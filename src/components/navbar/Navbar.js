@@ -20,6 +20,16 @@ const Example = ({ navArray = defaultArray, color = "light", light = true, extra
 
   const toggle = () => setIsOpen(!isOpen);
 
+/*
+TODO:
+  <Link
+    onClick={props.clearUser}
+  >
+    Logout
+  </Link>
+
+*/
+
   return (
     <div>
       <Navbar color={color} light={light} expand="md">
