@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { DLHOME } from "./index";
 import { Navbar } from "../components";
+import ProductForm from "./products/ProductForm"
 const Routes = () => {
   const [userInfo, stUserInfo] = useState({});
 
@@ -44,6 +45,12 @@ const Routes = () => {
         <Route
           path="/dl/:component_name"
           render={(props) => <DLHOME {...props} />}
+        />
+
+        <Route
+          exact
+          path="/products/form"
+          render={(props) => <ProductForm {...props} />}
         />
 
         <Redirect to="/" />
