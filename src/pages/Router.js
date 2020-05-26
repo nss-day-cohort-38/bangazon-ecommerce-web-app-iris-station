@@ -15,7 +15,16 @@ const Routes = () => {
 
   return (
     <Router>
-      <Navbar navArray={[{ title: "Route Name", route: "example" }]} />
+      {/* 
+        TODO: Login and register should conditionally display,
+        depending on if a user is logged in or not
+       */}
+      <Navbar navArray={
+        [
+          { title: "Login", route: "login" },
+          { title: "Register", route: "register" }
+        ]    
+      } />
       <Switch>
         <Route exact path="/" render={(props) => <Home {...props} />} />
 
