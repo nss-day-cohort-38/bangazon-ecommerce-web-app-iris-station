@@ -1,3 +1,5 @@
+//this page gets only one specific product and sends it to the dom
+
 import React, {useState, useEffect} from 'react';
 import productManager from "../../modules/productManager"
 import "./productDetails.css"
@@ -7,10 +9,12 @@ const ProductDetails = props => {
     const [product, setProduct] = useState({})
 
     useEffect(()=> {
+        //fetch the product here
         productManager.getOneProduct(props.productId).then(prod=> setProduct(prod))
     }, [props.productId])
 
     return (
+        //return jsx here
         <>
         <div className="details-container">
         <div className="product-container">
@@ -30,7 +34,7 @@ const ProductDetails = props => {
             </div>
             
             <div className="icon-container-details">
-            <button class="ui button" onClick={()=> console.log("add to card")}>Add To Cart</button>
+            <button className="ui button" onClick={()=> console.log("add to card")}>Add To Cart</button>
             </div>
         </div>
         </div>

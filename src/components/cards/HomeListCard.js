@@ -50,6 +50,7 @@ export default function HomeListCard(props) {
       setExpanded(!expanded);
     };
   if (props.product.id%5===0 ){
+    //this returns a different card to break up the same cards from displaying to the dom (same information but adds price)
     return(
       <div className="custom-card">
         <div className="cc-left">
@@ -66,7 +67,7 @@ export default function HomeListCard(props) {
           <IconButton aria-label="add to card">
             <i className="plus icon"></i>
           </IconButton>
-          <button class="ui button" onClick={()=> props.history.push(`/products/${props.product.id}`)}>See More</button>
+          <button className="ui button" onClick={()=> props.history.push(`/products/${props.product.id}`)}>See More</button>
           </div>
         </div>
       </div>
