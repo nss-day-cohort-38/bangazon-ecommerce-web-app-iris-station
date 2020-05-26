@@ -1,3 +1,5 @@
+// renders the cards to the home as well as a simple welcome message
+
 import React, {useState, useEffect} from 'react';
 import productManager from "../../modules/productManager"
 import HomeListCard from "../../components/cards/HomeListCard"

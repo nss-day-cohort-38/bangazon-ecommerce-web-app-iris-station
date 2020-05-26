@@ -1,3 +1,5 @@
+// Made by Kurt this is just a card for the products on the home page  using semantic react
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -79,7 +81,7 @@ export default function HomeListCard(props) {
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="add to card">
-            <i class="plus icon"></i>
+            <i className="plus icon"></i>
           </IconButton>
           {/* <IconButton aria-label="share">
             <ShareIcon />
