@@ -5,14 +5,19 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { DLHOME } from "./index";
+import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
 const Routes = () => {
   const [userInfo, stUserInfo] = useState({});
 
   return (
     <Router>
-      <Navbar navArray={[{ title: "Route Name", route: "example" }]} />
+      <Navbar
+        navArray={[
+          { title: "Route Name", route: "example" },
+          { title: "Profile" },
+        ]}
+      />
       <Switch>
         <Route exact path="/" render={(props) => <Home {...props} />} />
 
@@ -38,6 +43,18 @@ const Routes = () => {
           exact
           path="/products"
           render={(props) => <Product {...props} />}
+        />
+
+        <Route
+          exact
+          path="/profile"
+          render={(props) => <Profile {...props} />}
+        />
+
+        <Route
+          exact
+          path="/profile/:category"
+          render={(props) => <Profile {...props} />}
         />
 
         {/* Will redirect to home page if page does not exist */}

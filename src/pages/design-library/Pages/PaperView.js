@@ -1,18 +1,8 @@
 import React, { useState } from "react";
-import { Button, Table, LoginForm, RegisterForm, PaymentForm } from "../../../components";
+import { Button, Table, Paper } from "../../../components";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
-const FormsView = () => {
+const ButtonsView = () => {
   const [showProps, setShowProps] = useState(false);
-  const [loginForm, setLoginForm] = useState({
-    email: "",
-    password: "",
-    rememberme: false,
-  });
-
-
-  const updateLoginState = (e) => {
-    
-  }
 
   return (
     <>
@@ -57,42 +47,11 @@ const FormsView = () => {
         <>
           <h1>Normal</h1>
           <h3>This is a normal button with nothing passed down to it</h3>
-          <LoginForm />
-          <pre>
-            {`
-            {
-                email: ${loginForm.email},
-                password: ${loginForm.password},
-                rememberme: ${loginForm.rememberme},
-            }
-            `}
-          </pre>
-          <hr />
-
-
-          <h1>Normal</h1>
-          <h3>This is a normal button with nothing passed down to it</h3>
-          <RegisterForm />
-          <pre>
-            {`
-            <Button />
-            `}
-          </pre>
-          <hr />
-
-          <h1>Normal</h1>
-          <h3>This is a normal button with nothing passed down to it</h3>
-          <PaymentForm />
-          <pre>
-            {`
-            <Button />
-            `}
-          </pre>
-          <hr />
+          <Paper>This is some text</Paper>
         </>
       )}
     </>
   );
 };
 
-export default FormsView;
+export default ButtonsView;

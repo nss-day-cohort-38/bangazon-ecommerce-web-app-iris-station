@@ -62,7 +62,7 @@ const Example = ({ navArray = defaultArray, color = "light", light = true, extra
                         to={
                           item.route
                             ? item.route
-                            : `${item.title
+                            : `/${item.title
                                 .split(" ")
                                 .join("-")
                                 .toLowerCase()}`

@@ -12,6 +12,7 @@ const Button = ({
   disabled = false,
   icon,
   children,
+  type,
 }) => (
   <SemButton
     loading={loading}
@@ -21,9 +22,10 @@ const Button = ({
     onClick={handleClick}
     icon={icon ? true : false}
     labelPosition={icon ? "right" : false}
+    type={type ? type : ""}
   >
     {children ? children : content}
-    <Icon name={icon} />
+    {icon && <Icon name={icon} />}
   </SemButton>
 );
 
