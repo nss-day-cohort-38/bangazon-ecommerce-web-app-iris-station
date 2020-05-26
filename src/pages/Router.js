@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import { DLHOME } from "./index";
 import { Navbar } from "../components";
+import Register from "../pages/users/register"
+
 const Routes = () => {
   const [userInfo, stUserInfo] = useState({});
 
@@ -38,6 +40,12 @@ const Routes = () => {
           exact
           path="/products"
           render={(props) => <Product {...props} />}
+        />
+
+        <Route
+          exact
+          path="/register"
+          render={(props) => <Register {...props} />}
         />
 
         {/* Will redirect to home page if page does not exist */}
