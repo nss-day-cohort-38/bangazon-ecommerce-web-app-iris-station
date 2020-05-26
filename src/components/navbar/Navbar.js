@@ -15,20 +15,10 @@ import {
 } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
-const Example = ({ navArray = defaultArray, color = "light", light = true, extraText="" }) => {
+const Example = (props, { navArray = defaultArray, color = "light", light = true, extraText=""}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
-/*
-TODO:
-  <Link
-    onClick={props.clearUser}
-  >
-    Logout
-  </Link>
-
-*/
 
   return (
     <div>
@@ -86,7 +76,15 @@ TODO:
               }
             })}
           </Nav>
-          <NavbarText>{extraText}</NavbarText>
+          <NavbarText>
+            {/* TODO: fix the styling to make it look like a link */}
+            <span
+              className="nav-link"
+              onClick={props.clearUser}
+            >
+              Logout
+            </span>
+          </NavbarText>
         </Collapse>
       </Navbar>
     </div>

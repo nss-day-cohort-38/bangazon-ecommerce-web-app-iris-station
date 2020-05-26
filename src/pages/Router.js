@@ -41,6 +41,7 @@ const Routes = () => {
           ]    
         } 
         hasUser={hasUser}
+        clearUser={clearUser}
       />
       <Switch>
         <Route exact path="/" render={(props) => <HomePage {...props} />} />
