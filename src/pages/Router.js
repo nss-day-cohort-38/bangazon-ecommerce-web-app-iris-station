@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import { DLHOME } from "./index";
 import { Navbar } from "../components";
+import { HomePage } from "./home/index"
+
 const Routes = () => {
   const [userInfo, stUserInfo] = useState({});
 
@@ -14,7 +16,7 @@ const Routes = () => {
     <Router>
       <Navbar navArray={[{ title: "Route Name", route: "example" }]} />
       <Switch>
-        <Route exact path="/" render={(props) => <Home {...props} />} />
+        <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
         {/* ADD CUSTOMER ROUTES BELOW */}
         <Route
@@ -52,7 +54,7 @@ const Routes = () => {
   );
 };
 
-const Home = () => "You are Home";
+// const Home = () => 
 const Customer = () => "Customer page";
 const Order = () => "Orders page";
 const Payment = () => "Payment page";
