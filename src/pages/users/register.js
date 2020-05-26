@@ -23,7 +23,6 @@ const Register = props => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log("submission begun")
 
     const user = {
       "username": formData.username,

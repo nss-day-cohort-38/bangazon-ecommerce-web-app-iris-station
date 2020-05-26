@@ -12,13 +12,14 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { Message } from "semantic-ui-react"; 
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Iris Station
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide({}) {
+const LoginForm = props => {
   const classes = useStyles();
 
   return (
@@ -75,15 +76,21 @@ export default function SignInSide({}) {
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
+            {props.failedLogin 
+              ? <Message negative>
+                  <p>The email or password you entered is incorrect, please try again.</p>
+                </Message>
+              : <></> 
+            }
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -113,12 +120,13 @@ export default function SignInSide({}) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                {/* We're not doing this... */}
+                {/* <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -132,3 +140,5 @@ export default function SignInSide({}) {
     </Grid>
   );
 }
+
+export default LoginForm

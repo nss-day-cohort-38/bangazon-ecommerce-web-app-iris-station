@@ -7,7 +7,8 @@ import {
 } from "react-router-dom";
 import { DLHOME } from "./index";
 import { Navbar } from "../components";
-import Register from "../pages/users/register"
+import {Register, Login} from "../pages/users/index"
+
 
 const Routes = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -40,6 +41,16 @@ const Routes = () => {
           exact
           path="/products"
           render={(props) => <Product {...props} />}
+        />
+
+        <Route
+          exact
+          path="/login"
+          render={(props) => 
+            <Login
+              setUserInfo={setUserInfo} 
+              {...props} 
+            />}
         />
 
         <Route
