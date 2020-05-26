@@ -39,7 +39,9 @@ export default function SimpleTable({ tableData = defaultData }) {
                   ))}
                 </TableRow>
               );
-            }
+            } 
+
+            return ""
           })}
         </TableBody>
       </Table>

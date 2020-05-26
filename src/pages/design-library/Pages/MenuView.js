@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Table, VerticalMenu } from "../../../components";
-import AcUnitIcon from "@material-ui/icons/AcUnit";
 const MenuView = () => {
   const [showProps, setShowProps] = useState(false);
 

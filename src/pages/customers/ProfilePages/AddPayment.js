@@ -28,7 +28,7 @@ const AddPaymentPage = () => {
       account_number: paymentForm.accountNumber,
       expiration_date: paymentForm.expirationDate,
     }).then((resp) => {
-      if (resp.status == 200) {
+      if (resp.status === 200) {
         setSubmitMessage("Payment Added");
       }
     });

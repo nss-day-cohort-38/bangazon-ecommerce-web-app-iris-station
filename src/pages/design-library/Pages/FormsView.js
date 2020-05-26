@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Table, LoginForm, RegisterForm, PaymentForm } from "../../../components";
-import AcUnitIcon from "@material-ui/icons/AcUnit";
 const FormsView = () => {
   const [showProps, setShowProps] = useState(false);
   const [loginForm, setLoginForm] = useState({
@@ -11,7 +10,7 @@ const FormsView = () => {
 
 
   const updateLoginState = (e) => {
-    
+    setLoginForm()
   }
 
   return (

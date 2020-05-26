@@ -21,11 +21,11 @@ const DLHOME = ({ match }) => {
           { title: "Menues" },
         ]}
       />
-      {pageView == "navbar" && <NavbarView />}
-      {pageView == "menues" && <MenuView />}
-      {pageView == "buttons" && <ButtonsView />}
-      {pageView == "forms" && <FormsView />}
-      {pageView == "papers" && <PaperView />}
+      {pageView === "navbar" && <NavbarView />}
+      {pageView === "menues" && <MenuView />}
+      {pageView === "buttons" && <ButtonsView />}
+      {pageView === "forms" && <FormsView />}
+      {pageView === "papers" && <PaperView />}
     </>
   );
 };

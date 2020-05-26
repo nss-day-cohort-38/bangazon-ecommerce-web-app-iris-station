@@ -6,16 +6,23 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   NavbarText,
 } from "reactstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../../styles/Navbar.css";
+
 import { Link } from "react-router-dom";
-const Example = ({ navArray = defaultArray, color = "light", light = true, extraText="" }) => {
+
+const Example = ({
+  navArray = defaultArray,
+  color = "light",
+  light = true,
+  extraText = "",
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -27,10 +34,10 @@ const Example = ({ navArray = defaultArray, color = "light", light = true, extra
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            {navArray.map((item) => {
+            {navArray.map((item, id) => {
               if (item.dropdown && item.options) {
                 return (
-                  <UncontrolledDropdown nav inNavbar>
+                  <UncontrolledDropdown key={id} nav inNavbar>
                     <DropdownToggle nav caret>
                       {item.title}
                     </DropdownToggle>
@@ -56,21 +63,16 @@ const Example = ({ navArray = defaultArray, color = "light", light = true, extra
                 );
               } else {
                 return (
-                  <NavItem>
-                    <NavLink>
-                      <Link
-                        to={
-                          item.route
-                            ? item.route
-                            : `/${item.title
-                                .split(" ")
-                                .join("-")
-                                .toLowerCase()}`
-                        }
-                      >
-                        {item.title}
-                      </Link>
-                    </NavLink>
+                  <NavItem key={id} className="navbar-item-link">
+                    <Link
+                      to={
+                        item.route
+                          ? item.route
+                          : `/${item.title.split(" ").join("-").toLowerCase()}`
+                      }
+                    >
+                      {item.title}
+                    </Link>
                   </NavItem>
                 );
               }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Paper, VerticalMenu } from "../../components";
+import { VerticalMenu } from "../../components";
 import { AddPaymentPage } from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -26,7 +26,7 @@ const ProfilePage = ({ match }) => {
           />
         </Grid>
         <Grid item xs={9}>
-          {profileView == "add-payment" && <AddPaymentPage />}
+          {profileView === "add-payment" && <AddPaymentPage />}
         </Grid>
       </Grid>
     </div>
