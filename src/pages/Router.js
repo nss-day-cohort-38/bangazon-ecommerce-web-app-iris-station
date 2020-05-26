@@ -15,7 +15,7 @@ const Routes = () => {
 
   return (
     <Router>
-      <Navbar navArray={[{ title: "Route Name", route: "example" }]} />
+      <Navbar navArray={[{ title: "Route Name", route: "example" }, { title: "Sell a Product", route: "/products/form" }]} />
       <Switch>
         <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
