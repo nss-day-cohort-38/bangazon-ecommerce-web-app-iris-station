@@ -38,7 +38,6 @@ const Register = props => {
     userManager.register(user)
       .then(resp => {
         if("token" in resp) {
-          // FIXME: this needs fixing
           props.setUserInfo(resp)
         }
         props.history.push("/");
