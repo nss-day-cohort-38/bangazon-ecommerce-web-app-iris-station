@@ -52,7 +52,6 @@ const SignUp = props => {
 
   const handleFieldChange = props.handleFieldChange;
 
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

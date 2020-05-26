@@ -28,9 +28,13 @@ const Login = props => {
     userManager.login(user)
       .then(resp => {
         if("token" in resp) {
-          props.setUserInfo(resp)
-          props.history.push("/");
-        } else {
+          props.setUserToken(resp)
+          props.history.push("/")
+        }
+        // If there is no token, 
+        // the login was unsuccessful,
+        // and so an error message is displayed 
+        else {
           setFailedLogin(true)
         }
       })

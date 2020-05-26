@@ -11,7 +11,20 @@ import {Register, Login} from "../pages/users/index"
 
 
 const Routes = () => {
+  const isAuthenticated = () => sessionStorage.getItem("token") !== null;
+  const [hasUser, setHasUser] = useState(isAuthenticated())
   const [userInfo, setUserInfo] = useState({});
+
+  const setUserToken = resp => {
+    sessionStorage.setItem("token", resp.token)
+    setHasUser(isAuthenticated());
+  } 
+
+  // TODO: Implement this with router/navbar
+  const clearUser = () => {
+    sessionStorage.clear();
+    setHasUser(isAuthenticated());
+  }
 
   return (
     <Router>
@@ -19,12 +32,15 @@ const Routes = () => {
         TODO: Login and register should conditionally display,
         depending on if a user is logged in or not
        */}
-      <Navbar navArray={
-        [
-          { title: "Login", route: "login" },
-          { title: "Register", route: "register" }
-        ]    
-      } />
+      <Navbar 
+        navArray={
+          [
+            { title: "Login", route: "login" },
+            { title: "Register", route: "register" }
+          ]    
+        } 
+        hasUser={hasUser}
+      />
       <Switch>
         <Route exact path="/" render={(props) => <Home {...props} />} />
 
@@ -57,7 +73,7 @@ const Routes = () => {
           path="/login"
           render={(props) => 
             <Login
-              setUserInfo={setUserInfo} 
+              setUserToken={setUserToken} 
               {...props} 
             />}
         />
@@ -67,7 +83,7 @@ const Routes = () => {
           path="/register"
           render={(props) => 
             <Register
-              setUserInfo={setUserInfo} 
+              setUserToken={setUserToken}
               {...props} 
             />}
         />

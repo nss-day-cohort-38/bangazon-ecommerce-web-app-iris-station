@@ -38,13 +38,13 @@ const Register = props => {
     userManager.register(user)
       .then(resp => {
         if ("token" in resp) {
-            props.setUserInfo(resp)
+            props.setUserToken(resp)
             props.history.push("/");
         }
       })
       // With a 500 HTTP error, no response is given,
       // so the error must be handled with .catch
-      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch
       .catch( () => setFailedLogin(true) )
   }
 

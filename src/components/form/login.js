@@ -92,6 +92,7 @@ const LoginForm = props => {
               name="username"
               autoComplete="username"
               autoFocus
+              onChange={props.handleFieldChange}
             />
             <TextField
               variant="outlined"
@@ -103,6 +104,7 @@ const LoginForm = props => {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={props.handleFieldChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
