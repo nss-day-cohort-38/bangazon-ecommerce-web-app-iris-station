@@ -10,7 +10,7 @@ import { Navbar } from "../components";
 import Register from "../pages/users/register"
 
 const Routes = () => {
-  const [userInfo, stUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
 
   return (
     <Router>
@@ -45,7 +45,11 @@ const Routes = () => {
         <Route
           exact
           path="/register"
-          render={(props) => <Register {...props} />}
+          render={(props) => 
+            <Register
+              setUserInfo={setUserInfo} 
+              {...props} 
+            />}
         />
 
         {/* Will redirect to home page if page does not exist */}

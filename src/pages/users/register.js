@@ -23,6 +23,7 @@ const Register = props => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log("submission begun")
 
     const user = {
       "username": formData.username,
@@ -34,10 +35,11 @@ const Register = props => {
       "phone_number": formData.phoneNumber
     }
 
-    userManager.register("register", user)
+    userManager.register(user)
       .then(resp => {
         if("token" in resp) {
-          props.setUser(resp)
+          // FIXME: this needs fixing
+          props.setUserInfo(resp)
         }
         props.history.push("/");
       })
