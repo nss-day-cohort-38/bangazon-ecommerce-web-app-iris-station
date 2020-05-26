@@ -7,8 +7,9 @@ import {
 } from "react-router-dom";
 import { DLHOME } from "./index";
 import { Navbar } from "../components";
+import { HomePage } from "./home/index"
+import { ProductDetails } from "./products/index"
 import {Register, Login} from "../pages/users/index";
-import { HomePage } from "./home/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -67,6 +68,11 @@ const Routes = () => {
           path="/products"
           render={(props) => <Product {...props} />}
         />
+        {/* this will route to a product detail page */}
+        <Route 
+        exact path = "/products/:productId(\d+)"
+        render={(props)=> <ProductDetails productId={parseInt(props.match.params.productId)} {...props} /> }
+        />
 
         <Route
           exact
@@ -93,6 +99,7 @@ const Routes = () => {
           path="/dl/:component_name"
           render={(props) => <DLHOME {...props} />}
         />
+      
 
         <Redirect to="/" />
       </Switch>
