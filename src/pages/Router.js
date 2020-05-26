@@ -7,14 +7,40 @@ import {
 } from "react-router-dom";
 import { DLHOME } from "./index";
 import { Navbar } from "../components";
-import { HomePage } from "./home/index"
+import {Register, Login} from "../pages/users/index";
+import { HomePage } from "./home/index";
 
 const Routes = () => {
-  const [userInfo, stUserInfo] = useState({});
+  const isAuthenticated = () => sessionStorage.getItem("token") !== null;
+  const [hasUser, setHasUser] = useState(isAuthenticated())
+  const [userInfo, setUserInfo] = useState({});
+
+  const setUserToken = resp => {
+    sessionStorage.setItem("token", resp.token)
+    setHasUser(isAuthenticated());
+  } 
+
+  // TODO: Implement this with router/navbar
+  const clearUser = () => {
+    sessionStorage.clear();
+    setHasUser(isAuthenticated());
+  }
 
   return (
     <Router>
-      <Navbar navArray={[{ title: "Route Name", route: "example" }]} />
+      {/* 
+        TODO: Login and register should conditionally display,
+        depending on if a user is logged in or not
+       */}
+      <Navbar 
+        navArray={
+          [
+            { title: "Login", route: "login" },
+            { title: "Register", route: "register" }
+          ]    
+        } 
+        hasUser={hasUser}
+      />
       <Switch>
         <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
@@ -40,6 +66,26 @@ const Routes = () => {
           exact
           path="/products"
           render={(props) => <Product {...props} />}
+        />
+
+        <Route
+          exact
+          path="/login"
+          render={(props) => 
+            <Login
+              setUserToken={setUserToken} 
+              {...props} 
+            />}
+        />
+
+        <Route
+          exact
+          path="/register"
+          render={(props) => 
+            <Register
+              setUserToken={setUserToken}
+              {...props} 
+            />}
         />
 
         {/* Will redirect to home page if page does not exist */}
