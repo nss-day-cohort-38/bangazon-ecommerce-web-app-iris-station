@@ -13,7 +13,7 @@ import {
   DropdownItem,
   NavbarText,
 } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 const Example = ({ navArray = defaultArray, color = "light", light = true, extraText="" }) => {
   const [isOpen, setIsOpen] = useState(false);
