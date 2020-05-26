@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {RegisterForm} from "../../components/form/index"
+import {userManager} from "../../modules/index"
 
-const Register = () => {
+const Register = props => {
   const [formData, setFormData] = useState(
     {
       username: "", 
@@ -33,7 +34,7 @@ const Register = () => {
       "phone_number": formData.phoneNumber
     }
 
-    ApiManager.post("register", user)
+    userManager.register("register", user)
       .then(resp => {
         if("token" in resp) {
           props.setUser(resp)
@@ -44,7 +45,11 @@ const Register = () => {
 
   return (
     <>
-      <RegisterForm />
+      <form onSubmit={handleRegister}>
+        <RegisterForm 
+          handleFieldChange={handleFieldChange}
+        />
+      </form>
     </>
   )
 }
