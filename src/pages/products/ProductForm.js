@@ -10,8 +10,6 @@ const ProductForm = (props) => {
     image_path: "",
     created_at: "",
     product_type_id: 1,
-    customer_id: ""
-
   });
   const [producttypes, setProducttypes] = useState([]);
 
@@ -33,14 +31,15 @@ const ProductForm = (props) => {
       image_path: product.image_path,
       created_at: product.created_at,
       product_type_id: product.product_type_id,
-      customer_id: product.customer_id
     };
 
     fetch("http://localhost:8000/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Accept": "application/json",
+        "Authorization": `Token ${sessionStorage.getItem("token")}`
+
       },
       body: JSON.stringify(newProduct),
     })
