@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Message } from "semantic-ui-react"; 
 
 function Copyright() {
   return (
@@ -64,6 +65,13 @@ const SignUp = props => {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+            {/* For now, this is the most common error we will be facing */}
+            {props.failedLogin 
+              ? <Message negative>
+                  <p>The username you entered is already in use, please try again.</p>
+                </Message>
+              : <></> 
+            }
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"

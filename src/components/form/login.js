@@ -78,7 +78,7 @@ const LoginForm = props => {
           <form className={classes.form} noValidate>
             {props.failedLogin 
               ? <Message negative>
-                  <p>The email or password you entered is incorrect, please try again.</p>
+                  <p>The username or password you entered is incorrect, please try again.</p>
                 </Message>
               : <></> 
             }

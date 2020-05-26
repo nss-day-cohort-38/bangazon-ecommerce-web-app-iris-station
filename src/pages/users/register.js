@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {RegisterForm} from "../../components/form/index"
 import {userManager} from "../../modules/index"
 
@@ -14,6 +14,7 @@ const Register = props => {
       phoneNumber: ""
     }
   )
+  const [failedLogin, setFailedLogin] = useState(false)
 
   const handleFieldChange = (evt) => {
     const stateToChange = { ...formData };
@@ -36,18 +37,27 @@ const Register = props => {
 
     userManager.register(user)
       .then(resp => {
-        if("token" in resp) {
-          props.setUserInfo(resp)
+        if ("token" in resp) {
+            props.setUserInfo(resp)
+            props.history.push("/");
         }
-        props.history.push("/");
       })
+      // With a 500 HTTP error, no response is given,
+      // so the error must be handled with .catch
+      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch
+      .catch( () => setFailedLogin(true) )
   }
+
+  useEffect( () => {
+
+  }, [failedLogin])
 
   return (
     <>
       <form onSubmit={handleRegister}>
         <RegisterForm 
           handleFieldChange={handleFieldChange}
+          failedLogin={failedLogin}
         />
       </form>
     </>
