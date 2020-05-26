@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import { DLHOME } from "./index";
 import { Navbar } from "../components";
-import {Register, Login} from "../pages/users/index"
-
+import {Register, Login} from "../pages/users/index";
+import { HomePage } from "./home/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -42,7 +42,7 @@ const Routes = () => {
         hasUser={hasUser}
       />
       <Switch>
-        <Route exact path="/" render={(props) => <Home {...props} />} />
+        <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
         {/* ADD CUSTOMER ROUTES BELOW */}
         <Route
@@ -100,7 +100,7 @@ const Routes = () => {
   );
 };
 
-const Home = () => "You are Home";
+// const Home = () => 
 const Customer = () => "Customer page";
 const Order = () => "Orders page";
 const Payment = () => "Payment page";
