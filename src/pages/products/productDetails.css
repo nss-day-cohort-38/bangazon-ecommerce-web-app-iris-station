@@ -8,6 +8,7 @@
     flex-direction: column;
     width: 90%;
     padding: 5%;
+    padding-bottom: 1%;
     align-items: center;
     background-color: rgba(224, 221, 221, 0.349);
     -webkit-box-shadow: 2px 2px 3px 4px rgba(204, 204, 204, 0.781);  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
@@ -29,4 +30,11 @@
 }
 .spec{
     align-self: baseline;
+}
+.icon-container-details{
+   
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
 }

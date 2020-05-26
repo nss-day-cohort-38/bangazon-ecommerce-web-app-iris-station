@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import productManager from "../../modules/productManager"
 import "./productDetails.css"
+import IconButton from '@material-ui/core/IconButton';
 
 const ProductDetails = props => {
     const [product, setProduct] = useState({})
@@ -26,6 +27,10 @@ const ProductDetails = props => {
             </div>
             <div className="product-description">
                 <p className="prod-description">{product.description}</p>
+            </div>
+            
+            <div className="icon-container-details">
+            <button class="ui button" onClick={()=> console.log("add to card")}>Add To Cart</button>
             </div>
         </div>
         </div>
