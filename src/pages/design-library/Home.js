@@ -16,6 +16,7 @@ const DLHOME = ({ match }) => {
             title: "Navbar",
           },
           { title: "Buttons" },
+          { title: "Form" },
         ]}
       />
       {pageView == "navbar" && <NavbarView />}

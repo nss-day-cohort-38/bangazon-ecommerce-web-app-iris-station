@@ -6,11 +6,13 @@ import {
   Redirect,
 } from "react-router-dom";
 import { DLHOME } from "./index";
+import { Navbar } from "../components";
 const Routes = () => {
   const [userInfo, stUserInfo] = useState({});
 
   return (
     <Router>
+      <Navbar navArray={[{ title: "Route Name", route: "example" }]} />
       <Switch>
         <Route exact path="/" render={(props) => <Home {...props} />} />
 
@@ -39,7 +41,10 @@ const Routes = () => {
         />
 
         {/* Will redirect to home page if page does not exist */}
-        <Route path="/dl/:component_name" render={(props) => <DLHOME {...props} />} />
+        <Route
+          path="/dl/:component_name"
+          render={(props) => <DLHOME {...props} />}
+        />
 
         <Redirect to="/" />
       </Switch>

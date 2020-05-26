@@ -57,7 +57,7 @@ const FormsView = () => {
         <>
           <h1>Normal</h1>
           <h3>This is a normal button with nothing passed down to it</h3>
-          <LoginForm setStateFunction={updateLoginState} />
+          <LoginForm />
           <pre>
             {`
             {
@@ -68,11 +68,11 @@ const FormsView = () => {
             `}
           </pre>
           <hr />
-          
+
 
           <h1>Normal</h1>
           <h3>This is a normal button with nothing passed down to it</h3>
-          {/* <RegisterForm setStateFunction={setLoginForm} /> */}
+          <RegisterForm />
           <pre>
             {`
             <Button />
