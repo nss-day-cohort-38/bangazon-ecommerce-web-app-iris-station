@@ -20,6 +20,7 @@ const HomePage = props => {
         <div className = "list-container">
             {prods.map(product=> (
                 <HomeListCard key={product.id} product={product} {...props} />
+                
             ))}
         </div>
 
