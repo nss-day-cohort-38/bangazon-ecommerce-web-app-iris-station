@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 const ProductForm = (props) => {
-  sessionStorage.setItem("token", "123456789");
   const [product, setProduct] = useState({
     title: "",
     price: "",
@@ -11,7 +10,7 @@ const ProductForm = (props) => {
     image_path: "",
     created_at: "",
     product_type_id: 1,
-    customer_id: 1
+    customer_id: ""
 
   });
   const [producttypes, setProducttypes] = useState([]);
@@ -46,11 +45,11 @@ const ProductForm = (props) => {
       body: JSON.stringify(newProduct),
     })
       .then((response) => response.json())
-      // .then((parsedResponse) => {
-      //   if ("token" in parsedResponse) {
-      //     sessionStorage.setItem("token", parsedResponse.token);
-      //   }
-      // })
+      .then((parsedResponse) => {
+        if ("token" in parsedResponse) {
+          sessionStorage.setItem("token", parsedResponse.token);
+        }
+      })
       .then(() => {
         props.history.push({
           pathname: "/",
