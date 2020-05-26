@@ -2,7 +2,7 @@ import baseurl from "./baseurl";
 
 const paymentDataManager = {
   addPayment(token, paymentObj) {
-    fetch(`${baseurl}/payment_types`, {
+    return fetch(`${baseurl}/payment_types`, {
       method: "POST",
       body: JSON.stringify(paymentObj),
       headers: {

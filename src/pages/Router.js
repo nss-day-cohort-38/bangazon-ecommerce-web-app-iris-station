@@ -8,7 +8,7 @@ import {
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
 const Routes = () => {
-  const [userInfo, stUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
 
   return (
     <Router>

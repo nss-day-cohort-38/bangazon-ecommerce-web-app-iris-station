@@ -4,12 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "../buttons";
 
-export default function PaymentForm({ handleSubmit, handleChange, formState }) {
+export default function PaymentForm({
+  handleSubmit,
+  handleChange,
+  formState,
+  submitMessage,
+}) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Payment method
       </Typography>
+
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -49,8 +55,13 @@ export default function PaymentForm({ handleSubmit, handleChange, formState }) {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" />
+            <Button type="submit" content="Submit" />
           </Grid>
+          {submitMessage && (
+            <Typography variant="h3" gutterBottom>
+              {submitMessage}
+            </Typography>
+          )}
         </Grid>
       </form>
     </React.Fragment>

@@ -6,8 +6,9 @@ const AddPaymentPage = () => {
   const [paymentForm, setPaymentForm] = useState({
     merchantName: "",
     accountNumber: "",
-    expirationDate: "2020-01-14",
+    expirationDate: "2020-02-01",
   });
+  const [submitMessage, setSubmitMessage] = useState("");
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -21,16 +22,16 @@ const AddPaymentPage = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    let data = paymentForm.expirationDate;
-    console.log(date);
-
-    // PaymentDataManager.addPayment("9134c6b2e84e0394198e2cbe0a8bd2c1e9a0adbc", {
-    //   merchant_name: paymentForm.merchantName,
-    //   account_number: paymentForm.accountNumber,
-    //   expiration_date: data["expiration_date"],
-    //   customer: 4,
-    // });
-    // console.log("submitted");
+    const token = window.sessionStorage.getItem("token");
+    PaymentDataManager.addPayment(token, {
+      merchant_name: paymentForm.merchantName,
+      account_number: paymentForm.accountNumber,
+      expiration_date: paymentForm.expirationDate,
+    }).then((resp) => {
+      if (resp.status == 200) {
+        setSubmitMessage("Payment Added");
+      }
+    });
   };
 
   return (
@@ -39,6 +40,7 @@ const AddPaymentPage = () => {
         formState={paymentForm}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        submitMessage={submitMessage}
       />
     </Paper>
   );
