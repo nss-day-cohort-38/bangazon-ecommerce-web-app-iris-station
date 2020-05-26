@@ -14,7 +14,6 @@ const HomePage = props => {
             setProds(arr)
         })
     }, [])
-
     return (
         <>
         <div className="home-header"><h1>Welcome Back!</h1><h4>Here's what's new...</h4></div>
