@@ -13,7 +13,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
 // import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -49,7 +49,30 @@ export default function HomeListCard(props) {
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-  
+  if (props.product.id%5===0 ){
+    return(
+      <div className="custom-card">
+        <div className="cc-left">
+          
+          <div className="cc-img">
+            <img src={props.product.image_path} alt={props.product.title} />
+          </div>
+        </div>
+        <div className="cc-mid"><div className="cc-title">{props.product.title}</div><p className="text">{props.product.description}</p></div>
+        <div className="cc-right">
+          <div></div>
+          <div className="cc-price">Only ${props.product.price}</div>
+          <div className="cc-prod-buttons">
+          <IconButton aria-label="add to card">
+            <i className="plus icon"></i>
+          </IconButton>
+          <button class="ui button" onClick={()=> props.history.push(`/products/${props.product.id}`)}>See More</button>
+          </div>
+        </div>
+      </div>
+    )
+
+  }else{
     return (
       <Card className={classes.root} id="home-card">
         <CardHeader
@@ -72,38 +95,23 @@ export default function HomeListCard(props) {
           title={props.product.title}
         />
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="div">
             <p className="text">{props.product.description}</p>
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to wishlist">
+        <CardActions disableSpacing className="prod-card-button-container">
+          {/* <IconButton aria-label="add to wishlist">
             <FavoriteIcon />
-          </IconButton>
+          </IconButton> */}
           <IconButton aria-label="add to card">
             <i className="plus icon"></i>
           </IconButton>
           {/* <IconButton aria-label="share">
             <ShareIcon />
           </IconButton> */}
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
+            <button className="ui button" onClick={()=> props.history.push(`/products/${props.product.id}`)}>See More</button>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {props.product.description}
-          </Typography>
-          </CardContent>
-        </Collapse>
       </Card>
     );
   }
+}

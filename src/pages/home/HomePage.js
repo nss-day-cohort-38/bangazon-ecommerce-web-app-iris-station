@@ -13,13 +13,15 @@ const HomePage = props => {
         productManager.getHomeList().then(arr=> {
             setProds(arr)
         })
-    })
+    }, [])
+
     return (
         <>
         <div className="home-header"><h1>Welcome Back!</h1><h4>Here's what's new...</h4></div>
         <div className = "list-container">
             {prods.map(product=> (
                 <HomeListCard key={product.id} product={product} {...props} />
+                
             ))}
         </div>
 
