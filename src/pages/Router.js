@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { DLHOME } from "./index";
 const Routes = () => {
   const [userInfo, stUserInfo] = useState({});
 
@@ -24,12 +25,22 @@ const Routes = () => {
         <Route exact path="/orders" render={(props) => <Order {...props} />} />
 
         {/* ADD PAYMENT ROUTES BELOW */}
-        <Route exact path="/payments" render={(props) => <Payment {...props} />} />
+        <Route
+          exact
+          path="/payments"
+          render={(props) => <Payment {...props} />}
+        />
 
         {/* ADD PRODUCTS ROUTES BELOW */}
-        <Route exact path="/products" render={(props) => <Product {...props} />} />
+        <Route
+          exact
+          path="/products"
+          render={(props) => <Product {...props} />}
+        />
 
         {/* Will redirect to home page if page does not exist */}
+        <Route path="/dl/:component_name" render={(props) => <DLHOME {...props} />} />
+
         <Redirect to="/" />
       </Switch>
     </Router>
