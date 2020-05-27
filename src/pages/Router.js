@@ -7,10 +7,11 @@ import {
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
+import "../styles/Global.css";
+import ProductForm from "./products/ProductForm";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
-import "../styles/Global.css"
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -37,14 +38,20 @@ const Routes = () => {
        */}
 
       <Navbar
-        navArray={[
-          { title: "Profile" },
-          { title: "Login", route: "/login" },
-          { title: "Register", route: "/register" },
-        ]}
+        navArray={
+          hasUser
+            ? [
+                { title: "Sell a Product", route: "/products/form" },
+                { title: "Profile" },
+              ]
+            : [
+                { title: "Login", route: "login" },
+                { title: "Register", route: "register" },
+              ]
+        }
         hasUser={hasUser}
       />
-      
+
       <div className="body-container">
         <Switch>
           <Route exact path="/" render={(props) => <HomePage {...props} />} />
@@ -110,7 +117,6 @@ const Routes = () => {
               hasUser ? <Profile {...props} /> : <Redirect to="/login" />
             }
           />
-
           {hasUser ? (
             <>
               {/* This will handle all routes that are for the profile section */}
@@ -123,6 +129,17 @@ const Routes = () => {
                 exact
                 path="/profile/:category/:itemId(\d+)"
                 render={(props) => <Profile {...props} />}
+              />
+              <Route
+                exact
+                path="/products/form"
+                render={(props) => {
+                  if (hasUser) {
+                    return <ProductForm {...props} />;
+                  } else {
+                    return <HomePage {...props} />;
+                  }
+                }}
               />
               <Route
                 path="/dl/:component_name"
