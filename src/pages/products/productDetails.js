@@ -13,6 +13,7 @@ const ProductDetails = props => {
 
     const handleAddToCard= productId=> {
         orderManager.getOrders(token).then(arr=> {
+            if (arr.length>0){
             if(arr[0].payment_type_id != null){
                 console.log('lets make a new order')
                 orderManager.postOrder(token).then(obj=> {
@@ -20,14 +21,23 @@ const ProductDetails = props => {
                         "order_id": obj.id,
                         "product_id": productId
                     }
-                    order_product_manager.postNewOrder(token, productRelationship).then(()=> console.log('you started a new order and added a thing'))
+                    order_product_manager.postNewOrder(token, productRelationship)
                 })
             } else{
                 const productRelationship = {
                     "order_id": arr[0].id,
                     "product_id": productId
                 }
-                order_product_manager.postNewOrder(token, productRelationship).then(()=> console.log('you added a new thing to your order'))
+                order_product_manager.postNewOrder(token, productRelationship)
+            }}
+            else{
+                orderManager.postOrder(token).then(obj=> {
+                    const productRelationship = {
+                        "order_id": obj.id,
+                        "product_id": productId
+                    }
+                    order_product_manager.postNewOrder(token, productRelationship)
+                })
             }
         })
     }
