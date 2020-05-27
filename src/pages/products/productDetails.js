@@ -2,11 +2,45 @@
 
 import React, {useState, useEffect} from 'react';
 import productManager from "../../modules/productManager"
+import orderManager  from "../../modules/orderManager";
+import order_product_manager from "../../modules/order_product_manager"
 import "./productDetails.css"
 import IconButton from '@material-ui/core/IconButton';
 
 const ProductDetails = props => {
     const [product, setProduct] = useState({})
+    const token = sessionStorage.getItem('token')
+
+    const handleAddToCard= productId=> {
+        orderManager.getOrders(token).then(arr=> {
+            if (arr.length>0){
+            if(arr[0].payment_type_id != null){
+                console.log('lets make a new order')
+                orderManager.postOrder(token).then(obj=> {
+                    const productRelationship = {
+                        "order_id": obj.id,
+                        "product_id": productId
+                    }
+                    order_product_manager.postNewOrder(token, productRelationship)
+                })
+            } else{
+                const productRelationship = {
+                    "order_id": arr[0].id,
+                    "product_id": productId
+                }
+                order_product_manager.postNewOrder(token, productRelationship)
+            }}
+            else{
+                orderManager.postOrder(token).then(obj=> {
+                    const productRelationship = {
+                        "order_id": obj.id,
+                        "product_id": productId
+                    }
+                    order_product_manager.postNewOrder(token, productRelationship)
+                })
+            }
+        })
+    }
 
     useEffect(()=> {
         //fetch the product here
@@ -34,7 +68,7 @@ const ProductDetails = props => {
             </div>
             
             <div className="icon-container-details">
-            <button className="ui button" onClick={()=> console.log("add to card")}>Add To Cart</button>
+            <button className="ui button" onClick={()=> handleAddToCard(product.id)}>Add To Cart</button>
             </div>
         </div>
         </div>
