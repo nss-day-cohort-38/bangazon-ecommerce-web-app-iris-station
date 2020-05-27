@@ -21,6 +21,7 @@ const ProfilePage = ({ match }) => {
         <Grid item xs={2}>
           <VerticalMenu
             menuData={[
+              { title: "Order History", route: "/profile/order-history" },
               { title: "Add Payment Option", route: "/profile/add-payment" },
             ]}
           />
