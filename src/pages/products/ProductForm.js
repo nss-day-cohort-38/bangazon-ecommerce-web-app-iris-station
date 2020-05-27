@@ -35,7 +35,7 @@ const ProductForm = (props) => {
     if (typeof(newProduct.title) != "string" || newProduct.title.length === 0) { alert ("The title field must contain text.")}
     else if (typeof(newProduct.description) != "string" || newProduct.description.length === 0) { alert ("The description field must contain text.")}
     else if (typeof(newProduct.location) != "string" || newProduct.location.length === 0) { alert ("The location field must contain text.")}
-    else if (typeof(newProduct.image_path) != "string" || newProduct.image_path.length === 0) { alert ("The image_path field must contain text.")}
+    else if (typeof(newProduct.image_path) != "string" || newProduct.image_path.length === 0) { alert ("The image URL field must contain text.")}
     else if (newProduct.price.length === 0) { alert ("The price field must contain a number.")}
     else if (newProduct.quantity.length === 0) { alert ("The quantity field must contain a number.")}
     else{
@@ -94,6 +94,7 @@ const ProductForm = (props) => {
           placeholder="Price"
           required=""
           autoFocus=""
+          step=".01"
         />
       </fieldset>
       <fieldset>
