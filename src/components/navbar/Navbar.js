@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
-const Example = (props, { navArray = defaultArray, color = "light", light = true, extraText=""}) => {
+const Example = (props, {color = "light", light = true, extraText=""}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -27,7 +27,7 @@ const Example = (props, { navArray = defaultArray, color = "light", light = true
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            {navArray.map((item) => {
+            {props.navArray.map((item) => {
               if (item.dropdown && item.options) {
                 return (
                   <UncontrolledDropdown nav inNavbar>
@@ -77,38 +77,38 @@ const Example = (props, { navArray = defaultArray, color = "light", light = true
             })}
           </Nav>
           <NavbarText>
-            {/* TODO: fix the styling to make it look like a link */}
-            <span
-              className="nav-link"
-              onClick={props.clearUser}
-            >
-              Logout
-            </span>
+            {/* TODO: make this not inline styling */}
+            {props.hasUser
+            ? <span
+                style={{cursor: 'pointer', color: 'blue'}}
+                className="nav-link"
+                onClick={props.clearUser}
+              >
+                Logout
+              </span>
+            : <>
+                <NavLink>
+                  <Link
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                </NavLink>
+                <NavLink>
+                  <Link
+                    to="/register"
+                  >
+                    Register
+                  </Link>
+                </NavLink>
+              </>
+            }
+
           </NavbarText>
         </Collapse>
       </Navbar>
     </div>
   );
 };
-
-const defaultArray = [
-  {
-    title: "Customers",
-    route: "/customers",
-  },
-  {
-    title: "Payments of this",
-    dropdown: true,
-    options: [
-      {
-        title: "Here",
-        route: "/here",
-      },
-      {
-        title: "There is another example",
-      },
-    ],
-  },
-];
 
 export default Example;

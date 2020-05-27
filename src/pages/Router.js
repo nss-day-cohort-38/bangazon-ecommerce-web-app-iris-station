@@ -29,15 +29,13 @@ const Routes = () => {
 
   return (
     <Router>
-      {/* 
-        TODO: Login and register should conditionally display,
-        depending on if a user is logged in or not
-       */}
       <Navbar 
         navArray={
           [
-            { title: "Login", route: "login" },
-            { title: "Register", route: "register" }
+            { title: "Customers", route: "customers" },
+            { title: "Orders", route: "orders" },
+            { title: "Products", route: "products" },
+            { title: "Payments", route: "payments" }
           ]    
         } 
         hasUser={hasUser}
