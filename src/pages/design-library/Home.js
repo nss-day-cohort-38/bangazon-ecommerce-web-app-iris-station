@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavbarView, ButtonsView, FormsView } from "./Pages";
+import { NavbarView, ButtonsView, FormsView, PaperView, MenuView } from "./Pages";
 import { Navbar } from "../../components";
 
 const DLHOME = ({ match }) => {
@@ -16,12 +16,16 @@ const DLHOME = ({ match }) => {
             title: "Navbar",
           },
           { title: "Buttons" },
-          { title: "Form" },
+          { title: "Forms" },
+          { title: "Papers" },
+          { title: "Menues" },
         ]}
       />
-      {pageView == "navbar" && <NavbarView />}
-      {pageView == "buttons" && <ButtonsView />}
-      {pageView == "forms" && <FormsView />}
+      {pageView === "navbar" && <NavbarView />}
+      {pageView === "menues" && <MenuView />}
+      {pageView === "buttons" && <ButtonsView />}
+      {pageView === "forms" && <FormsView />}
+      {pageView === "papers" && <PaperView />}
     </>
   );
 };

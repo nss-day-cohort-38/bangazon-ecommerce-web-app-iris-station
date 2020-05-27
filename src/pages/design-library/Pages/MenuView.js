@@ -1,17 +1,7 @@
 import React, { useState } from "react";
-import { Button, Table, LoginForm, RegisterForm, PaymentForm } from "../../../components";
-const FormsView = () => {
+import { Button, Table, VerticalMenu } from "../../../components";
+const MenuView = () => {
   const [showProps, setShowProps] = useState(false);
-  const [loginForm, setLoginForm] = useState({
-    email: "",
-    password: "",
-    rememberme: false,
-  });
-
-
-  const updateLoginState = (e) => {
-    setLoginForm()
-  }
 
   return (
     <>
@@ -56,42 +46,11 @@ const FormsView = () => {
         <>
           <h1>Normal</h1>
           <h3>This is a normal button with nothing passed down to it</h3>
-          <LoginForm />
-          <pre>
-            {`
-            {
-                email: ${loginForm.email},
-                password: ${loginForm.password},
-                rememberme: ${loginForm.rememberme},
-            }
-            `}
-          </pre>
-          <hr />
-
-
-          <h1>Normal</h1>
-          <h3>This is a normal button with nothing passed down to it</h3>
-          <RegisterForm />
-          <pre>
-            {`
-            <Button />
-            `}
-          </pre>
-          <hr />
-
-          <h1>Normal</h1>
-          <h3>This is a normal button with nothing passed down to it</h3>
-          <PaymentForm />
-          <pre>
-            {`
-            <Button />
-            `}
-          </pre>
-          <hr />
+          <VerticalMenu />
         </>
       )}
     </>
   );
 };
 
-export default FormsView;
+export default MenuView;

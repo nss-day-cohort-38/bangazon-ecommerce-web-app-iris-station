@@ -6,16 +6,22 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   NavbarText,
 } from "reactstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from "react-router-dom";
-const Example = (props, {color = "light", light = true, extraText=""}) => {
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Link, NavLink } from "react-router-dom";
+import "../../styles/Navbar.css";
+
+const Example = (props, {
+  navArray = props.navArray,
+  color = "light",
+  light = true,
+  extraText = "",
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -27,10 +33,10 @@ const Example = (props, {color = "light", light = true, extraText=""}) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            {props.navArray.map((item) => {
+            {navArray.map((item, id) => {
               if (item.dropdown && item.options) {
                 return (
-                  <UncontrolledDropdown nav inNavbar>
+                  <UncontrolledDropdown key={id} nav inNavbar>
                     <DropdownToggle nav caret>
                       {item.title}
                     </DropdownToggle>
@@ -56,60 +62,57 @@ const Example = (props, {color = "light", light = true, extraText=""}) => {
                 );
               } else {
                 return (
-                  <NavItem>
-                    <NavLink>
-                      <Link
-                        to={
-                          item.route
-                            ? item.route
-                            : `${item.title
-                                .split(" ")
-                                .join("-")
-                                .toLowerCase()}`
-                        }
-                      >
-                        {item.title}
-                      </Link>
-                    </NavLink>
+                  <NavItem key={id} className="navbar-item-link">
+                    <Link
+                      to={
+                        item.route
+                          ? item.route
+                          : `/${item.title.split(" ").join("-").toLowerCase()}`
+                      }
+                    >
+                      {item.title}
+                    </Link>
                   </NavItem>
                 );
               }
             })}
           </Nav>
           <NavbarText>
-            {/* TODO: make this not inline styling */}
             {props.hasUser
             ? <>
-                <NavLink>
+                {/* TODO: Change to profile */}
+                <NavItem>
                   <Link
                     to="/myaccount"
-                  >
+                    >
                     My Account
                   </Link>
-                </NavLink>
-                <span
-                  style={{cursor: 'pointer', color: 'blue'}}
-                  className="nav-link"
-                  onClick={props.clearUser}
-                >
-                  Logout
-                </span>
+                </NavItem>
+                {/* TODO: make this not inline styling */}
+                <NavItem>
+                  <span
+                    style={{cursor: 'pointer', color: 'blue'}}
+                    onClick={props.clearUser}
+                  >
+                    Logout
+                  </span>
+                </NavItem>
               </>
             : <>
-                <NavLink>
+                <NavItem>
                   <Link
                     to="/login"
                   >
                     Login
                   </Link>
-                </NavLink>
-                <NavLink>
+                </NavItem>
+                <NavItem>
                   <Link
                     to="/register"
                   >
                     Register
                   </Link>
-                </NavLink>
+                </NavItem>
               </>
             }
 
@@ -119,5 +122,25 @@ const Example = (props, {color = "light", light = true, extraText=""}) => {
     </div>
   );
 };
+
+const defaultArray = [
+  {
+    title: "Customers",
+    route: "/customers",
+  },
+  {
+    title: "Payments of this",
+    dropdown: true,
+    options: [
+      {
+        title: "Here",
+        route: "/here",
+      },
+      {
+        title: "There is another example",
+      },
+    ],
+  },
+];
 
 export default Example;
