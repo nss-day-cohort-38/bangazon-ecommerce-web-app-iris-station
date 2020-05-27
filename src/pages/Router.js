@@ -9,7 +9,7 @@ import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
 import { HomePage } from "./home/index"
 import { ProductDetails } from "./products/index"
-import {Register, Login, MyAccount} from "../pages/users/index";
+import {Register, Login} from "../pages/users/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -22,7 +22,6 @@ const Routes = () => {
     setHasUser(isAuthenticated());
   };
 
-  // TODO: Implement this with router/navbar
   const clearUser = () => {
     sessionStorage.clear();
     setHasUser(isAuthenticated());
@@ -79,52 +78,47 @@ const Routes = () => {
             />
           )}
         />
+        {hasUser 
+          ? (
+            <>
+              <Route
+                exact
+                path="/profile"
+                render={(props) => <Profile {...props} />}
+              />
 
-        <Route
-          exact
-          path="/login"
-          render={(props) => <Login setUserToken={setUserToken} {...props} />}
-        />
-
-        <Route
-          exact
-          path="/register"
-          render={(props) => (
-            <Register setUserToken={setUserToken} {...props} />
-          )}
-        />
-
-        <Route
-          exact
-          path="/myaccount"
-          render={(props) => 
-            <MyAccount
-              {...props} 
-            />}
-        />
+              <Route
+                exact
+                path="/profile/:category"
+                render={(props) => <Profile {...props} />}
+              />
+            </>
+          )
+          : (
+            <>
+              <Route
+                exact
+                path="/login"
+                render={(props) => <Login setUserToken={setUserToken} {...props} />}
+              />
+    
+              <Route
+                exact
+                path="/register"
+                render={(props) => (
+                  <Register setUserToken={setUserToken} {...props} />
+                )}
+              />
+            </>
+          )
+        }
 
         {/* Will redirect to home page if page does not exist */}
         <Route
           path="/dl/:component_name"
           render={(props) => <DLHOME {...props} />}
         />
-        {hasUser ? (
-          <>
-            <Route
-              exact
-              path="/profile"
-              render={(props) => <Profile {...props} />}
-            />
 
-            <Route
-              exact
-              path="/profile/:category"
-              render={(props) => <Profile {...props} />}
-            />
-          </>
-        ) : (
-          ""
-        )}
         <Redirect to="/" />
       </Switch>
     </Router>

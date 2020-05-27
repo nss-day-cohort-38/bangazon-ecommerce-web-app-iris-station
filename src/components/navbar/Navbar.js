@@ -80,12 +80,11 @@ const Example = (props, {
           <NavbarText>
             {props.hasUser
             ? <>
-                {/* TODO: Change to profile */}
                 <NavItem>
                   <Link
-                    to="/myaccount"
+                    to="/profile/view"
                     >
-                    My Account
+                    Profile
                   </Link>
                 </NavItem>
                 {/* TODO: make this not inline styling */}

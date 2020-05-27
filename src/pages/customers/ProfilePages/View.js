@@ -1,7 +1,7 @@
 import React from "react"
-import Table from '../../components/table/Table'
+import Table from '../../../components/table/Table';
 
-const MyAccount = props => {
+const ProfileView = props => {
   const userData = [
     ["Key", "Value"],
     [
@@ -29,7 +29,8 @@ const MyAccount = props => {
       "PHONE NUMBER"
     ]
   ]
-
+  
+  /* TODO: REPLACE ME */
   const orderData = [
     ["ORDER", "DATA"],
     ["ORDER 1", "WHATEVER"]
@@ -37,16 +38,16 @@ const MyAccount = props => {
 
   return (
     <>
-      <h1>User Account</h1>
-      <Table
-        tableData={userData}
-      />
-      <h1>Order History</h1>
-      <Table
-        tableData={orderData}
-      />
+        <h1>User Account</h1>
+        <Table
+          tableData={userData}
+        />
+        <h1>Order History</h1>
+        <Table
+          tableData={orderData}
+        />
     </>
   )
 }
 
-export default MyAccount
+export default ProfileView

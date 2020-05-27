@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { VerticalMenu } from "../../components";
-import { AddPaymentPage } from "./index";
+import { AddPaymentPage, View } from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 const ProfilePage = ({ match }) => {
   const [profileView, setProfileView] = useState("");
   const classes = useStyles();
+  
   useEffect(() => {
     if (match.params.category) {
       setProfileView(match.params.category);
@@ -21,17 +22,19 @@ const ProfilePage = ({ match }) => {
         <Grid item xs={2}>
           <VerticalMenu
             menuData={[
-              { title: "Add Payment Option", route: "/profile/add-payment" },
+              { title: "Profile View", route: "/profile/view"},
+              { title: "Add Payment Option", route: "/profile/add-payment" }
             ]}
           />
         </Grid>
         <Grid item xs={9}>
+          {profileView === "view" && <View/>}
           {profileView === "add-payment" && <AddPaymentPage />}
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
 export default ProfilePage;
 
