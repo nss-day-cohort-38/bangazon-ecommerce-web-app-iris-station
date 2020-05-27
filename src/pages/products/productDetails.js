@@ -7,6 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 
 const ProductDetails = props => {
     const [product, setProduct] = useState({})
+    const [order, SetOrder] = useState({})
+    const token = sessionStorage.getItem('token')
+
+    const handleAddToCard= productId=> {
+
+    }
 
     useEffect(()=> {
         //fetch the product here
