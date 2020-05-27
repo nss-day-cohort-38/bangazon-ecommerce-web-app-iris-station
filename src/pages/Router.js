@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
+import ProductForm from "./products/ProductForm"
 import { HomePage } from "./home/index"
 import { ProductDetails } from "./products/index"
 import {Register, Login} from "../pages/users/index";
@@ -29,14 +30,14 @@ const Routes = () => {
 
   return (
     <Router>
-      <Navbar 
+      <Navbar
         navArray={
-          [
-            { title: "Customers", route: "customers" },
-            { title: "Orders", route: "orders" },
-            { title: "Products", route: "products" },
-            { title: "Payments", route: "payments" }
-          ]    
+          hasUser
+          ? [
+            { title: "Sell a Product", route: "/products/form" },
+            { title: "Orders", route: "orders" }
+            ]
+          : []
         } 
         hasUser={hasUser}
         clearUser={clearUser}
@@ -119,6 +120,31 @@ const Routes = () => {
           render={(props) => <DLHOME {...props} />}
         />
 
+        <Route
+          exact
+          path="/products/form"
+          render={(props) => {
+            if (hasUser) {
+              return ( <ProductForm {...props} />
+              );
+            } else {
+              return <HomePage {...props} />;
+            }
+          }}
+        />
+
+        {/* <Route
+          exact
+          path="/products/form"
+          render={(props) => <ProductForm {...props} />}
+        /> */}
+
+        <Route
+          exact
+          path="/profile/:category"
+          render={(props) => <Profile {...props} />}
+        />
+        
         <Redirect to="/" />
       </Switch>
     </Router>
