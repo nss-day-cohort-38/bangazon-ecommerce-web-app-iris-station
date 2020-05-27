@@ -4,6 +4,7 @@ import { AddPaymentPage, View } from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
+// FIXME: This component currently gets wonky when the normal navbar is used while user is in this component
 const ProfilePage = ({ match }) => {
   const [profileView, setProfileView] = useState("");
   const classes = useStyles();
