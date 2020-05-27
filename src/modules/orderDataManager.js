@@ -1,6 +1,0 @@
-const orderDataManager = {
-    getAllOrders(){
-        
-    },
-
-}
