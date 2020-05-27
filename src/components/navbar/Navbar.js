@@ -79,13 +79,22 @@ const Example = (props, {color = "light", light = true, extraText=""}) => {
           <NavbarText>
             {/* TODO: make this not inline styling */}
             {props.hasUser
-            ? <span
-                style={{cursor: 'pointer', color: 'blue'}}
-                className="nav-link"
-                onClick={props.clearUser}
-              >
-                Logout
-              </span>
+            ? <>
+                <NavLink>
+                  <Link
+                    to="/myaccount"
+                  >
+                    My Account
+                  </Link>
+                </NavLink>
+                <span
+                  style={{cursor: 'pointer', color: 'blue'}}
+                  className="nav-link"
+                  onClick={props.clearUser}
+                >
+                  Logout
+                </span>
+              </>
             : <>
                 <NavLink>
                   <Link

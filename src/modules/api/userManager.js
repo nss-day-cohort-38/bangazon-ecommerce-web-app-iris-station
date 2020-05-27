@@ -1,8 +1,8 @@
-const url = "http://localhost:8000"
+import baseurl from '../baseurl'
 
 export default {
   register(userToPost) {
-    return fetch(`${url}/register/`, {
+    return fetch(`${baseurl}/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -11,7 +11,7 @@ export default {
     }).then(result => result.json());
   },
   login(userToLogin) {
-    return fetch(`${url}/login/`, {
+    return fetch(`${baseurl}/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

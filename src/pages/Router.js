@@ -9,7 +9,7 @@ import { DLHOME } from "./index";
 import { Navbar } from "../components";
 import { HomePage } from "./home/index"
 import { ProductDetails } from "./products/index"
-import {Register, Login} from "../pages/users/index";
+import {Register, Login, MyAccount} from "../pages/users/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -93,6 +93,15 @@ const Routes = () => {
             />}
         />
 
+        <Route
+          exact
+          path="/myaccount"
+          render={(props) => 
+            <MyAccount
+              {...props} 
+            />}
+        />
+
         {/* Will redirect to home page if page does not exist */}
         <Route
           path="/dl/:component_name"
@@ -106,7 +115,6 @@ const Routes = () => {
   );
 };
 
-// const Home = () => 
 const Customer = () => "Customer page";
 const Order = () => "Orders page";
 const Payment = () => "Payment page";
