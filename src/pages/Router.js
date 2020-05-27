@@ -7,16 +7,10 @@ import {
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
-<<<<<<< HEAD
 import ProductForm from "./products/ProductForm"
 import { HomePage } from "./home/index"
 import { ProductDetails } from "./products/index"
 import {Register, Login} from "../pages/users/index";
-=======
-import { HomePage } from "./home/index";
-import { ProductDetails } from "./products/index";
-import { Register, Login } from "../pages/users/index";
->>>>>>> master
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -120,7 +114,6 @@ const Routes = () => {
               render={(props) => <Profile {...props} />}
             />
 
-<<<<<<< HEAD
         <Route
           exact
           path="/products/form"
@@ -140,7 +133,6 @@ const Routes = () => {
           render={(props) => <ProductForm {...props} />}
         /> */}
 
-=======
             <Route
               exact
               path="/profile/:category"
@@ -150,7 +142,6 @@ const Routes = () => {
         ) : (
           ""
         )}
->>>>>>> master
         <Redirect to="/" />
       </Switch>
     </Router>
