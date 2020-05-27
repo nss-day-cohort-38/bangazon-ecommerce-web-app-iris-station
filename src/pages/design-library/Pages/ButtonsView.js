@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Table } from "../../../components";
-import AcUnitIcon from "@material-ui/icons/AcUnit";
 const ButtonsView = () => {
   const [showProps, setShowProps] = useState(false);
 
@@ -138,6 +137,7 @@ const ButtonsView = () => {
             This takes in a string that corrosponds with a{" "}
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://react.semantic-ui.com/elements/icon/"
             >
               Semantic UI Icon
