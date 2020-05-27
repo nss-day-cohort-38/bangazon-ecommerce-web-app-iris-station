@@ -1,0 +1,6 @@
+.order-details-column {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 65px;
+    width: 100%;
+}
