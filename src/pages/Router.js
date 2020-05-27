@@ -34,13 +34,17 @@ const Routes = () => {
         TODO: Login and register should conditionally display,
         depending on if a user is logged in or not
        */}
-      <Navbar 
+
+      <Navbar
         navArray={
-          [
-            { title: "Login", route: "login" },
-            { title: "Register", route: "register" },
+          hasUser
+          ? [
             { title: "Sell a Product", route: "/products/form" }
-          ]    
+            ]
+          : [
+            { title: "Login", route: "login" },
+            { title: "Register", route: "register" }
+            ]
         } 
         hasUser={hasUser}
       />
@@ -106,8 +110,21 @@ const Routes = () => {
         <Route
           exact
           path="/products/form"
-          render={(props) => <ProductForm {...props} />}
+          render={(props) => {
+            if (hasUser) {
+              return ( <ProductForm {...props} />
+              );
+            } else {
+              return <HomePage {...props} />;
+            }
+          }}
         />
+
+        {/* <Route
+          exact
+          path="/products/form"
+          render={(props) => <ProductForm {...props} />}
+        /> */}
 
         <Redirect to="/" />
       </Switch>

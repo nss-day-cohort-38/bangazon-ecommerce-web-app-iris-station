@@ -8,8 +8,8 @@ const ProductForm = (props) => {
     quantity: "",
     location: "",
     image_path: "",
-    created_at: "",
-    product_type_id: 1,
+    created_at: Date.now(),
+    product_type_id: 1
   });
   const [producttypes, setProducttypes] = useState([]);
 
@@ -32,6 +32,13 @@ const ProductForm = (props) => {
       created_at: product.created_at,
       product_type_id: product.product_type_id,
     };
+    if (typeof(newProduct.title) != "string" || newProduct.title.length === 0) { alert ("The title field must contain text.")}
+    else if (typeof(newProduct.description) != "string" || newProduct.description.length === 0) { alert ("The description field must contain text.")}
+    else if (typeof(newProduct.location) != "string" || newProduct.location.length === 0) { alert ("The location field must contain text.")}
+    else if (typeof(newProduct.image_path) != "string" || newProduct.image_path.length === 0) { alert ("The image_path field must contain text.")}
+    else if (newProduct.price.length === 0) { alert ("The price field must contain a number.")}
+    else if (newProduct.quantity.length === 0) { alert ("The quantity field must contain a number.")}
+    else{
 
     fetch("http://localhost:8000/products", {
       method: "POST",
@@ -45,16 +52,11 @@ const ProductForm = (props) => {
     })
       .then((response) => response.json())
       .then((parsedResponse) => {
-        if ("token" in parsedResponse) {
-          sessionStorage.setItem("token", parsedResponse.token);
-        }
-      })
-      .then(() => {
         props.history.push({
-          pathname: "/",
+          pathname: `/products/${parsedResponse.id}`,
         });
       });
-  };
+  }};
 
   const getProductTypes = () => {
     fetch("http://localhost:8000/producttypes")
@@ -87,7 +89,7 @@ const ProductForm = (props) => {
         <label htmlFor="price"> Price: </label>
         <input
           onChange={handleProductChange}
-          type="text"
+          type="number"
           id="price"
           placeholder="Price"
           required=""
@@ -134,17 +136,6 @@ const ProductForm = (props) => {
           type="text"
           id="image_path"
           placeholder="Image URL"
-          required=""
-          autoFocus=""
-        />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="created_at"> Date Created: </label>
-        <input
-          onChange={handleProductChange}
-          type="date"
-          id="created_at"
-          placeholder="Date Created"
           required=""
           autoFocus=""
         />
