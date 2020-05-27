@@ -40,7 +40,8 @@ const Routes = () => {
         navArray={
           hasUser
           ? [
-            { title: "Sell a Product", route: "/products/form" }
+            { title: "Sell a Product", route: "/products/form" },
+            { title: "Profile" }
             ]
           : [
             { title: "Login", route: "login" },
