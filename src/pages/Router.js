@@ -7,9 +7,9 @@ import {
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
-import { HomePage } from "./home/index"
-import { ProductDetails } from "./products/index"
-import {Register, Login} from "../pages/users/index";
+import { HomePage } from "./home/index";
+import { ProductDetails } from "./products/index";
+import { Register, Login } from "../pages/users/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -34,21 +34,17 @@ const Routes = () => {
         TODO: Login and register should conditionally display,
         depending on if a user is logged in or not
        */}
-       
+
       <Navbar
-        navArray={
-          hasUser
-            ? [{ title: "Profile" }]
-            : [
-                { title: "Login", route: "login" },
-                { title: "Register", route: "register" },
-              ]
-        }
+        navArray={[
+          { title: "Profile" },
+          { title: "Login", route: "/login" },
+          { title: "Register", route: "/register" },
+        ]}
         hasUser={hasUser}
       />
       <Switch>
         <Route exact path="/" render={(props) => <HomePage {...props} />} />
-
 
         {hasUser ? (
           <>
@@ -92,9 +88,15 @@ const Routes = () => {
           render={(props) => <Product {...props} />}
         />
         {/* this will route to a product detail page */}
-        <Route 
-        exact path = "/products/:productId(\d+)"
-        render={(props)=> <ProductDetails productId={parseInt(props.match.params.productId)} {...props} /> }
+        <Route
+          exact
+          path="/products/:productId(\d+)"
+          render={(props) => (
+            <ProductDetails
+              productId={parseInt(props.match.params.productId)}
+              {...props}
+            />
+          )}
         />
 
         <Route
@@ -103,12 +105,19 @@ const Routes = () => {
           render={(props) => <Login setUserToken={setUserToken} {...props} />}
         />
 
+        <Route
+          exact
+          path="/register"
+          render={(props) => (
+            <Register setUserToken={setUserToken} {...props} />
+          )}
+        />
+
         {/* Will redirect to home page if page does not exist */}
         <Route
           path="/dl/:component_name"
           render={(props) => <DLHOME {...props} />}
         />
-      
 
         <Redirect to="/" />
       </Switch>
