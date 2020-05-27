@@ -1,7 +1,6 @@
 import React from "react";
 import { Button as SemButton, Icon } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
-import AcUnitIcon from "@material-ui/icons/AcUnit";
 
 const Button = ({
   handleClick = () => "",
@@ -12,6 +11,7 @@ const Button = ({
   disabled = false,
   icon,
   children,
+  type,
 }) => (
   <SemButton
     loading={loading}
@@ -21,9 +21,10 @@ const Button = ({
     onClick={handleClick}
     icon={icon ? true : false}
     labelPosition={icon ? "right" : false}
+    type={type ? type : ""}
   >
     {children ? children : content}
-    <Icon name={icon} />
+    {icon && <Icon name={icon} />}
   </SemButton>
 );
 

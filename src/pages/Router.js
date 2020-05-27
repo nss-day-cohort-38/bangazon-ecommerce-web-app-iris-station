@@ -5,28 +5,35 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { DLHOME } from "./index";
+import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
+<<<<<<< HEAD
 import ProductForm from "./products/ProductForm"
 import { HomePage } from "./home/index"
 import { ProductDetails } from "./products/index"
 import {Register, Login} from "../pages/users/index";
+=======
+import { HomePage } from "./home/index";
+import { ProductDetails } from "./products/index";
+import { Register, Login } from "../pages/users/index";
+>>>>>>> master
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
-  const [hasUser, setHasUser] = useState(isAuthenticated())
+
+  const [hasUser, setHasUser] = useState(isAuthenticated());
   const [userInfo, setUserInfo] = useState({});
 
-  const setUserToken = resp => {
-    sessionStorage.setItem("token", resp.token)
+  const setUserToken = (resp) => {
+    sessionStorage.setItem("token", resp.token);
     setHasUser(isAuthenticated());
-  } 
+  };
 
   // TODO: Implement this with router/navbar
   const clearUser = () => {
     sessionStorage.clear();
     setHasUser(isAuthenticated());
-  }
+  };
 
   return (
     <Router>
@@ -36,6 +43,7 @@ const Routes = () => {
        */}
 
       <Navbar
+<<<<<<< HEAD
         navArray={
           hasUser
           ? [
@@ -46,6 +54,13 @@ const Routes = () => {
             { title: "Register", route: "register" }
             ]
         } 
+=======
+        navArray={[
+          { title: "Profile" },
+          { title: "Login", route: "/login" },
+          { title: "Register", route: "/register" },
+        ]}
+>>>>>>> master
         hasUser={hasUser}
       />
       <Switch>
@@ -75,29 +90,29 @@ const Routes = () => {
           render={(props) => <Product {...props} />}
         />
         {/* this will route to a product detail page */}
-        <Route 
-        exact path = "/products/:productId(\d+)"
-        render={(props)=> <ProductDetails productId={parseInt(props.match.params.productId)} {...props} /> }
+        <Route
+          exact
+          path="/products/:productId(\d+)"
+          render={(props) => (
+            <ProductDetails
+              productId={parseInt(props.match.params.productId)}
+              {...props}
+            />
+          )}
         />
 
         <Route
           exact
           path="/login"
-          render={(props) => 
-            <Login
-              setUserToken={setUserToken} 
-              {...props} 
-            />}
+          render={(props) => <Login setUserToken={setUserToken} {...props} />}
         />
 
         <Route
           exact
           path="/register"
-          render={(props) => 
-            <Register
-              setUserToken={setUserToken}
-              {...props} 
-            />}
+          render={(props) => (
+            <Register setUserToken={setUserToken} {...props} />
+          )}
         />
 
         {/* Will redirect to home page if page does not exist */}
@@ -105,8 +120,15 @@ const Routes = () => {
           path="/dl/:component_name"
           render={(props) => <DLHOME {...props} />}
         />
-      
+        {hasUser ? (
+          <>
+            <Route
+              exact
+              path="/profile"
+              render={(props) => <Profile {...props} />}
+            />
 
+<<<<<<< HEAD
         <Route
           exact
           path="/products/form"
@@ -126,13 +148,24 @@ const Routes = () => {
           render={(props) => <ProductForm {...props} />}
         /> */}
 
+=======
+            <Route
+              exact
+              path="/profile/:category"
+              render={(props) => <Profile {...props} />}
+            />
+          </>
+        ) : (
+          ""
+        )}
+>>>>>>> master
         <Redirect to="/" />
       </Switch>
     </Router>
   );
 };
 
-// const Home = () => 
+// const Home = () =>
 const Customer = () => "Customer page";
 const Order = () => "Orders page";
 const Payment = () => "Payment page";
