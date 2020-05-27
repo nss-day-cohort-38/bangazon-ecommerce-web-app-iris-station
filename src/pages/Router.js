@@ -7,9 +7,10 @@ import {
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
-import { HomePage } from "./home/index";
-import { ProductDetails } from "./products/index";
-import { Register, Login } from "../pages/users/index";
+import ProductForm from "./products/ProductForm"
+import { HomePage } from "./home/index"
+import { ProductDetails } from "./products/index"
+import {Register, Login} from "../pages/users/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -36,11 +37,17 @@ const Routes = () => {
        */}
 
       <Navbar
-        navArray={[
-          { title: "Profile" },
-          { title: "Login", route: "/login" },
-          { title: "Register", route: "/register" },
-        ]}
+        navArray={
+          hasUser
+          ? [
+            { title: "Sell a Product", route: "/products/form" },
+            { title: "Profile" }
+            ]
+          : [
+            { title: "Login", route: "login" },
+            { title: "Register", route: "register" }
+            ]
+        } 
         hasUser={hasUser}
       />
       <Switch>
@@ -107,6 +114,25 @@ const Routes = () => {
               path="/profile"
               render={(props) => <Profile {...props} />}
             />
+
+        <Route
+          exact
+          path="/products/form"
+          render={(props) => {
+            if (hasUser) {
+              return ( <ProductForm {...props} />
+              );
+            } else {
+              return <HomePage {...props} />;
+            }
+          }}
+        />
+
+        {/* <Route
+          exact
+          path="/products/form"
+          render={(props) => <ProductForm {...props} />}
+        /> */}
 
             <Route
               exact
