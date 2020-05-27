@@ -46,24 +46,6 @@ const Routes = () => {
       <Switch>
         <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
-        {hasUser ? (
-          <>
-            <Route
-              exact
-              path="/profile"
-              render={(props) => <Profile {...props} />}
-            />
-
-            <Route
-              exact
-              path="/profile/:category"
-              render={(props) => <Profile {...props} />}
-            />
-          </>
-        ) : (
-          ""
-        )}
-
         {/* ADD CUSTOMER ROUTES BELOW */}
         <Route
           exact
@@ -118,7 +100,23 @@ const Routes = () => {
           path="/dl/:component_name"
           render={(props) => <DLHOME {...props} />}
         />
+        {hasUser ? (
+          <>
+            <Route
+              exact
+              path="/profile"
+              render={(props) => <Profile {...props} />}
+            />
 
+            <Route
+              exact
+              path="/profile/:category"
+              render={(props) => <Profile {...props} />}
+            />
+          </>
+        ) : (
+          ""
+        )}
         <Redirect to="/" />
       </Switch>
     </Router>
