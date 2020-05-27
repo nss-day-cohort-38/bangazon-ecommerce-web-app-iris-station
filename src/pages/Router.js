@@ -43,7 +43,6 @@ const Routes = () => {
        */}
 
       <Navbar
-<<<<<<< HEAD
         navArray={
           hasUser
           ? [
@@ -54,13 +53,6 @@ const Routes = () => {
             { title: "Register", route: "register" }
             ]
         } 
-=======
-        navArray={[
-          { title: "Profile" },
-          { title: "Login", route: "/login" },
-          { title: "Register", route: "/register" },
-        ]}
->>>>>>> master
         hasUser={hasUser}
       />
       <Switch>
