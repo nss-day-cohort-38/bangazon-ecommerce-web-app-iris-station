@@ -7,21 +7,65 @@ import {
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
-import { HomePage } from "./home/index"
+import { Register, Login } from "../pages/users/index";
+import { HomePage } from "./home/index";
 
 const Routes = () => {
+  const isAuthenticated = () => sessionStorage.getItem("token") !== null;
+
+  const [hasUser, setHasUser] = useState(isAuthenticated());
   const [userInfo, setUserInfo] = useState({});
+
+  const setUserToken = (resp) => {
+    sessionStorage.setItem("token", resp.token);
+    setHasUser(isAuthenticated());
+  };
+
+  // TODO: Implement this with router/navbar
+  const clearUser = () => {
+    sessionStorage.clear();
+    setHasUser(isAuthenticated());
+  };
 
   return (
     <Router>
+      {/* 
+        TODO: Login and register should conditionally display,
+        depending on if a user is logged in or not
+       */}
+       
       <Navbar
-        navArray={[
-          { title: "Route Name", route: "example" },
-          { title: "Profile" },
-        ]}
+        navArray={
+          hasUser
+            ? [{ title: "Profile" }]
+            : [
+                { title: "Login", route: "login" },
+                { title: "Register", route: "register" },
+              ]
+        }
+        hasUser={hasUser}
       />
       <Switch>
         <Route exact path="/" render={(props) => <HomePage {...props} />} />
+
+
+        {hasUser ? (
+          <>
+            <Route
+              exact
+              path="/profile"
+              render={(props) => <Profile {...props} />}
+            />
+
+            <Route
+              exact
+              path="/profile/:category"
+              render={(props) => <Profile {...props} />}
+            />
+          </>
+        ) : (
+          ""
+        )}
 
         {/* ADD CUSTOMER ROUTES BELOW */}
         <Route
@@ -49,14 +93,8 @@ const Routes = () => {
 
         <Route
           exact
-          path="/profile"
-          render={(props) => <Profile {...props} />}
-        />
-
-        <Route
-          exact
-          path="/profile/:category"
-          render={(props) => <Profile {...props} />}
+          path="/login"
+          render={(props) => <Login setUserToken={setUserToken} {...props} />}
         />
 
         {/* Will redirect to home page if page does not exist */}
@@ -71,7 +109,7 @@ const Routes = () => {
   );
 };
 
-// const Home = () => 
+// const Home = () =>
 const Customer = () => "Customer page";
 const Order = () => "Orders page";
 const Payment = () => "Payment page";

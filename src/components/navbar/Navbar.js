@@ -13,10 +13,8 @@ import {
   NavbarText,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/Navbar.css";
-
 import { Link } from "react-router-dom";
-
+import "../../styles/Navbar.css";
 const Example = ({
   navArray = defaultArray,
   color = "light",
