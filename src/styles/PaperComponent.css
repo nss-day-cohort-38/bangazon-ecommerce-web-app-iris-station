@@ -1,3 +1,15 @@
 .paper-component {
     padding: 10%;
 }
+
+.paper-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px rgb(172, 172, 172) solid;
+    padding: 5px;
+}
+
+.paper-body {
+
+    
+}
