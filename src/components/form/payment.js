@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "../buttons";
+import { Message } from "semantic-ui-react";
 
 export default function PaymentForm({
   handleSubmit,
@@ -57,11 +58,13 @@ export default function PaymentForm({
           <Grid item xs={12}>
             <Button type="submit" content="Submit" />
           </Grid>
-          {submitMessage && (
-            <Typography variant="h3" gutterBottom>
-              {submitMessage}
-            </Typography>
-          )}
+          <Grid item xs={12}>
+            {submitMessage && (
+              <Typography variant="h8" gutterBottom>
+                <Message positive>{submitMessage}</Message>
+              </Typography>
+            )}
+          </Grid>
         </Grid>
       </form>
     </React.Fragment>
