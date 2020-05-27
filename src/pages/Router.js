@@ -44,6 +44,7 @@ const Routes = () => {
         ]}
         hasUser={hasUser}
       />
+      
       <div className="body-container">
         <Switch>
           <Route exact path="/" render={(props) => <HomePage {...props} />} />

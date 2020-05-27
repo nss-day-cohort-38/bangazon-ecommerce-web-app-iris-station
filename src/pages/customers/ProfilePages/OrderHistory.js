@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Sticky, Ref, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import "../../../styles/OrderHistory.css";
 
 const OrderHistory = ({ itemId }) => {
@@ -25,17 +26,24 @@ const OrderHistory = ({ itemId }) => {
     // Push to orderHistory state
 
     // End Loading
+    const timer = setInterval(() => {
+      setLoading(false);
+    }, 500);
+
+    
   }, []);
 
   return (
     //   Add loaging if loading
 
     // Map over Order History and put them in paper
-    //
+
     <div className={classes.root}>
       {/* // Add grid to seperate this into two parts. */}
       <h1>Your Orders</h1>
       <Grid container spacing={0}>
+        <LinearProgress variant="determinate" value={loading ? 0 : 100} />
+
         <Grid item xs={itemId ? 8 : 12}>
           {orderHistory.map((item) => {
             return (
