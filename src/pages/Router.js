@@ -100,14 +100,16 @@ const Routes = () => {
           path="/dl/:component_name"
           render={(props) => <DLHOME {...props} />}
         />
+        <Route
+          exact
+          path="/profile"
+          render={(props) =>
+            hasUser ? <Profile {...props} /> : <Redirect to="/login" />
+          }
+        />
+
         {hasUser ? (
           <>
-            <Route
-              exact
-              path="/profile"
-              render={(props) => <Profile {...props} />}
-            />
-
             <Route
               exact
               path="/profile/:category"
