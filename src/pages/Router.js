@@ -95,11 +95,7 @@ const Routes = () => {
           )}
         />
 
-        {/* Will redirect to home page if page does not exist */}
-        <Route
-          path="/dl/:component_name"
-          render={(props) => <DLHOME {...props} />}
-        />
+        {/* If not Authenticated, this route will take you to the login page */}
         <Route
           exact
           path="/profile"
@@ -110,15 +106,22 @@ const Routes = () => {
 
         {hasUser ? (
           <>
+            {/* This will handle all routes that are for the profile section */}
             <Route
               exact
               path="/profile/:category"
               render={(props) => <Profile {...props} />}
             />
+            <Route
+              path="/dl/:component_name"
+              render={(props) => <DLHOME {...props} />}
+            />
           </>
         ) : (
           ""
         )}
+
+        {/* Will redirect to home page if page does not exist */}
         <Redirect to="/" />
       </Switch>
     </Router>

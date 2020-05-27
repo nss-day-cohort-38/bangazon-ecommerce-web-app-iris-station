@@ -24,6 +24,7 @@ const ProfilePage = ({ match }) => {
               { title: "Order History", route: "/profile/order-history" },
               { title: "Add Payment Option", route: "/profile/add-payment" },
             ]}
+            firstActive={profileView}
           />
         </Grid>
         <Grid item xs={9}>
