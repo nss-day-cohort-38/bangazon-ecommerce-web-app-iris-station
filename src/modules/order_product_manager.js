@@ -1,4 +1,4 @@
-import baseurl from "./baseurl"
+import baseurl from "./baseurl";
 
 export default{
     postNewOrder(token, obj){

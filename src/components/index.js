@@ -7,3 +7,4 @@ export {} from "./icons";
 export {VerticalMenu} from "./menu";
 export { Table } from "./table";
 export {Paper} from "./paper"
+export {Expansion} from "./expansion"
