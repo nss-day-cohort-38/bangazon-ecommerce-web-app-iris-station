@@ -12,6 +12,7 @@ import ProductForm from "./products/ProductForm";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
+import MyProducts from "./products/MyProducts";
 import { MyCart } from "./orders/index";
 
 const Routes = () => {
@@ -44,7 +45,11 @@ const Routes = () => {
             ? [
                 { title: "Sell a Product", route: "/products/form" },
                 { title: "Profile" },
-                { title: <i class="shopping cart icon"></i>, route: "/mycart" },
+                { title: "My Products", route: "/products/myproducts" },
+                {
+                  title: <i className="shopping cart icon"></i>,
+                  route: "/mycart",
+                },
               ]
             : [
                 { title: "Login", route: "login" },
@@ -143,6 +148,17 @@ const Routes = () => {
             }}
           />
           <Route
+            exact
+            path="/products/myproducts"
+            render={(props) => {
+              if (hasUser) {
+                return <MyProducts {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          <Route
             path="/dl/:component_name"
             render={(props) => {
               if (hasUser) {
@@ -175,7 +191,6 @@ const Routes = () => {
               }
             }}
           />
-          
 
           {/* Will redirect to home page if page does not exist */}
           <Redirect to="/" />
