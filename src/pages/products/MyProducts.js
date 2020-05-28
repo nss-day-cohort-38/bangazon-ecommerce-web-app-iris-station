@@ -2,8 +2,9 @@
 
 import React, {useState, useEffect} from 'react';
 import productManager from "../../modules/productManager"
-import HomeListCard from "../../components/cards/HomeListCard"
+import MyListCard from "../../components/cards/MyListCard"
 import "../home/HomePage.css"
+
 
 const MyProducts = props => {
     const [prods, setProds] = useState([])
@@ -16,10 +17,10 @@ const MyProducts = props => {
     }, [])
     return (
         <>
-        <div className="home-header"><h1>Your Products Listed For Sale</h1><h4>Here's what's new...</h4></div>
+        <div className="home-header"><h1>Your Products Listed For Sale</h1><h4>Here's what you're selling...</h4></div>
         <div className = "list-container">
             {prods.map(product=> (
-                <HomeListCard key={product.id} product={product} {...props} />
+                <MyListCard key={product.id} product={product} {...props} />
                 
             ))}
         </div>
