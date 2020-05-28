@@ -30,7 +30,6 @@ const OrderHistory = ({ itemId }) => {
     orderManager
       .getOrders(window.sessionStorage.getItem("token"))
       .then((resp) => {
-        console.log(resp);
 
         setOrderHistory(
           // Removes active orders
