@@ -1,11 +1,11 @@
-// renders the cards to the home as well as a simple welcome message
+// renders the cards to the my products page
 
 import React, {useState, useEffect} from 'react';
 import productManager from "../../modules/productManager"
 import HomeListCard from "../../components/cards/HomeListCard"
-// import "./HomePage.css"
+import "../home/HomePage.css"
 
-const HomePage = props => {
+const MyProducts = props => {
     const [prods, setProds] = useState([])
 
 
@@ -16,7 +16,7 @@ const HomePage = props => {
     }, [])
     return (
         <>
-        <div className="home-header"><h1>Welcome Back!</h1><h4>Here's what's new...</h4></div>
+        <div className="home-header"><h1>Your Products Listed For Sale</h1><h4>Here's what's new...</h4></div>
         <div className = "list-container">
             {prods.map(product=> (
                 <HomeListCard key={product.id} product={product} {...props} />
@@ -27,4 +27,4 @@ const HomePage = props => {
         </>
     )
 }
-export default HomePage
+export default MyProducts

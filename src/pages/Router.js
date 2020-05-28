@@ -7,10 +7,11 @@ import {
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
-import ProductForm from "./products/ProductForm"
-import { HomePage } from "./home/index"
-import { ProductDetails } from "./products/index"
-import {Register, Login} from "../pages/users/index";
+import ProductForm from "./products/ProductForm";
+import { HomePage } from "./home/index";
+import { ProductDetails } from "./products/index";
+import { Register, Login } from "../pages/users/index";
+import MyProducts from "./products/MyProducts";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -39,15 +40,16 @@ const Routes = () => {
       <Navbar
         navArray={
           hasUser
-          ? [
-            { title: "Sell a Product", route: "/products/form" },
-            { title: "Profile" }
-            ]
-          : [
-            { title: "Login", route: "login" },
-            { title: "Register", route: "register" }
-            ]
-        } 
+            ? [
+                { title: "Sell a Product", route: "/products/form" },
+                { title: "My Products", route: "/products/myproducts" },
+                { title: "Profile" },
+              ]
+            : [
+                { title: "Login", route: "login" },
+                { title: "Register", route: "register" },
+              ]
+        }
         hasUser={hasUser}
       />
       <Switch>
@@ -115,24 +117,30 @@ const Routes = () => {
               render={(props) => <Profile {...props} />}
             />
 
-        <Route
-          exact
-          path="/products/form"
-          render={(props) => {
-            if (hasUser) {
-              return ( <ProductForm {...props} />
-              );
-            } else {
-              return <HomePage {...props} />;
-            }
-          }}
-        />
+            <Route
+              exact
+              path="/products/form"
+              render={(props) => {
+                if (hasUser) {
+                  return <ProductForm {...props} />;
+                } else {
+                  return <HomePage {...props} />;
+                }
+              }}
+            />
+            <Route
+              exact
+              path="/products/myproducts"
+              render={(props) => {
+                if (hasUser) {
+                  return <MyProducts {...props} />;
+                } else {
+                  return <HomePage {...props} />;
+                }
+              }}
+            />
 
-        {/* <Route
-          exact
-          path="/products/form"
-          render={(props) => <ProductForm {...props} />}
-        /> */}
+            <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
             <Route
               exact
