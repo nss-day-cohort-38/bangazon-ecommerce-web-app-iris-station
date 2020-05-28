@@ -4,3 +4,9 @@
     top: 65px;
     width: 100%;
 }
+
+.order-history-list {
+    display: flex;
+    padding: 0 15px;
+    justify-content: space-around;
+}

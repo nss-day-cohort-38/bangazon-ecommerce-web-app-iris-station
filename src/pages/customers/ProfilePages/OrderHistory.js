@@ -1,37 +1,74 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import { Paper, PaymentForm } from "../../../components";
-import { PaymentDataManager } from "../../../modules";
+import { orderManager, orderProductManager } from "../../../modules";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Sticky, Ref, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import "../../../styles/OrderHistory.css";
 
 const OrderHistory = ({ itemId }) => {
   const classes = useStyles();
   const contextRef = createRef();
   // Order History needs to be stored in state as an array
-  const [orderHistory, setOrderHistory] = useState(Array(30).fill({ id: 1 }));
+  const [orderHistory, setOrderHistory] = useState([]);
   // Set Loading in state
-  const [loading, setLoading] = useState(false);
+  const [listLoading, setListLoading] = useState(false);
+  const [detailsLoading, setDetailsLoading] = useState(false);
   //   State to hold what order the user is looking at
-  const [activeOrder, setActiveOrder] = useState([]);
+  const [activeOrder, setActiveOrder] = useState({
+    orderinfo: {},
+    products: [],
+  });
 
-  useState(() => {
+  useEffect(() => {
     //   Start Loading
-    setLoading(true);
+    setListLoading(true);
     //   Get Order History from database
-
-    // Push to orderHistory state
-
-    // End Loading
-    const timer = setInterval(() => {
-      setLoading(false);
-    }, 500);
-
-    
+    orderManager
+      .getOrders(window.sessionStorage.getItem("token"))
+      .then((resp) => {
+        setOrderHistory(resp);
+        setListLoading(false);
+      });
   }, []);
+
+  useEffect(() => {
+    if (itemId && orderHistory.length > 0) {
+      let token = window.sessionStorage.getItem("token");
+      setDetailsLoading(true);
+      orderProductManager
+        .getOrderProductByOrderId(token, itemId)
+        .then((resp) => {
+          let moreInfoPromises = orderManager
+            .getOrderPrice(token, itemId)
+            .then((resp) => {
+              return resp;
+            });
+
+          Promise.all([moreInfoPromises]).then((moreInfo) => {
+            setActiveOrder((prevState) => {
+              let newObj = { ...prevState };
+              newObj.products = resp;
+              newObj.price = moreInfo.map((item) => {
+                console.log(item);
+              });
+              newObj.orderinfo = orderHistory.filter(
+                (item) => item.id == itemId
+              )[0];
+              setDetailsLoading(false);
+              return newObj;
+            });
+          });
+        });
+    } else {
+      setActiveOrder({
+        orderinfo: {},
+        products: [],
+      });
+    }
+  }, [itemId, orderHistory]);
 
   return (
     //   Add loaging if loading
@@ -42,36 +79,53 @@ const OrderHistory = ({ itemId }) => {
       {/* // Add grid to seperate this into two parts. */}
       <h1>Your Orders</h1>
       <Grid container spacing={0}>
-        <LinearProgress variant="determinate" value={loading ? 0 : 100} />
-
-        <Grid item xs={itemId ? 8 : 12}>
-          {orderHistory.map((item) => {
-            return (
-              <Paper>
-                <div>Order Placed:</div>
-                <div>Price:</div>
-                <div>Pictures of order items</div>
-                <Link to={`/profile/order-history/${item.id}`}>Details</Link>
-              </Paper>
-            );
-          })}
+        <Grid item xs={itemId ? 6 : 8}>
+          {listLoading ? (
+            <Paper>
+              <CircularProgress />
+            </Paper>
+          ) : (
+            orderHistory.map((item) => {
+              if (item.payment_type_id) {
+                return (
+                  <Paper classProps="order-history-list">
+                    <div>Order placed on: {item.created_at}</div>
+                    <Link to={`/profile/order-history/${item.id}`}>
+                      Details
+                    </Link>
+                  </Paper>
+                );
+              }
+            })
+          )}
         </Grid>
         {itemId && (
-          <Grid item xs={4}>
-            <Paper classProps="order-details-column">
-              <div className="paper-header">
-                <div>Order Placed</div>
-                <div>
-                  <Link to="/profile/order-history">
-                    <Icon name="x" />
-                  </Link>
-                </div>
-              </div>
-              <div>Price:</div>
-              <div>Products:</div>
-              zxczxcz
-            </Paper>
-          </Grid>
+          <>
+            <Grid item xs={6}>
+              {detailsLoading ? (
+                <Paper>
+                  <CircularProgress />
+                </Paper>
+              ) : (
+                activeOrder.orderinfo && (
+                  <Paper classProps="order-details-column">
+                    <h1>Order Details</h1>
+                    <div className="paper-header">
+                      <div>{activeOrder.orderinfo.created_at}</div>
+                      <div>
+                        <Link to="/profile/order-history">
+                          <Icon name="x" />
+                        </Link>
+                      </div>
+                    </div>
+                    <div>Price:</div>
+                    <div>Products:</div>
+                    zxczxcz
+                  </Paper>
+                )
+              )}
+            </Grid>
+          </>
         )}
       </Grid>
     </div>

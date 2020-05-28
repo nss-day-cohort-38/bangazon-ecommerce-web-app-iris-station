@@ -1,15 +1,24 @@
-import baseurl from "./baseurl"
+import baseurl from "./baseurl";
 
-export default{
-    postNewOrder(token, obj){
-        return fetch(`${baseurl}/order_products`, {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json',
-                'Accept': "application/json",
-                'Authorization': `Token ${token}`
-            },
-            body: JSON.stringify(obj)
-        }).then(r=> r.json())
-    }
-}
+export default {
+  postNewOrder(token, obj) {
+    return fetch(`${baseurl}/order_products`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(obj),
+    }).then((r) => r.json());
+  },
+  getOrderProductByOrderId(token, orderId) {
+    return fetch(`${baseurl}/order_products?order_id=${orderId}`, {
+      headers: {
+        "content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }).then((r) => r.json());
+  },
+};
