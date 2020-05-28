@@ -24,7 +24,6 @@ const Checkout = props => {
         //changeorder
         const newOrder = order
         newOrder.payment_type_id = Number(selectedPaymentId)
-        console.log(newOrder)
         OrderManager.putOrder(token, newOrder).then(()=> props.history.push("/"))}
     }
 
@@ -48,9 +47,9 @@ const Checkout = props => {
         <div className="center">
             <form>
                 <select onChange={selectPaymentId}>
-                    <option selected disabled>***Please choose one***</option>
+                    <option defaultValue disabled>***Please choose one***</option>
                     {pTypes.map(pt=>(
-                        <option value={pt.id} id="payment_id">{pt.merchant_name} ***{pt.account_number.substr(pt.account_number.length -4)}</option>
+                        <option value={pt.id} key={pt.id} id="payment_id">{pt.merchant_name} ***{pt.account_number.substr(pt.account_number.length -4)}</option>
                     ))}
                 </select>
 

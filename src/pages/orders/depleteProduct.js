@@ -11,7 +11,6 @@ const depleteProduct=(arr, token)=> {
             PM.getOneProduct(arr[i].product.id).then(obj=> {
                 const newObj = obj
                 newObj.quantity = obj.quantity - 1
-                console.log(newObj)
                 PM.updateQuantity(token, newObj)
             })
             // updatedProduct.quantity = updatedProduct.quantity -1

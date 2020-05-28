@@ -18,6 +18,6 @@ export default {
                 'Authorization': `Token ${token}`
             },
             body: JSON.stringify(obj)
-        }).then(r=>r.json())
+        })
     }
 }
