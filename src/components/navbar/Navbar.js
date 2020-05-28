@@ -13,10 +13,11 @@ import {
   NavbarText,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../../styles/Navbar.css";
-const Example = ({
-  navArray = defaultArray,
+
+const Example = (props, {
+  navArray = props.navArray,
   color = "light",
   light = true,
   extraText = "",
@@ -76,7 +77,45 @@ const Example = ({
               }
             })}
           </Nav>
-          <NavbarText>{extraText}</NavbarText>
+          <NavbarText>
+            {props.hasUser
+            ? <>
+                <NavItem>
+                  <Link
+                    to="/profile/view"
+                    >
+                    Profile
+                  </Link>
+                </NavItem>
+                {/* TODO: make this not inline styling */}
+                <NavItem>
+                  <span
+                    style={{cursor: 'pointer', color: 'blue'}}
+                    onClick={props.clearUser}
+                  >
+                    Logout
+                  </span>
+                </NavItem>
+              </>
+            : <>
+                <NavItem>
+                  <Link
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link
+                    to="/register"
+                  >
+                    Register
+                  </Link>
+                </NavItem>
+              </>
+            }
+
+          </NavbarText>
         </Collapse>
       </Navbar>
     </div>
