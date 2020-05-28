@@ -12,3 +12,4 @@ const depleteProduct=(arr, token)=> {
         }
     }
 }
+export default depleteProduct

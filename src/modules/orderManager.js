@@ -20,5 +20,16 @@ export default{
                 'Authorization': `Token ${token}`
             }
         }).then(r=>r.json())
+    },
+    putOrder(token, obj){
+        return fetch(`${baseurl}/orders/${obj.id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': "application/json",
+                'Accept': 'application/json',
+                'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify(obj)
+        })
     }
 }

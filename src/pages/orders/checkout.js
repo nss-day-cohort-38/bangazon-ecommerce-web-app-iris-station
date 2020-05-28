@@ -2,21 +2,30 @@ import React, {useState, useEffect} from 'react';
 import PTM from "../../modules/kk-paymenttypes"
 import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
+import depleteProduct from "./depleteProduct"
 
 const Checkout = props => {
     const [order, setOrder] = useState({})
     const [pTypes, setPTypes] = useState([])
-    const [selectedPaymentId, setSelectedPaymentId] = useState()
-    const [products, setProducts] = useState(0)
+    const [selectedPaymentId, setSelectedPaymentId] = useState("")
+    const [products, setProducts] = useState([])
     const token = sessionStorage.getItem('token')
 
     const selectPaymentId= e => {
         setSelectedPaymentId(e.target.value)
     }
 
-    const handleSubmit=e=> {
-        e.preventDefault()
-        
+    const handleSubmit=()=> {
+        if(selectedPaymentId===""){
+            alert('Please Select a Payment Method')
+        }else{
+        //deplete products
+        depleteProduct(products)
+        //changeorder
+        const newOrder = order
+        newOrder.payment_type_id = Number(selectedPaymentId)
+        console.log(newOrder)
+        OrderManager.putOrder(token, newOrder).then(()=> props.history.push("/"))}
     }
 
     useEffect(()=> {
@@ -47,7 +56,7 @@ const Checkout = props => {
 
             </form>
             <div className="checkout-btn-container">
-                <button>Checkout</button>
+                <button onClick={()=> handleSubmit()}>Checkout</button>
             </div>
         </div>
         </>
