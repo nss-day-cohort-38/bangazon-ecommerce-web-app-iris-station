@@ -11,5 +11,15 @@ export default{
             },
             body: JSON.stringify(obj)
         }).then(r=> r.json())
+    },
+    getProductsbyOrder(token, order_id){
+        return fetch(`${baseurl}/order_products?order_id=${order_id}`, {
+            method: "GET",
+            headers: {
+                'content-type': 'application/json',
+                'Accept': "application/json",
+                'Authorization': `Token ${token}`
+            }
+        }).then(r=>r.json())
     }
 }

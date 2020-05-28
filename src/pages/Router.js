@@ -11,6 +11,7 @@ import ProductForm from "./products/ProductForm"
 import { HomePage } from "./home/index"
 import { ProductDetails } from "./products/index"
 import {Register, Login} from "../pages/users/index";
+import { MyCart } from "./orders/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -35,7 +36,12 @@ const Routes = () => {
           hasUser
           ? [
             { title: "Sell a Product", route: "/products/form" },
-            { title: "Orders", route: "orders" }
+            { title: "Profile" },
+            {title: <i class="shopping cart icon"></i>, route:"/mycart"}
+            ]
+          : [
+            { title: "Login", route: "login" },
+            { title: "Register", route: "register" }
             ]
           : []
         } 
@@ -132,7 +138,17 @@ const Routes = () => {
             }
           }}
         />
-
+        {/* ROUTE FOR MY CART */}
+        <Route 
+        exact path = "/mycart"
+        render={props=> {
+          if (hasUser){
+            return (<MyCart {...props} />)
+          } else {
+            return <HomePage {...props} />
+          }
+        }}
+        />
         {/* <Route
           exact
           path="/products/form"
