@@ -18,8 +18,9 @@ const OrderHistory = ({ itemId }) => {
   const [detailsLoading, setDetailsLoading] = useState(false);
   //   State to hold what order the user is looking at
   const [activeOrder, setActiveOrder] = useState({
-    orderinfo: {},
+    price: "",
     products: [],
+    orderinfo: {},
   });
 
   useEffect(() => {
@@ -29,7 +30,9 @@ const OrderHistory = ({ itemId }) => {
     orderManager
       .getOrders(window.sessionStorage.getItem("token"))
       .then((resp) => {
-        setOrderHistory(resp);
+        setOrderHistory(
+          resp.filter((item) => (item.payment_type_id ? true : false))
+        );
         setListLoading(false);
       });
   }, []);
@@ -38,30 +41,46 @@ const OrderHistory = ({ itemId }) => {
     if (itemId && orderHistory.length > 0) {
       let token = window.sessionStorage.getItem("token");
       setDetailsLoading(true);
-      orderProductManager
-        .getOrderProductByOrderId(token, itemId)
-        .then((resp) => {
-          let moreInfoPromises = orderManager
-            .getOrderPrice(token, itemId)
-            .then((resp) => {
-              return resp;
-            });
+      orderProductManager.getProductsbyOrder(token, itemId).then((resp) => {
+        setActiveOrder((prevState) => {
+          let newObj = { ...prevState };
 
-          Promise.all([moreInfoPromises]).then((moreInfo) => {
-            setActiveOrder((prevState) => {
-              let newObj = { ...prevState };
-              newObj.products = resp;
-              newObj.price = moreInfo.map((item) => {
-                console.log(item);
-              });
-              newObj.orderinfo = orderHistory.filter(
-                (item) => item.id == itemId
-              )[0];
-              setDetailsLoading(false);
-              return newObj;
-            });
+          newObj.products = {};
+
+          resp.map((item) => {
+            let product = item.product;
+            if (newObj.products[item.product.id]) {
+              console.log(item);
+              newObj.products[item.product.id].instances.push(item.id);
+            } else {
+              newObj.products[item.product.id] = {
+                ...item.product,
+                instances: [item.id],
+              };
+              console.log(item);
+            }
           });
+
+          console.log(newObj.products);
+
+          newObj.price =
+            resp.length > 1
+              ? resp.reduce((a, b) =>
+                  a.product
+                    ? (
+                        Number(a.product.price) + Number(b.product.price)
+                      ).toFixed(2)
+                    : (Number(a) + Number(b.product.price)).toFixed(2)
+                )
+              : resp[0].product.price;
+
+          newObj.orderinfo = orderHistory.filter(
+            (item) => item.id == itemId
+          )[0];
+          setDetailsLoading(false);
+          return newObj;
         });
+      });
     } else {
       setActiveOrder({
         orderinfo: {},
@@ -84,19 +103,21 @@ const OrderHistory = ({ itemId }) => {
             <Paper>
               <CircularProgress />
             </Paper>
+          ) : orderHistory.length > 0 ? (
+            orderHistory.map((item) => (
+              <Paper key={item.created_at} classProps="order-history-list">
+                <div>Order placed on: {item.created_at}</div>
+                <Link to={`/profile/order-history/${item.id}`}>Details</Link>
+              </Paper>
+            ))
           ) : (
-            orderHistory.map((item) => {
-              if (item.payment_type_id) {
-                return (
-                  <Paper classProps="order-history-list">
-                    <div>Order placed on: {item.created_at}</div>
-                    <Link to={`/profile/order-history/${item.id}`}>
-                      Details
-                    </Link>
-                  </Paper>
-                );
-              }
-            })
+            <Paper classProps="order-history-list">
+              <h2>
+                No Order History... yet! Finish an order and it will show up
+                here!
+              </h2>
+              <Link to={`/`}>View products to add to cart</Link>
+            </Paper>
           )}
         </Grid>
         {itemId && (
@@ -118,8 +139,33 @@ const OrderHistory = ({ itemId }) => {
                         </Link>
                       </div>
                     </div>
-                    <div>Price:</div>
-                    <div>Products:</div>
+                    <div>Price:{activeOrder.price}</div>
+                    <div>
+                      <h2>Products</h2>
+                      {/* {activeOrder.products.map((item) => {
+                        let product = item.product;
+                        // console.log(product);
+
+                        return (
+                          <Paper>
+                            <div className="paper-header">
+                              <div>
+                                <Link to={`/products/${product.id}`}>
+                                  {product.title}
+                                </Link>
+                              </div>
+                              <div>
+                                <Link to="/profile/order-history">
+                                  <Icon name="x" />
+                                </Link>
+                              </div>
+                            </div>
+
+                            <div>Price:{activeOrder.price}</div>
+                          </Paper>
+                        );
+                      })} */}
+                    </div>
                     zxczxcz
                   </Paper>
                 )
