@@ -9,7 +9,9 @@ const EditProfile = props => {
     {
       username: "", 
       email: "",
-      password: "",
+      // Password updating has been tabled;
+      // it will require password hashing...
+      // password: "",
       firstName: "",
       lastName: "",
       address: "",
@@ -23,7 +25,9 @@ const EditProfile = props => {
     setFormData(
       {
         username: `${user.username}`,
-        password: `${user.password}`, 
+        // Password updating has been tabled;
+        // it will require password hashing...
+        // password: `${user.password}`, 
         email: `${user.email}`,
         firstName: `${user.first_name}`,
         lastName: `${user.last_name}`,
