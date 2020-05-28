@@ -12,6 +12,7 @@ import ProductForm from "./products/ProductForm";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
+import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
 
 const Routes = () => {
@@ -35,13 +36,17 @@ const Routes = () => {
       <Navbar
         navArray={
           hasUser
-          ? [
-            { title: "Sell a Product", route: "/products/form" },
-            { title: "Profile" },
-            {title: <i class="shopping cart icon"></i>, route:"/mycart"}
-            ]
-          : []
-        } 
+            ? [
+                { title: "Sell a Product", route: "/products/form" },
+                { title: "My Products", route: "/products/myproducts" },
+                {
+                  title: <i className="shopping cart icon"></i>,
+                  route: "/mycart",
+                }
+              ]
+            : [
+              ]
+        }
         hasUser={hasUser}
         clearUser={clearUser}
       />
@@ -123,23 +128,35 @@ const Routes = () => {
               }
             }}
           />
-           {/* ROUTE FOR CHECKOUT */}
-        <Route 
-        exact path = "/checkout"
-        render = {props=> {
-          if(hasUser){
-            return (<Checkout {...props} />)
-          } else {
-            return <HomePage {...props} />
-          }
-        }}
-        />
+          {/* ROUTE FOR CHECKOUT */}
+          <Route
+            exact
+            path="/checkout"
+            render={(props) => {
+              if (hasUser) {
+                return <Checkout {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
           <Route
             exact
             path="/products/form"
             render={(props) => {
               if (hasUser) {
                 return <ProductForm {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/products/myproducts"
+            render={(props) => {
+              if (hasUser) {
+                return <MyProducts {...props} />;
               } else {
                 return <HomePage {...props} />;
               }
@@ -178,7 +195,6 @@ const Routes = () => {
               }
             }}
           />
-          
 
           {/* Will redirect to home page if page does not exist */}
           <Redirect to="/" />
