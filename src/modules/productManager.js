@@ -8,5 +8,16 @@ export default {
     },
     getOneProduct(id){
         return fetch(`${baseurl}/products/${id}`).then(r=>r.json())
+    },
+    updateQuantity(token, obj){
+        return fetch(`${baseurl}/products/${obj.id}`, {
+            method: 'POST',
+            headers: {
+                'content-type': "application/json",
+                'Accept': "application/json",
+                'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify(obj)
+        }).then(r=>r.json())
     }
 }
