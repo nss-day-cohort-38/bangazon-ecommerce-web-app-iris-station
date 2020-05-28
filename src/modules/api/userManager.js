@@ -18,5 +18,15 @@ export default {
       },
       body: JSON.stringify(userToLogin)
     }).then(result => result.json());
+  },
+  // FIXME: use token?
+  getCustomer(customerId) {
+    return fetch(`${baseurl}/customers/${customerId}`)
+      .then(result => result.json())
+  },
+  // FIXME: use token?
+  getUser(userId) {
+    return fetch(`${baseurl}/users/${userId}`)
+      .then(result => result.json())
   }
 }
