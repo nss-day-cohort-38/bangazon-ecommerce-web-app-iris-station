@@ -8,5 +8,8 @@ export default {
     },
     getOneProduct(id){
         return fetch(`${baseurl}/products/${id}`).then(r=>r.json())
+    },
+    getProductByUser(userId){
+        return fetch(`${baseurl}/products/${userId}`).then(r=>r.json())
     }
 }
