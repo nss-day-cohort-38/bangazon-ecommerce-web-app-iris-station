@@ -46,8 +46,8 @@ const Checkout = props => {
         <>
         <div className="center">
             <form>
-                <select onChange={selectPaymentId}>
-                    <option selected disabled>***Please choose one***</option>
+                <select onChange={selectPaymentId} value={selectedPaymentId}>
+                    <option value="" disabled>***Please choose one***</option>
                     {pTypes.map(pt=>(
                         <option value={pt.id} key={pt.id} id="payment_id">{pt.merchant_name} ***{pt.account_number.substr(pt.account_number.length -4)}</option>
                     ))}
