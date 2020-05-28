@@ -12,7 +12,7 @@ import ProductForm from "./products/ProductForm";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
-import { MyCart } from "./orders/index";
+import { MyCart, Checkout } from "./orders/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -56,7 +56,7 @@ const Routes = () => {
             ? [
                 { title: "Sell a Product", route: "/products/form" },
                 { title: "Profile" },
-                { title: <i class="shopping cart icon"></i>, route: "/mycart" },
+                { title: <i className="shopping cart icon"></i>, route: "/mycart" },
               ]
             : [
                 { title: "Login", route: "login" },
@@ -144,6 +144,17 @@ const Routes = () => {
               }
             }}
           />
+           {/* ROUTE FOR CHECKOUT */}
+        <Route 
+        exact path = "/checkout"
+        render = {props=> {
+          if(hasUser){
+            return (<Checkout {...props} />)
+          } else {
+            return <HomePage {...props} />
+          }
+        }}
+        />
           <Route
             exact
             path="/products/form"

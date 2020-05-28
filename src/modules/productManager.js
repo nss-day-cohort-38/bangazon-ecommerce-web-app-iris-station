@@ -9,7 +9,30 @@ export default {
     getOneProduct(id){
         return fetch(`${baseurl}/products/${id}`).then(r=>r.json())
     },
-    getProductByUser(userId){
-        return fetch(`${baseurl}/products/${userId}`).then(r=>r.json())
+    getProductByUser() {
+        return fetch(`${baseurl}/products?user`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Token ${sessionStorage.getItem("token")}`,
+          },
+        }).then((r) => r.json());
+      },
+      deleteProduct(id) {
+        return fetch(`${baseurl}/products/${id}`, {
+          method: "DELETE",
+        });
+      },
+    updateQuantity(token, obj){
+        return fetch(`${baseurl}/products/${obj.id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': "application/json",
+                'Accept': "application/json",
+                'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify(obj)
+        })
     }
 }
