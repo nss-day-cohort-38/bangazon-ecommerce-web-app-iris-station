@@ -12,7 +12,6 @@ import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
-import ProductForm from "./products/ProductForm"
 import { MyCart } from "./orders/index";
 
 const Routes = () => {
@@ -42,29 +41,17 @@ const Routes = () => {
       <Navbar
         navArray={
           hasUser
-<<<<<<< HEAD
             ? [
                 { title: "Sell a Product", route: "/products/form" },
                 { title: "My Products", route: "/products/myproducts" },
                 { title: "Profile" },
+                { title: <i class="shopping cart icon"></i>, route: "/mycart" },
               ]
             : [
                 { title: "Login", route: "login" },
                 { title: "Register", route: "register" },
               ]
         }
-=======
-          ? [
-            { title: "Sell a Product", route: "/products/form" },
-            { title: "Profile" },
-            {title: <i class="shopping cart icon"></i>, route:"/mycart"}
-            ]
-          : [
-            { title: "Login", route: "login" },
-            { title: "Register", route: "register" }
-            ]
-        } 
->>>>>>> master
         hasUser={hasUser}
       />
       <Switch>
@@ -132,7 +119,6 @@ const Routes = () => {
               render={(props) => <Profile {...props} />}
             />
 
-<<<<<<< HEAD
             <Route
               exact
               path="/products/form"
@@ -157,36 +143,19 @@ const Routes = () => {
             />
 
             <Route exact path="/" render={(props) => <HomePage {...props} />} />
-=======
-        <Route
-          exact
-          path="/products/form"
-          render={(props) => {
-            if (hasUser) {
-              return ( <ProductForm {...props} />
-              );
-            } else {
-              return <HomePage {...props} />;
-            }
-          }}
-        />
-        {/* ROUTE FOR MY CART */}
-        <Route 
-        exact path = "/mycart"
-        render={props=> {
-          if (hasUser){
-            return (<MyCart {...props} />)
-          } else {
-            return <HomePage {...props} />
-          }
-        }}
-        />
-        {/* <Route
-          exact
-          path="/products/form"
-          render={(props) => <ProductForm {...props} />}
-        /> */}
->>>>>>> master
+
+            {/* ROUTE FOR MY CART */}
+            <Route
+              exact
+              path="/mycart"
+              render={(props) => {
+                if (hasUser) {
+                  return <MyCart {...props} />;
+                } else {
+                  return <HomePage {...props} />;
+                }
+              }}
+            />
 
             <Route
               exact
