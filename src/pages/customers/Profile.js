@@ -36,7 +36,6 @@ const ProfilePage = ({ match }) => {
           />
         </Grid>
         <Grid item xs={8} md={9}>
-          {console.log(profileView)}
           {profileView === "add-payment" && <AddPaymentPage />}
           {profileView === "order-history" && <OrderHistory itemId={itemId} />}
         </Grid>

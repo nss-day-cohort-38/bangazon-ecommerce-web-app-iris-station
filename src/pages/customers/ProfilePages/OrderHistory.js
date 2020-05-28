@@ -30,7 +30,6 @@ const OrderHistory = ({ itemId }) => {
     orderManager
       .getOrders(window.sessionStorage.getItem("token"))
       .then((resp) => {
-
         setOrderHistory(
           // Removes active orders
           resp.filter((item) => (item.payment_type_id ? true : false))
@@ -115,17 +114,14 @@ const OrderHistory = ({ itemId }) => {
             <Paper>
               <CircularProgress />
             </Paper>
-          ) : (orderHistory.length > 0 ? (
+          ) : orderHistory.length > 0 ? (
             orderHistory.map((item) => (
-              <>
-                <Paper key={item.created_at} classProps="order-history-list">
-                  <h2>Order placed on: {item.created_at.split("T")[0]}</h2>
-                  <Link to={`/profile/order-history/${item.id}`}>
-                    <h3>Details</h3>
-                  </Link>
-                </Paper>
-              
-              </>
+              <Paper key={item.created_at} classProps="order-history-list">
+                <h2>Order placed on: {item.created_at.split("T")[0]}</h2>
+                <Link to={`/profile/order-history/${item.id}`}>
+                  <h3>Details</h3>
+                </Link>
+              </Paper>
             ))
           ) : (
             <Paper classProps="order-history-list">
@@ -135,7 +131,7 @@ const OrderHistory = ({ itemId }) => {
               </h2>
               <Link to={`/`}>View products to add to cart</Link>
             </Paper>
-          ))}
+          )}
         </Grid>
         {itemId && (
           <>
@@ -167,10 +163,21 @@ const OrderHistory = ({ itemId }) => {
                     </div>
                     <div>
                       <br></br>
+                      <h2>
+                        {currentOrder.orderinfo.payment_type
+                          ? `Payed with Card ending in
+                          ${currentOrder.orderinfo.payment_type.account_number.substring(
+                            currentOrder.orderinfo.payment_type.account_number
+                              .length - 4
+                          )}`
+                          : "asd"}
+                      </h2>
+
+                      <br></br>
                       <h2>Products</h2>
                       {Object.values(currentOrder.products).map((item) => {
                         return (
-                          <Paper>
+                          <Paper key={item.id}>
                             <div className="paper-body">
                               <div className="paper-text-container-beside-image">
                                 <div>
