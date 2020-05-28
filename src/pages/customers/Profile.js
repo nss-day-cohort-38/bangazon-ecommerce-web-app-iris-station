@@ -19,7 +19,7 @@ const ProfilePage = ({ match }) => {
     if (match.params.itemId) {
       setItemId(match.params.itemId);
     } else if (itemId) {
-      setProfileView("");
+      setItemId("");
     }
   }, [match]);
 
@@ -36,6 +36,7 @@ const ProfilePage = ({ match }) => {
           />
         </Grid>
         <Grid item xs={8} md={9}>
+          {console.log(profileView)}
           {profileView === "add-payment" && <AddPaymentPage />}
           {profileView === "order-history" && <OrderHistory itemId={itemId} />}
         </Grid>
