@@ -16,7 +16,7 @@ const MyCart = props => {
 // if the pt-id is null (meaning it hasn't been closed) after that I get all the relationships with the products to that order and set them in start
 //and then I place those into cards
         OrderManager.getOrders(token).then(arr=> {
-      console.log(arr)
+      
             if(arr.length>=1){
                 if(arr[0].payment_type_id === null){
                     setOrder({"order": arr[0]})
