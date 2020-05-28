@@ -46,7 +46,7 @@ const ProfilePage = ({ match }) => {
           />
         </Grid>
         <Grid item xs={9}>
-          {profileView === "view" && <View userData={userData}/>}
+          {profileView === "view" && <View userData={userData} setProfileView={setProfileView}/>}
           {profileView === "edit" && <Edit userData={userData}/>}
           {profileView === "add-payment" && <AddPaymentPage />}
         </Grid>

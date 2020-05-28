@@ -45,7 +45,7 @@ const ProfileView = props => {
                 fullWidth
                 variant="contained"
                 color="primary"
-                // onClick={()=> props.history.push(`/customers/edit/${userData.id}`)}
+                onClick={()=> props.setProfileView("edit")}
               >
                 Edit
               </Button>
