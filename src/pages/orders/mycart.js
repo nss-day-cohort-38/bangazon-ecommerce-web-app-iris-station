@@ -57,7 +57,9 @@ const MyCart = props => {
                     ))}
                     </Card.Group>
                 </div>
-                <div className="cart-button-container"><h1>checkout</h1></div>
+                <div className="cart-button-container">
+                    <button onClick={()=> props.history.push('/checkout')}>Checkout</button>
+                </div>
             </div>
             </>
         )

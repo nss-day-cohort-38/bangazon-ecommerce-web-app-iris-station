@@ -44,10 +44,9 @@ const useStyles = makeStyles((theme) => ({
 export default function HomeListCard(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+    const token = sessionStorage.getItem('token')
   
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
+    
   if (props.product.id%5===0 ){
     //this returns a different card to break up the same cards from displaying to the dom (same information but adds price)
     return(
@@ -63,8 +62,8 @@ export default function HomeListCard(props) {
           <div></div>
           <div className="cc-price">Only ${props.product.price}</div>
           <div className="cc-prod-buttons">
-          <IconButton aria-label="add to card">
-            <i className="plus icon"></i>
+          <IconButton aria-label="add to card" onClick={()=> props.handleAddToCard(props.product.id)}>
+            <i className="plus icon" ></i>
           </IconButton>
           <button className="ui button" onClick={()=> props.history.push(`/products/${props.product.id}`)}>See More</button>
           </div>
@@ -103,7 +102,7 @@ export default function HomeListCard(props) {
           {/* <IconButton aria-label="add to wishlist">
             <FavoriteIcon />
           </IconButton> */}
-          <IconButton aria-label="add to card">
+          <IconButton aria-label="add to card" onClick={()=> props.handleAddToCard(props.product.id)}>
             <i className="plus icon"></i>
           </IconButton>
           {/* <IconButton aria-label="share">
