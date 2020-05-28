@@ -3,6 +3,7 @@ import PTM from "../../modules/kk-paymenttypes"
 import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
 import depleteProduct from "./depleteProduct"
+import "./checkout.css"
 
 const Checkout = props => {
     const [order, setOrder] = useState({"id": "", "created_at": "", "payment_type_id": "","customer":{"address":"","id": ""}})
@@ -45,15 +46,16 @@ const Checkout = props => {
 
     return(
         <>
-        <div className="checkout-container">
+        <div className="c-container">
+            <div className="checkout-container">
+            <div className="header"><h1>Review...</h1></div>
             <div className="shipping-container">
-                <h1>Shipping Address...</h1>
-                <h4>{order=== ""? ('no address supplied'): order.customer.address}</h4>
+                <h2>Shipping Address:   {order=== ""? ('no address supplied'): order.customer.address}</h2>
             </div>
             <div className="select-container">
             <form>
                 <select onChange={selectPaymentId} value={selectedPaymentId}>
-                    <option value="" disabled>***Please choose one***</option>
+                    <option value="" disabled>---Please choose one---</option>
                     {pTypes.map(pt=>(
                         <option value={pt.id} key={pt.id} id="payment_id">{pt.merchant_name} ***{pt.account_number.substr(pt.account_number.length -4)}</option>
                     ))}
@@ -63,6 +65,7 @@ const Checkout = props => {
             </div>
             <div className="checkout-btn-container">
                 <button class="ui primary button" onClick={()=> handleSubmit()}>Checkout</button>
+            </div>
             </div>
         </div>
         </>
