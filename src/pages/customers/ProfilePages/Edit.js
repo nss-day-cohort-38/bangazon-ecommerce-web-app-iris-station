@@ -22,7 +22,8 @@ const EditProfile = props => {
     const customer = userData;
     setFormData(
       {
-        username: `${user.username}`, 
+        username: `${user.username}`,
+        password: `${user.password}`, 
         email: `${user.email}`,
         firstName: `${user.first_name}`,
         lastName: `${user.last_name}`,
