@@ -1,3 +1,5 @@
+//A component to render the users cart to the DOM 
+
 import React, {useState,useEffect} from 'react';
 import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
@@ -10,14 +12,16 @@ const MyCart = props => {
     const token = sessionStorage.getItem('token')
 
     useEffect(()=> {
-        console.log('we got to my cart')
+//I start by grabbing all the orders and ten I see if there more than 0 orders and if so i check to see if there is an open order by seeing
+// if the pt-id is null (meaning it hasn't been closed) after that I get all the relationships with the products to that order and set them in start
+//and then I place those into cards
         OrderManager.getOrders(token).then(arr=> {
-            console.log("orders array", arr)
+      
             if(arr.length>1){
                 if(arr[0].payment_type_id === null){
                     setOrder({"order": arr[0]})
                     opm.getProductsbyOrder(token, arr[0].id).then(products=> {
-                        console.log('products', products)
+            
                         setProducts(products)
                     })
                 }
@@ -26,6 +30,7 @@ const MyCart = props => {
     }, [])
 
     if (order.order == null){
+        //this will render if there is no current open order
         return (
             <>
             <h1>Please start a new order to view your cart</h1>

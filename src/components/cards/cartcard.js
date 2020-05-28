@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, Image } from "semantic-ui-react"
 
 const CartCard = props => {
-
+//this will just return the card item for products in the users cart
 
     return(
         <Card>
