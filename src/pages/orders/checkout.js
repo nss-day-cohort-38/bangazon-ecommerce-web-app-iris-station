@@ -5,7 +5,7 @@ import opm from "../../modules/order_product_manager"
 import depleteProduct from "./depleteProduct"
 
 const Checkout = props => {
-    const [order, setOrder] = useState({})
+    const [order, setOrder] = useState({"id": "", "created_at": "", "payment_type_id": "","customer":{"address":"","id": ""}})
     const [pTypes, setPTypes] = useState([])
     const [selectedPaymentId, setSelectedPaymentId] = useState("")
     const [products, setProducts] = useState([])
@@ -32,6 +32,7 @@ const Checkout = props => {
         OrderManager.getOrders(token).then(arr=> {
                     if(arr.length>=1){
                         if(arr[0].payment_type_id === null){
+                          
                             setOrder(arr[0])
                             opm.getProductsbyOrder(token, arr[0].id).then(products=> {
                     
@@ -44,7 +45,12 @@ const Checkout = props => {
 
     return(
         <>
-        <div className="center">
+        <div className="checkout-container">
+            <div className="shipping-container">
+                <h1>Shipping Address...</h1>
+                <h4>{order=== ""? ('no address supplied'): order.customer.address}</h4>
+            </div>
+            <div className="select-container">
             <form>
                 <select onChange={selectPaymentId} value={selectedPaymentId}>
                     <option value="" disabled>***Please choose one***</option>
@@ -54,8 +60,9 @@ const Checkout = props => {
                 </select>
 
             </form>
+            </div>
             <div className="checkout-btn-container">
-                <button onClick={()=> handleSubmit()}>Checkout</button>
+                <button class="ui primary button" onClick={()=> handleSubmit()}>Checkout</button>
             </div>
         </div>
         </>
