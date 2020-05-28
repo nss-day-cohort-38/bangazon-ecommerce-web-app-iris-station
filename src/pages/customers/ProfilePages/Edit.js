@@ -4,6 +4,7 @@ import {UserForm} from "../../../components/form"
 import userManager from "../../../modules/api/userManager" 
 
 const EditProfile = props => {
+  const userData = props.userData;
   const [formData, setFormData] = useState(
     {
       username: "", 
@@ -15,6 +16,22 @@ const EditProfile = props => {
       phoneNumber: ""
     }
   )
+
+  const setUserToEdit = () => {
+    const user = userData.user;
+    const customer = userData;
+    setFormData(
+      {
+        username: `${user.username}`, 
+        email: `${user.email}`,
+        firstName: `${user.first_name}`,
+        lastName: `${user.last_name}`,
+        address: `${customer.address}`,
+        phoneNumber: `${customer.phone_number}`
+      }
+    )
+  }
+
   const [failedLogin, setFailedLogin] = useState(false)
 
   const handleFieldChange = (evt) => {
@@ -28,30 +45,32 @@ const EditProfile = props => {
     const token = window.sessionStorage.getItem("token");
 
     const user = {
-      "username": formData.username,
-      "email": formData.email,
-      "password": formData.password,
-      "first_name": formData.firstName,
-      "last_name": formData.lastName
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      first_name: formData.firstName,
+      last_name: formData.lastName
     }
 
     const customer = {
-      "address": formData.address,
-      "phone_number": formData.phoneNumber
+      address: formData.address,
+      phone_number: formData.phoneNumber
     }
 
-    // TODO: UPDATE NOT REGISTER
-    userManager.updateUser(token, user)
+    // Note: User and Customer updated seperately
+    userManager.updateUser(token, userData.user_id, user)
       .then(resp => {
-        if ("token" in resp) {
-            props.setUserToken(resp)
-            props.history.push("/");
+        if (resp.status === 204) {
+          userManager.updateCustomer(token, userData.id, customer)
+            .then(resp => {
+              if (resp.status === 204) {
+                // Forcing a get of the new data
+                props.getUserData()
+                props.setProfileView("view")
+              }
+            })
         }
       })
-      // With a 500 HTTP error, no response is given,
-      // so the error must be handled with .catch
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch
-      .catch( () => setFailedLogin(true) )
   }
   
   const useStyles = makeStyles((theme) => ({
@@ -75,8 +94,8 @@ const EditProfile = props => {
   }));
 
   useEffect( () => {
-
-  }, [failedLogin])
+    setUserToEdit()
+  }, [failedLogin, userData])
 
   return (
     <>
@@ -85,6 +104,7 @@ const EditProfile = props => {
         handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
         failedLogin={failedLogin}
+        formData={formData}
       />
     </>
   )

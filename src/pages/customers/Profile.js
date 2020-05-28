@@ -5,8 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import {userManager} from '../../modules';
 import { AddPaymentPage, View, Edit } from "./index";
 
-
-// FIXME: This component currently gets wonky when the normal navbar is used while user is in this component
 const ProfilePage = ({ match }) => {
   const [profileView, setProfileView] = useState("");
   const [userData, setUserData] = useState({});
@@ -47,7 +45,7 @@ const ProfilePage = ({ match }) => {
         </Grid>
         <Grid item xs={9}>
           {profileView === "view" && <View userData={userData} setProfileView={setProfileView}/>}
-          {profileView === "edit" && <Edit userData={userData}/>}
+          {profileView === "edit" && <Edit userData={userData} setProfileView={setProfileView} getUserData={getUserData}/>}
           {profileView === "add-payment" && <AddPaymentPage />}
         </Grid>
       </Grid>

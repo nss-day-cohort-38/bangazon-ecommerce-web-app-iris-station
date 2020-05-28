@@ -5,6 +5,10 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 const UserForm = props => {
+  let isEdit = false
+  if (Object.keys(props.formData).length !== 0) {
+    isEdit = true
+  }
   const classes = props.classes;
   const handleFieldChange = props.handleFieldChange;
   const handleSubmit = props.handleSubmit;
@@ -35,6 +39,7 @@ const UserForm = props => {
               label="First Name"
               autoFocus
               onChange={handleFieldChange}
+              value={isEdit ? props.formData.firstName : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -47,6 +52,7 @@ const UserForm = props => {
               name="lastName"
               autoComplete="lname"
               onChange={handleFieldChange}
+              value={isEdit ? props.formData.lastName : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -59,6 +65,7 @@ const UserForm = props => {
               name="username"
               autoComplete="username"
               onChange={handleFieldChange}
+              value={isEdit ? props.formData.username : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -71,6 +78,7 @@ const UserForm = props => {
               name="email"
               autoComplete="email"
               onChange={handleFieldChange}
+              value={isEdit ? props.formData.email : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -96,6 +104,7 @@ const UserForm = props => {
               id="address"
               autoComplete="address"
               onChange={handleFieldChange}
+              value={isEdit ? props.formData.address : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -108,6 +117,7 @@ const UserForm = props => {
               id="phoneNumber"
               autoComplete="phoneNumber"
               onChange={handleFieldChange}
+              value={isEdit ? props.formData.phoneNumber : ""}
             />
           </Grid>
           {/* <Grid item xs={12}>
@@ -124,7 +134,7 @@ const UserForm = props => {
           color="primary"
           className={classes.submit}
         >
-          Sign Up
+          Submit
         </Button>
       </form>
     </>

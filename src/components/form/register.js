@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = props => {
+  let formData = {}
+  if (props.formData) {
+    formData = props.formData;
+  }
   const classes = useStyles();
   const failedLogin = props.failedLogin;
   const handleFieldChange = props.handleFieldChange;
@@ -66,6 +70,7 @@ const SignUp = props => {
           handleSubmit={handleSubmit}
           failedLogin={failedLogin}
           classes={classes}
+          formData={formData}
         />
         <Grid container justify="flex-end">
           <Grid item>

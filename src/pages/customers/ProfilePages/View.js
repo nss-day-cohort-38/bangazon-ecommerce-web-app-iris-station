@@ -21,10 +21,10 @@ const ProfileView = props => {
   }
   
   /* TODO: REPLACE ME */
-  const orderData = [
-    ["ORDER", "DATA"],
-    ["ORDER 1", "WHATEVER"]
-  ]
+  // const orderData = [
+  //   ["ORDER", "DATA"],
+  //   ["ORDER 1", "WHATEVER"]
+  // ]
 
   useEffect(() => {
     if (Object.keys(userData).length !== 0) {
@@ -52,10 +52,11 @@ const ProfileView = props => {
             </>
           : <></>
         }
-        <h1>Order History</h1>
+        {/* TODO: REPLACE ME */}
+        {/* <h1>Order History</h1>
         <Table
           tableData={orderData}
-        />
+        /> */}
     </>
   )
 }

@@ -19,7 +19,6 @@ export default {
       body: JSON.stringify(userToLogin)
     }).then(result => result.json());
   },
-  // FIXME: use token?
   getCustomer(token) {
     return fetch(`${baseurl}/customers`, {
       method: "GET",
@@ -35,21 +34,19 @@ export default {
       method: "PUT",
       headers: {
           'content-type': "application/json",
-          'Accept': 'application/json',
           'Authorization': `Token ${token}`
       },
       body: JSON.stringify(updatedCustomer)
-    }).then(result => result.json())
+    })
   },
   updateUser(token, userId, updatedUser) {
     return fetch(`${baseurl}/users/${userId}`, {
       method: "PUT",
       headers: {
           'content-type': "application/json",
-          'Accept': 'application/json',
           'Authorization': `Token ${token}`
       },
       body: JSON.stringify(updatedUser)
-    }).then(result => result.json())
+    })
   }
 }
