@@ -14,7 +14,6 @@ const MyCart = props => {
 
 
     const deleteProductFromOrder= (id)=> {
-        console.log(id)
         opm.deleteRelationship(id).then(()=> {
             setReload(!reload)
         })
