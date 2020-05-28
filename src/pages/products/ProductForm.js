@@ -8,7 +8,6 @@ const ProductForm = (props) => {
     quantity: "",
     location: "",
     image_path: "",
-    created_at: Date.now(),
     product_type_id: 1
   });
   const [producttypes, setProducttypes] = useState([]);
@@ -29,8 +28,7 @@ const ProductForm = (props) => {
       quantity: product.quantity,
       location: product.location,
       image_path: product.image_path,
-      created_at: product.created_at,
-      product_type_id: product.product_type_id,
+      product_type_id: product.product_type_id
     };
     if (typeof(newProduct.title) != "string" || newProduct.title.length === 0) { alert ("The title field must contain text.")}
     else if (typeof(newProduct.description) != "string" || newProduct.description.length === 0) { alert ("The description field must contain text.")}

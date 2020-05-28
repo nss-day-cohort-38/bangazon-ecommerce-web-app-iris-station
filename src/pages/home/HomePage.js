@@ -5,7 +5,7 @@ import productManager from "../../modules/productManager"
 import orderManager from "../../modules/orderManager"
 import order_product_manager from "../../modules/order_product_manager"
 import HomeListCard from "../../components/cards/HomeListCard"
-import "./HomePage.css"
+// import "./HomePage.css"
 
 const HomePage = props => {
     const [prods, setProds] = useState([])
