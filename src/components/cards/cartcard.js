@@ -22,7 +22,7 @@ const CartCard = props => {
           <Button basic color='green'>
             Add Another
           </Button>
-          <Button basic color='red'>
+          <Button basic color='red' onClick={()=> props.deleteProductFromOrder(props.product.id)}>
             Remove
           </Button>
         </div>

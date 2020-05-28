@@ -9,7 +9,15 @@ import CartCard from "../../components/cards/cartcard"
 const MyCart = props => {
     const [products, setProducts] = useState([])
     const [order, setOrder] = useState({"order": null})
+    const [reload, setReload] = useState(false)
     const token = sessionStorage.getItem('token')
+
+
+    const deleteProductFromOrder= (id)=> {
+        opm.deleteRelationship(id).then(()=> {
+            setReload(!reload)
+        })
+    }
 
     useEffect(()=> {
 //I start by grabbing all the orders and ten I see if there more than 0 orders and if so i check to see if there is an open order by seeing
@@ -27,7 +35,7 @@ const MyCart = props => {
                 }
             }
         })
-    }, [])
+    }, [reload])
 
     if (order.order == null){
         //this will render if there is no current open order
@@ -45,7 +53,7 @@ const MyCart = props => {
                 <div className="cart-contents">
                     <Card.Group>
                     {products.map(prod=> (
-                        <CartCard key={prod.id} product= {prod} {...props} />
+                        <CartCard key={prod.id} product= {prod} {...props} deleteProductFromOrder={deleteProductFromOrder}/>
                     ))}
                     </Card.Group>
                 </div>
