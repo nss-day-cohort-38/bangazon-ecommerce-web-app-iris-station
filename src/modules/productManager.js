@@ -19,4 +19,9 @@ export default {
       },
     }).then((r) => r.json());
   },
+  deleteProduct(id) {
+    return fetch(`${baseurl}/products/${id}`, {
+      method: "DELETE",
+    });
+  },
 };

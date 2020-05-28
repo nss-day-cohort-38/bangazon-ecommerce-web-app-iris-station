@@ -1,4 +1,4 @@
-// Made by Kurt then copied, pasted and edited marginally by Andrew this is just a card for the products on the My Products page using semantic react
+// Made by Kurt - then copied, pasted and edited marginally by Andrew - this is just a card for the products on the My Products page using whatever the heck Kurt did
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,6 +17,7 @@ import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import "./homecss.css"
+import { Button, Image } from "semantic-ui-react"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,9 +64,9 @@ export default function MyListCard(props) {
           <div></div>
           <div className="cc-price">Only ${props.product.price}</div>
           <div className="cc-prod-buttons">
-          <IconButton aria-label="add to card">
-            <i className="plus icon"></i>
-          </IconButton>
+          <Button basic color='red' onClick={()=> props.deleteThisProduct(props.product.id)}>
+            Remove
+          </Button>
           <button className="ui button" onClick={()=> props.history.push(`/products/${props.product.id}`)}>See More</button>
           </div>
         </div>
@@ -103,9 +104,9 @@ export default function MyListCard(props) {
           {/* <IconButton aria-label="add to wishlist">
             <FavoriteIcon />
           </IconButton> */}
-          <IconButton aria-label="add to card">
-            <i className="plus icon"></i>
-          </IconButton>
+          <Button basic color='red' onClick={()=> props.deleteThisProduct(props.product.id)}>
+            Remove
+          </Button>
           {/* <IconButton aria-label="share">
             <ShareIcon />
           </IconButton> */}
