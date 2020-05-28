@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { VerticalMenu } from "../../components";
-import { AddPaymentPage, OrderHistory } from "./index";
+import { AddPaymentPage, OrderHistory, PaymentPage } from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -30,6 +30,7 @@ const ProfilePage = ({ match }) => {
           <VerticalMenu
             menuData={[
               { title: "Order History", route: "/profile/order-history" },
+              { title: "Payment Types", route: "/profile/payment-types" },
               { title: "Add Payment Option", route: "/profile/add-payment" },
             ]}
             firstActive={profileView}
@@ -38,6 +39,7 @@ const ProfilePage = ({ match }) => {
         <Grid item xs={8} md={9}>
           {profileView === "add-payment" && <AddPaymentPage />}
           {profileView === "order-history" && <OrderHistory itemId={itemId} />}
+          {profileView === "payment-types" && <PaymentPage />}
         </Grid>
       </Grid>
     </div>

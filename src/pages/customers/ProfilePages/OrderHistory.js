@@ -3,7 +3,7 @@ import { Paper, Expansion } from "../../../components";
 import { orderManager, orderProductManager } from "../../../modules";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { Sticky, Ref, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "../../../styles/OrderHistory.css";
@@ -165,7 +165,7 @@ const OrderHistory = ({ itemId }) => {
                       <br></br>
                       <h2>
                         {currentOrder.orderinfo.payment_type
-                          ? `Payed with Card ending in
+                          ? `Paid with Card ending in
                           ${currentOrder.orderinfo.payment_type.account_number.substring(
                             currentOrder.orderinfo.payment_type.account_number
                               .length - 4
