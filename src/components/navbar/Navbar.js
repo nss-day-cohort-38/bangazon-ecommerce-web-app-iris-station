@@ -27,7 +27,7 @@ const Example = ({
 
   return (
     <div>
-      <Navbar color={color} light={light} expand="md">
+      <Navbar color={color} light={light} expand="md" fixed="top">
         <NavbarBrand href="/">Iris Station</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

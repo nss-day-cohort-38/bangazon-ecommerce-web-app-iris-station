@@ -1,2 +1,5 @@
 export {default as PaymentDataManager} from "./paymentDataManager"
+export {default as orderManager} from "./orderManager"
+export {default as orderProductManager} from "./order_product_manager"
 export {default as userManager} from "./api/userManager"
+export {default as productManager} from "./productManager"
