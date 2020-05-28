@@ -28,8 +28,28 @@ export default {
           'Accept': 'application/json',
           'Authorization': `Token ${token}`
       }
-    }
-    )
-      .then(result => result.json())
+    }).then(result => result.json())
+  },
+  updateCustomer(token, customerId, updatedCustomer) {
+    return fetch(`${baseurl}/customers/${customerId}`, {
+      method: "PUT",
+      headers: {
+          'content-type': "application/json",
+          'Accept': 'application/json',
+          'Authorization': `Token ${token}`
+      },
+      body: JSON.stringify(updatedCustomer)
+    }).then(result => result.json())
+  },
+  updateUser(token, userId, updatedUser) {
+    return fetch(`${baseurl}/users/${userId}`, {
+      method: "PUT",
+      headers: {
+          'content-type': "application/json",
+          'Accept': 'application/json',
+          'Authorization': `Token ${token}`
+      },
+      body: JSON.stringify(updatedUser)
+    }).then(result => result.json())
   }
 }

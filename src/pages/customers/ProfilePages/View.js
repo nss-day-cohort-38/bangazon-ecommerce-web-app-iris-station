@@ -1,22 +1,11 @@
 import React, {useState, useEffect} from "react"
 import Table from '../../../components/table/Table';
 import Button from '@material-ui/core/Button';
-import {userManager} from '../../../modules';
-
 
 const ProfileView = props => {
-  const [userData, setUserData] = useState({});
   const [userTableData, setUserTableData] = useState([]);
+  const userData = props.userData;
   
-  const getUserData = () => {
-    const token = window.sessionStorage.getItem("token");
-    userManager.getCustomer(token)
-      .then(resp => {
-        setUserData(resp)
-        setUserTableData(makeUserTable(resp))
-      })
-  }
-
   const makeUserTable = (resp) => {
     const customer = resp
     const user = resp.user
@@ -38,8 +27,11 @@ const ProfileView = props => {
   ]
 
   useEffect(() => {
-    getUserData();
-  }, []);
+    if (Object.keys(userData).length !== 0) {
+      const table = makeUserTable(userData)
+      setUserTableData(table)
+    }
+  }, [userData]);
 
   return (
     <>
