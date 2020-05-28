@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { VerticalMenu } from "../../components";
-import { AddPaymentPage, OrderHistory } from "./index";
+import { AddPaymentPage, OrderHistory, View, Edit } from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import {userManager} from '../../modules';
 
 const ProfilePage = ({ match }) => {
   const [profileView, setProfileView] = useState("");
-  const [itemId, setItemId] = useState("");
+  const [userData, setUserData] = useState({});
   const classes = useStyles();
+  const [itemId, setItemId] = useState("");
+
+  const getUserData = () => {
+    const token = window.sessionStorage.getItem("token");
+    userManager.getCustomer(token)
+      .then(resp => {
+        setUserData(resp)
+      })
+  }
 
   useEffect(() => {
     if (match.params.category) {
@@ -15,7 +25,7 @@ const ProfilePage = ({ match }) => {
     } else if (profileView) {
       setProfileView("");
     }
-
+    getUserData();
     if (match.params.itemId) {
       setItemId(match.params.itemId);
     } else if (itemId) {
@@ -26,7 +36,12 @@ const ProfilePage = ({ match }) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid xs={4} item md={2}>
+        <Grid item xs={2} md={2}>
+          {/* 
+            Edit Profile doesn't appear in the menu, 
+            because it is accessed from an edit button on /profile/view,
+            not the menu itself
+          */}
           <VerticalMenu
             menuData={[
               { title: "Order History", route: "/profile/order-history" },
@@ -36,14 +51,15 @@ const ProfilePage = ({ match }) => {
           />
         </Grid>
         <Grid item xs={8} md={9}>
-          {console.log(profileView)}
+          {profileView === "view" && <View userData={userData} setProfileView={setProfileView}/>}
+          {profileView === "edit" && <Edit userData={userData} setProfileView={setProfileView} getUserData={getUserData}/>}
           {profileView === "add-payment" && <AddPaymentPage />}
           {profileView === "order-history" && <OrderHistory itemId={itemId} />}
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
 export default ProfilePage;
 

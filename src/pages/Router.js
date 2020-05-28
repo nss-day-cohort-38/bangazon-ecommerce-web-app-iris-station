@@ -25,7 +25,6 @@ const Routes = () => {
     setHasUser(isAuthenticated());
   };
 
-  // TODO: Implement this with router/navbar
   const clearUser = () => {
     sessionStorage.clear();
     setHasUser(isAuthenticated());
@@ -33,14 +32,10 @@ const Routes = () => {
 
   return (
     <Router>
-      {/* 
-        TODO: Login and register should conditionally display,
-        depending on if a user is logged in or not
-       */}
-
       <Navbar
         navArray={
           hasUser
+<<<<<<< HEAD
 <<<<<<< HEAD
           ? [
             { title: "Sell a Product", route: "/products/form" },
@@ -64,7 +59,17 @@ const Routes = () => {
               ]
         }
 >>>>>>> b66b39afd6091dc6d50cb32e064608cd98922721
+=======
+          ? [
+            { title: "Sell a Product", route: "/products/form" },
+            { title: "Profile" },
+            {title: <i class="shopping cart icon"></i>, route:"/mycart"}
+            ]
+          : []
+        } 
+>>>>>>> 20f39f9c6ae7440986747f7a96c00be7e3732d62
         hasUser={hasUser}
+        clearUser={clearUser}
       />
 
       <div className="body-container">
@@ -209,7 +214,6 @@ const Routes = () => {
   );
 };
 
-// const Home = () =>
 const Customer = () => "Customer page";
 const Order = () => "Orders page";
 const Payment = () => "Payment page";

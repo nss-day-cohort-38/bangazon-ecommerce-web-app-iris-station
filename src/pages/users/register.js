@@ -22,7 +22,7 @@ const Register = props => {
     setFormData(stateToChange);
   };
 
-  const handleRegister = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
@@ -54,12 +54,11 @@ const Register = props => {
 
   return (
     <>
-      <form onSubmit={handleRegister}>
-        <RegisterForm 
-          handleFieldChange={handleFieldChange}
-          failedLogin={failedLogin}
-        />
-      </form>
+      <RegisterForm 
+        handleFieldChange={handleFieldChange}
+        failedLogin={failedLogin}
+        handleSubmit={handleSubmit}
+      />
     </>
   )
 }
