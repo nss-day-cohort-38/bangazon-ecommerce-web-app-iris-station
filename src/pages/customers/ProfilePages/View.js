@@ -1,22 +1,27 @@
 import React, {useState, useEffect} from "react"
 import Table from '../../../components/table/Table';
-import {userManager} from '../../../modules'
+import Button from '@material-ui/core/Button';
+import {userManager} from '../../../modules';
+
 
 const ProfileView = props => {
-  const [userData, setUserData] = useState([])
-
+  const [userData, setUserData] = useState({});
+  const [userTableData, setUserTableData] = useState([]);
+  
   const getUserData = () => {
     const token = window.sessionStorage.getItem("token");
     userManager.getCustomer(token)
       .then(resp => {
-        setUserData(makeUser(resp))
+        setUserData(resp)
+        setUserTableData(makeUserTable(resp))
       })
   }
 
-  const makeUser = (resp) => {
+  const makeUserTable = (resp) => {
     const customer = resp
     const user = resp.user
     return [
+      ["User Id", `${customer.user_id}`],
       ["Username", `${user.username}`],
       ["Email", `${user.email}`],
       ["First Name", `${user.first_name}`],
@@ -39,10 +44,20 @@ const ProfileView = props => {
   return (
     <>
         <h1>User Account</h1>
-        {userData.length !== 0
-          ? <Table
-              tableData={userData}
-            />
+        {userTableData.length !== 0
+          ? <>
+              <Table
+                tableData={userTableData}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                // onClick={()=> props.history.push(`/customers/edit/${userData.id}`)}
+              >
+                Edit
+              </Button>
+            </>
           : <></>
         }
         <h1>Order History</h1>
