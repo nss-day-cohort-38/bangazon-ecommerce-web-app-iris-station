@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { VerticalMenu } from "../../components";
+import { AddPaymentPage, OrderHistory, View, Edit } from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import {userManager} from '../../modules';
-import { AddPaymentPage, View, Edit } from "./index";
 
 const ProfilePage = ({ match }) => {
   const [profileView, setProfileView] = useState("");
   const [userData, setUserData] = useState({});
   const classes = useStyles();
-  
+  const [itemId, setItemId] = useState("");
+
   const getUserData = () => {
     const token = window.sessionStorage.getItem("token");
     userManager.getCustomer(token)
@@ -25,12 +26,17 @@ const ProfilePage = ({ match }) => {
       setProfileView("");
     }
     getUserData();
+    if (match.params.itemId) {
+      setItemId(match.params.itemId);
+    } else if (itemId) {
+      setItemId("");
+    }
   }, [match]);
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={2}>
+        <Grid item xs={2} md={2}>
           {/* 
             Edit Profile doesn't appear in the menu, 
             because it is accessed from an edit button on /profile/view,
@@ -38,15 +44,17 @@ const ProfilePage = ({ match }) => {
           */}
           <VerticalMenu
             menuData={[
-              { title: "Profile View", route: "/profile/view"},
-              { title: "Add Payment Option", route: "/profile/add-payment" }
+              { title: "Order History", route: "/profile/order-history" },
+              { title: "Add Payment Option", route: "/profile/add-payment" },
             ]}
+            firstActive={profileView}
           />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} md={9}>
           {profileView === "view" && <View userData={userData} setProfileView={setProfileView}/>}
           {profileView === "edit" && <Edit userData={userData} setProfileView={setProfileView} getUserData={getUserData}/>}
           {profileView === "add-payment" && <AddPaymentPage />}
+          {profileView === "order-history" && <OrderHistory itemId={itemId} />}
         </Grid>
       </Grid>
     </div>

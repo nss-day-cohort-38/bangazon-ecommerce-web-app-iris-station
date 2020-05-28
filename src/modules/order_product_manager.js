@@ -1,4 +1,4 @@
-import baseurl from "./baseurl"
+import baseurl from "./baseurl";
 
 export default{
     postNewOrder(token, obj){
@@ -21,5 +21,10 @@ export default{
                 'Authorization': `Token ${token}`
             }
         }).then(r=>r.json())
+    },
+    deleteRelationship(id){
+        return fetch(`${baseurl}/order_products/${id}`, {
+            method: "DELETE"  
+    })
     }
 }

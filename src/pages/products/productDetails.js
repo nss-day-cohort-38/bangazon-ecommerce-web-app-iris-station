@@ -15,7 +15,6 @@ const ProductDetails = props => {
         orderManager.getOrders(token).then(arr=> {
             if (arr.length>0){
             if(arr[0].payment_type_id != null){
-                console.log('lets make a new order')
                 orderManager.postOrder(token).then(obj=> {
                     const productRelationship = {
                         "order_id": obj.id,
