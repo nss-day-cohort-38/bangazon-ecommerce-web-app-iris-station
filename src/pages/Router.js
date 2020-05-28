@@ -45,7 +45,7 @@ const Routes = () => {
                 { title: "Sell a Product", route: "/products/form" },
                 { title: "My Products", route: "/products/myproducts" },
                 { title: "Profile" },
-                { title: <i class="shopping cart icon"></i>, route: "/mycart" },
+                { title: <i className="shopping cart icon"></i>, route: "/mycart" },
               ]
             : [
                 { title: "Login", route: "login" },

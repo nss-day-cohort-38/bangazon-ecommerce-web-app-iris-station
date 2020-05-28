@@ -10,7 +10,7 @@ const MyProducts = props => {
 
 
     useEffect(()=> {
-        productManager.getHomeList().then(arr=> {
+        productManager.getProductByUser().then(arr=> {
             setProds(arr)
         })
     }, [])
