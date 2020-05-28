@@ -1,5 +1,5 @@
 import React, { useState, createRef, useEffect } from "react";
-import { Paper, PaymentForm } from "../../../components";
+import { Paper, Expansion } from "../../../components";
 import { orderManager, orderProductManager } from "../../../modules";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,7 +17,7 @@ const OrderHistory = ({ itemId }) => {
   const [listLoading, setListLoading] = useState(false);
   const [detailsLoading, setDetailsLoading] = useState(false);
   //   State to hold what order the user is looking at
-  const [activeOrder, setActiveOrder] = useState({
+  const [currentOrder, setCurrentOrder] = useState({
     price: "",
     products: [],
     orderinfo: {},
@@ -30,39 +30,48 @@ const OrderHistory = ({ itemId }) => {
     orderManager
       .getOrders(window.sessionStorage.getItem("token"))
       .then((resp) => {
+        console.log(resp);
+
         setOrderHistory(
+          // Removes active orders
           resp.filter((item) => (item.payment_type_id ? true : false))
         );
+        // Stops loading
         setListLoading(false);
       });
   }, []);
 
   useEffect(() => {
+    // Checks to see if there is an Itemid passed down and that that order history has been fetched
     if (itemId && orderHistory.length > 0) {
-      let token = window.sessionStorage.getItem("token");
+      // Starts loading for details view
       setDetailsLoading(true);
+
+      // Get's the token from session storage
+      let token = window.sessionStorage.getItem("token");
+
+      // Gets all the products for the order
       orderProductManager.getProductsbyOrder(token, itemId).then((resp) => {
-        setActiveOrder((prevState) => {
+        setCurrentOrder((prevState) => {
+          // Object to hold new state
           let newObj = { ...prevState };
 
+          // Starting state of products
           newObj.products = {};
 
+          // Combines duplicate prpducts in newObj.products
           resp.map((item) => {
-            let product = item.product;
             if (newObj.products[item.product.id]) {
-              console.log(item);
               newObj.products[item.product.id].instances.push(item.id);
             } else {
               newObj.products[item.product.id] = {
                 ...item.product,
                 instances: [item.id],
               };
-              console.log(item);
             }
           });
 
-          console.log(newObj.products);
-
+          // Combines the proces of all products to get total price
           newObj.price =
             resp.length > 1
               ? resp.reduce((a, b) =>
@@ -74,15 +83,19 @@ const OrderHistory = ({ itemId }) => {
                 )
               : resp[0].product.price;
 
+          // Stored origin order information
           newObj.orderinfo = orderHistory.filter(
             (item) => item.id == itemId
           )[0];
+          // Stops loading for details view
           setDetailsLoading(false);
+
+          // Pushes newObj as new state for activeOrder
           return newObj;
         });
       });
     } else {
-      setActiveOrder({
+      setCurrentOrder({
         orderinfo: {},
         products: [],
       });
@@ -103,12 +116,17 @@ const OrderHistory = ({ itemId }) => {
             <Paper>
               <CircularProgress />
             </Paper>
-          ) : orderHistory.length > 0 ? (
+          ) : (orderHistory.length > 0 ? (
             orderHistory.map((item) => (
-              <Paper key={item.created_at} classProps="order-history-list">
-                <div>Order placed on: {item.created_at}</div>
-                <Link to={`/profile/order-history/${item.id}`}>Details</Link>
-              </Paper>
+              <>
+                <Paper key={item.created_at} classProps="order-history-list">
+                  <h2>Order placed on: {item.created_at.split("T")[0]}</h2>
+                  <Link to={`/profile/order-history/${item.id}`}>
+                    <h3>Details</h3>
+                  </Link>
+                </Paper>
+              
+              </>
             ))
           ) : (
             <Paper classProps="order-history-list">
@@ -118,7 +136,7 @@ const OrderHistory = ({ itemId }) => {
               </h2>
               <Link to={`/`}>View products to add to cart</Link>
             </Paper>
-          )}
+          ))}
         </Grid>
         {itemId && (
           <>
@@ -128,45 +146,68 @@ const OrderHistory = ({ itemId }) => {
                   <CircularProgress />
                 </Paper>
               ) : (
-                activeOrder.orderinfo && (
+                currentOrder.orderinfo && (
                   <Paper classProps="order-details-column">
                     <h1>Order Details</h1>
                     <div className="paper-header">
-                      <div>{activeOrder.orderinfo.created_at}</div>
+                      <div>
+                        <h2>Total Price: {currentOrder.price}</h2>
+                      </div>
+                      <div>
+                        <h2>
+                          Date:{" "}
+                          {currentOrder.orderinfo.created_at &&
+                            currentOrder.orderinfo.created_at.split("T")[0]}
+                        </h2>
+                      </div>
                       <div>
                         <Link to="/profile/order-history">
                           <Icon name="x" />
                         </Link>
                       </div>
                     </div>
-                    <div>Price:{activeOrder.price}</div>
                     <div>
+                      <br></br>
                       <h2>Products</h2>
-                      {/* {activeOrder.products.map((item) => {
-                        let product = item.product;
-                        // console.log(product);
-
+                      {Object.values(currentOrder.products).map((item) => {
                         return (
                           <Paper>
-                            <div className="paper-header">
-                              <div>
-                                <Link to={`/products/${product.id}`}>
-                                  {product.title}
-                                </Link>
+                            <div className="paper-body">
+                              <div className="paper-text-container-beside-image">
+                                <div>
+                                  <Link to={`/products/${item.id}`}>
+                                    {item.title}
+                                  </Link>
+                                </div>
+                                <div>Quantity: {item.instances.length}</div>
+                                <div>Price: {item.price}</div>
+                                <hr />
+                                <div>
+                                  {item.description.length > 40 ? (
+                                    <Expansion
+                                      summary={`${item.description.substring(
+                                        0,
+                                        40
+                                      )}...`}
+                                      details={item.description}
+                                    />
+                                  ) : (
+                                    item.description
+                                  )}
+                                </div>
                               </div>
-                              <div>
-                                <Link to="/profile/order-history">
-                                  <Icon name="x" />
-                                </Link>
+
+                              <div className="paper-image-container">
+                                <img
+                                  className="paper-image"
+                                  src={item.image_path}
+                                />
                               </div>
                             </div>
-
-                            <div>Price:{activeOrder.price}</div>
                           </Paper>
                         );
-                      })} */}
+                      })}
                     </div>
-                    zxczxcz
                   </Paper>
                 )
               )}

@@ -10,6 +10,24 @@
 }
 
 .paper-body {
-
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px rgba(172, 172, 172, 0.288) solid;
+    padding: 5px;
     
+}
+
+.paper-image {
+
+    width: 100%;
+    /* height: 200px; */
+}
+
+.paper-image-container {
+    width: 50%;
+}
+
+.paper-text-container-beside-image{
+    width: 50%;
+    text-align: left;
 }
