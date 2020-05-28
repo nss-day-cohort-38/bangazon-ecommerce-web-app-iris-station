@@ -38,7 +38,6 @@ const Routes = () => {
           hasUser
             ? [
                 { title: "Sell a Product", route: "/products/form" },
-                { title: "Profile" },
                 { title: "My Products", route: "/products/myproducts" },
                 {
                   title: <i className="shopping cart icon"></i>,
@@ -46,8 +45,6 @@ const Routes = () => {
                 }
               ]
             : [
-                { title: "Login", route: "login" },
-                { title: "Register", route: "register" },
               ]
         }
         hasUser={hasUser}
