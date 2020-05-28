@@ -131,38 +131,51 @@ const Routes = () => {
               }
             }}
           />
-          {hasUser ? (
-            <>
-              {/* This will handle all routes that are for the profile section */}
-              <Route
-                exact
-                path="/profile/:category"
-                render={(props) => <Profile {...props} />}
-              />
-              <Route
-                exact
-                path="/profile/:category/:itemId(\d+)"
-                render={(props) => <Profile {...props} />}
-              />
-              <Route
-                exact
-                path="/products/form"
-                render={(props) => {
-                  if (hasUser) {
-                    return <ProductForm {...props} />;
-                  } else {
-                    return <HomePage {...props} />;
-                  }
-                }}
-              />
-              <Route
-                path="/dl/:component_name"
-                render={(props) => <DLHOME {...props} />}
-              />
-            </>
-          ) : (
-            ""
-          )}
+          <Route
+            exact
+            path="/products/form"
+            render={(props) => {
+              if (hasUser) {
+                return <ProductForm {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          <Route
+            path="/dl/:component_name"
+            render={(props) => {
+              if (hasUser) {
+                return <DLHOME {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          {/* This will handle all routes that are for the profile section */}
+          <Route
+            exact
+            path="/profile/:category"
+            render={(props) => {
+              if (hasUser) {
+                return <Profile {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/profile/:category/:itemId(\d+)"
+            render={(props) => {
+              if (hasUser) {
+                return <Profile {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          
 
           {/* Will redirect to home page if page does not exist */}
           <Redirect to="/" />
