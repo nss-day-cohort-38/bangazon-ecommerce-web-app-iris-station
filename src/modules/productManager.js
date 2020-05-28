@@ -24,4 +24,15 @@ export default {
       method: "DELETE",
     });
   },
+  updateQuantity(token, obj) {
+    return fetch(`${baseurl}/products/${obj.id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(obj),
+    });
+  },
 };

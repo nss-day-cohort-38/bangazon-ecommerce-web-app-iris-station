@@ -5,7 +5,7 @@ import productManager from "../../modules/productManager"
 import orderManager  from "../../modules/orderManager";
 import order_product_manager from "../../modules/order_product_manager"
 import "./productDetails.css"
-import IconButton from '@material-ui/core/IconButton';
+
 
 const ProductDetails = props => {
     const [product, setProduct] = useState({})
@@ -20,14 +20,14 @@ const ProductDetails = props => {
                         "order_id": obj.id,
                         "product_id": productId
                     }
-                    order_product_manager.postNewOrder(token, productRelationship)
+                    order_product_manager.postNewOrder(token, productRelationship).then(()=>props.history.push('/'))
                 })
             } else{
                 const productRelationship = {
                     "order_id": arr[0].id,
                     "product_id": productId
                 }
-                order_product_manager.postNewOrder(token, productRelationship)
+                order_product_manager.postNewOrder(token, productRelationship).then(()=>props.history.push('/'))
             }}
             else{
                 orderManager.postOrder(token).then(obj=> {
@@ -35,7 +35,7 @@ const ProductDetails = props => {
                         "order_id": obj.id,
                         "product_id": productId
                     }
-                    order_product_manager.postNewOrder(token, productRelationship)
+                    order_product_manager.postNewOrder(token, productRelationship).then(()=>props.history.push('/'))
                 })
             }
         })

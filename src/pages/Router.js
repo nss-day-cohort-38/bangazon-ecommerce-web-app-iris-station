@@ -13,7 +13,7 @@ import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
-import { MyCart } from "./orders/index";
+import { MyCart, Checkout } from "./orders/index";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -49,7 +49,7 @@ const Routes = () => {
                 {
                   title: <i className="shopping cart icon"></i>,
                   route: "/mycart",
-                },
+                }
               ]
             : [
                 { title: "Login", route: "login" },
@@ -131,6 +131,18 @@ const Routes = () => {
             render={(props) => {
               if (hasUser) {
                 return <MyCart {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          {/* ROUTE FOR CHECKOUT */}
+          <Route
+            exact
+            path="/checkout"
+            render={(props) => {
+              if (hasUser) {
+                return <Checkout {...props} />;
               } else {
                 return <HomePage {...props} />;
               }
