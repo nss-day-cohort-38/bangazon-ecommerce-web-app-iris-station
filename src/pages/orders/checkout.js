@@ -20,7 +20,7 @@ const Checkout = props => {
             alert('Please Select a Payment Method')
         }else{
         //deplete products
-        depleteProduct(products)
+        depleteProduct(products, token)
         //changeorder
         const newOrder = order
         newOrder.payment_type_id = Number(selectedPaymentId)

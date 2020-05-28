@@ -11,7 +11,7 @@ export default {
     },
     updateQuantity(token, obj){
         return fetch(`${baseurl}/products/${obj.id}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'content-type': "application/json",
                 'Accept': "application/json",
