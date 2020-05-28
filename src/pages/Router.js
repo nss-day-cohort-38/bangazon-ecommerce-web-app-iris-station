@@ -39,10 +39,6 @@ const Routes = () => {
             { title: "Profile" },
             {title: <i class="shopping cart icon"></i>, route:"/mycart"}
             ]
-          : [
-            { title: "Login", route: "login" },
-            { title: "Register", route: "register" }
-            ]
           : []
         } 
         hasUser={hasUser}

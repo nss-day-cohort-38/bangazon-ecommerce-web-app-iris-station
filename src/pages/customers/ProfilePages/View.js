@@ -1,31 +1,28 @@
 import React, {useState, useEffect} from "react"
 import Table from '../../../components/table/Table';
-import userManager from '../../../modules'
+import {userManager} from '../../../modules'
 
 const ProfileView = props => {
   const [userData, setUserData] = useState([])
 
-  // FIXME: Use token?
   const getUserData = () => {
-    userManager.getCustomer(customerId)
-    userManager.getUser(userId)
+    const token = window.sessionStorage.getItem("token");
+    userManager.getCustomer(token)
+      .then(resp => {
+        setUserData(makeUser(resp))
+      })
   }
 
-  const makeUser = (userResp, customerResp) => {
-    return {
-      "Username": `${userResp.username}`,
-      "Email": `${userResp.email}`,
-      "First Name": `${userResp.first_name}`,
-      "Last Name": `${userResp.last_name}`,
-      "Address": `${customerResp.address}`,
-      "Phone Number": `${customerResp.phoneNumber}`
-    }
-  }
-
-  const makeUserData = ()  => {
-    // For each key/value pair, make an array, append it to this array
+  const makeUser = (resp) => {
+    const customer = resp
+    const user = resp.user
     return [
-      ["Key", "Value"],
+      ["Username", `${user.username}`],
+      ["Email", `${user.email}`],
+      ["First Name", `${user.first_name}`],
+      ["Last Name", `${user.last_name}`],
+      ["Address", `${customer.address}`],
+      ["Phone Number", `${customer.phone_number}`]
     ]
   }
   
@@ -36,15 +33,18 @@ const ProfileView = props => {
   ]
 
   useEffect(() => {
-
+    getUserData();
   }, []);
 
   return (
     <>
         <h1>User Account</h1>
-        <Table
-          tableData={userData}
-        />
+        {userData.length !== 0
+          ? <Table
+              tableData={userData}
+            />
+          : <></>
+        }
         <h1>Order History</h1>
         <Table
           tableData={orderData}

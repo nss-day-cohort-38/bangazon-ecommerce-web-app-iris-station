@@ -20,13 +20,16 @@ export default {
     }).then(result => result.json());
   },
   // FIXME: use token?
-  getCustomer(customerId) {
-    return fetch(`${baseurl}/customers/${customerId}`)
-      .then(result => result.json())
-  },
-  // FIXME: use token?
-  getUser(userId) {
-    return fetch(`${baseurl}/users/${userId}`)
+  getCustomer(token) {
+    return fetch(`${baseurl}/customers`, {
+      method: "GET",
+      headers: {
+          'content-type': "application/json",
+          'Accept': 'application/json',
+          'Authorization': `Token ${token}`
+      }
+    }
+    )
       .then(result => result.json())
   }
 }
