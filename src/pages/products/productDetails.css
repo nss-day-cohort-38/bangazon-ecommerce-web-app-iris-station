@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     padding-top: 60px;  
+    font-family: 'Hind', sans-serif;
 }
 .product-container{
     display: flex;
@@ -16,7 +17,7 @@
   box-shadow:         2px 2px 3px 4px rgba(204, 204, 204, 0.781);; 
 }
 .product-img-n-price{
-    width: 60%;
+    width: 90%;
     display: flex;
     justify-content: space-between;
     margin: 5%;
@@ -37,4 +38,11 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 5px;
+}
+#prod-img-details{
+    max-width: 400px ;
+    background-color: rgba(224, 221, 221, 0.349);
+    -webkit-box-shadow: 2px 2px 3px 4px rgba(204, 204, 204, 0.781);  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    2px 2px 3px 4px rgba(204, 204, 204, 0.781);;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         2px 2px 3px 4px rgba(204, 204, 204, 0.781);; 
 }

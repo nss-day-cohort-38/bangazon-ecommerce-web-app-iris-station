@@ -5,12 +5,14 @@ import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
 import {Card} from 'semantic-ui-react'
 import CartCard from "../../components/cards/cartcard"
+import "./mycart.css"
 
 const MyCart = props => {
     const [products, setProducts] = useState([])
     const [order, setOrder] = useState({"order": null})
     const [reload, setReload] = useState(false)
     const token = sessionStorage.getItem('token')
+    
 
 
     const deleteProductFromOrder= (id)=> {

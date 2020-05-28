@@ -54,7 +54,7 @@ const ProductDetails = props => {
             <div className='product-header'><h1>{product.title}</h1></div>
             <div className="product-img-n-price">
                 <div className="product-image">
-                    <img src={product.image_path} alt={product.title} />
+                    <img src={product.image_path} alt={product.title}  id="prod-img-details"/>
                 </div>
                 <div className="product-specs">
                     <p className="price spec">Price: ${product.price}</p>
