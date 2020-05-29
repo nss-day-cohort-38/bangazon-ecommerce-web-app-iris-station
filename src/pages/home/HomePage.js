@@ -12,7 +12,6 @@ const HomePage = props => {
     const token = sessionStorage.getItem('token')
 
     const handleAddToCard= productId=> {
-        console.log('we made it')   
         orderManager.getOrders(token).then(arr=> {
             if (arr.length>0){
             if(arr[0].payment_type_id != null){

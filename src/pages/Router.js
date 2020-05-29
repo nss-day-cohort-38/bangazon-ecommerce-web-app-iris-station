@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,6 +14,7 @@ import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
+import { userManager } from "../modules";
 
 const Routes = () => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -31,6 +32,22 @@ const Routes = () => {
     setHasUser(isAuthenticated());
   };
 
+  const getUserInfo = () => {
+    userManager
+      .getUser({ token: window.sessionStorage.getItem("token") })
+      .then((resp) => {
+        setUserInfo((prevState) => {
+          return resp;
+        });
+      });
+  };
+
+  useEffect(() => {
+    if (hasUser !== Object.keys(userInfo) > 0) {
+      getUserInfo();
+    }
+  }, [hasUser]);
+
   return (
     <Router>
       <Navbar
@@ -42,12 +59,12 @@ const Routes = () => {
                 {
                   title: <i className="shopping cart icon"></i>,
                   route: "/mycart",
-                }
+                },
               ]
-            : [
-              ]
+            : []
         }
         hasUser={hasUser}
+        userInfo={userInfo}
         clearUser={clearUser}
       />
 
@@ -55,33 +72,21 @@ const Routes = () => {
         <Switch>
           <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
-          {/* ADD CUSTOMER ROUTES BELOW */}
           <Route
             exact
-            path="/customers"
-            render={(props) => <Customer {...props} />}
+            path="/products/form"
+            render={(props) =>
+              hasUser ? <ProductForm {...props} /> : <Redirect to="/" />
+            }
+          />
+          <Route
+            exact
+            path="/products/myproducts"
+            render={(props) =>
+              hasUser ? <MyProducts {...props} /> : <Redirect to="/" />
+            }
           />
 
-          {/* ADD ORDER ROUTES BELOW */}
-          <Route
-            exact
-            path="/orders"
-            render={(props) => <Order {...props} />}
-          />
-
-          {/* ADD PAYMENT ROUTES BELOW */}
-          <Route
-            exact
-            path="/payments"
-            render={(props) => <Payment {...props} />}
-          />
-
-          {/* ADD PRODUCTS ROUTES BELOW */}
-          <Route
-            exact
-            path="/products"
-            render={(props) => <Product {...props} />}
-          />
           {/* this will route to a product detail page */}
           <Route
             exact
@@ -97,15 +102,25 @@ const Routes = () => {
           <Route
             exact
             path="/login"
-            render={(props) => <Login setUserToken={setUserToken} {...props} />}
+            render={(props) =>
+              hasUser ? (
+                <Redirect to="/" />
+              ) : (
+                <Login setUserToken={setUserToken} {...props} />
+              )
+            }
           />
 
           <Route
             exact
             path="/register"
-            render={(props) => (
-              <Register setUserToken={setUserToken} {...props} />
-            )}
+            render={(props) =>
+              hasUser ? (
+                <Redirect to="/" />
+              ) : (
+                <Register setUserToken={setUserToken} {...props} />
+              )
+            }
           />
 
           {/* If not Authenticated, this route will take you to the login page */}
@@ -116,84 +131,45 @@ const Routes = () => {
               hasUser ? <Profile {...props} /> : <Redirect to="/login" />
             }
           />
+
           {/* ROUTE FOR MY CART */}
           <Route
             exact
             path="/mycart"
-            render={(props) => {
-              if (hasUser) {
-                return <MyCart {...props} />;
-              } else {
-                return <HomePage {...props} />;
-              }
-            }}
+            render={(props) =>
+              hasUser ? <MyCart {...props} /> : <Redirect to="/" />
+            }
           />
+
           {/* ROUTE FOR CHECKOUT */}
           <Route
             exact
             path="/checkout"
-            render={(props) => {
-              if (hasUser) {
-                return <Checkout {...props} />;
-              } else {
-                return <HomePage {...props} />;
-              }
-            }}
+            render={(props) =>
+              hasUser ? <Checkout {...props} /> : <Redirect to="/" />
+            }
           />
+
           <Route
             exact
-            path="/products/form"
-            render={(props) => {
-              if (hasUser) {
-                return <ProductForm {...props} />;
-              } else {
-                return <HomePage {...props} />;
-              }
-            }}
-          />
-          <Route
-            exact
-            path="/products/myproducts"
-            render={(props) => {
-              if (hasUser) {
-                return <MyProducts {...props} />;
-              } else {
-                return <HomePage {...props} />;
-              }
-            }}
-          />
-          <Route
             path="/dl/:component_name"
-            render={(props) => {
-              if (hasUser) {
-                return <DLHOME {...props} />;
-              } else {
-                return <HomePage {...props} />;
-              }
-            }}
+            render={(props) => <DLHOME {...props} userInfo={userInfo} hasUser={hasUser}/>}
           />
+
           {/* This will handle all routes that are for the profile section */}
           <Route
             exact
             path="/profile/:category"
-            render={(props) => {
-              if (hasUser) {
-                return <Profile {...props} />;
-              } else {
-                return <HomePage {...props} />;
-              }
-            }}
+            render={(props) =>
+              hasUser ? <Profile {...props} /> : <Redirect to="/" />
+            }
           />
           <Route
             exact
             path="/profile/:category/:itemId(\d+)"
-            render={(props) => {
-              if (hasUser) {
-                return <Profile {...props} />;
-              } else {
-                return <HomePage {...props} />;
-              }
-            }}
+            render={(props) =>
+              hasUser ? <Profile {...props} /> : <Redirect to="/" />
+            }
           />
 
           {/* Will redirect to home page if page does not exist */}

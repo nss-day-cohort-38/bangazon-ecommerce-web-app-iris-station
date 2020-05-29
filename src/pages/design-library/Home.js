@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { NavbarView, ButtonsView, FormsView, PaperView, MenuView } from "./Pages";
+import {
+  NavbarView,
+  ButtonsView,
+  FormsView,
+  PaperView,
+  MenuView,
+} from "./Pages";
 import { Navbar } from "../../components";
 
-const DLHOME = ({ match }) => {
+const DLHOME = ({ match, userInfo, hasUser }) => {
   const [pageView, setPageView] = useState("");
 
   useEffect(() => {
@@ -11,21 +17,31 @@ const DLHOME = ({ match }) => {
   return (
     <>
       <Navbar
+        userInfo={userInfo}
+        hasUser={hasUser}
         navArray={[
+          { title: "Buttons", route: "/dl/buttons" },
+          { title: "Cards", route: "/dl/cards" },
+          { title: "Expansions", route: "/dl/exasions" },
+          { title: "Forms", route: "/dl/forms" },
+          { title: "Menus", route: "/dl/menus" },
           {
             title: "Navbar",
+            route: "/dl/navbar",
           },
-          { title: "Buttons" },
-          { title: "Forms" },
-          { title: "Papers" },
-          { title: "Menues" },
+
+          { title: "Papers", route: "/dl/papers" },
+          { title: "Tables", route: "/dl/tables" },
         ]}
       />
-      {pageView === "navbar" && <NavbarView />}
-      {pageView === "menues" && <MenuView />}
       {pageView === "buttons" && <ButtonsView />}
+      {pageView === "cards" && <ButtonsView />}
+      {pageView === "expansions" && <ButtonsView />}
       {pageView === "forms" && <FormsView />}
+      {pageView === "menues" && <MenuView />}
+      {pageView === "navbar" && <NavbarView />}
       {pageView === "papers" && <PaperView />}
+      {pageView === "tables" && <PaperView />}
     </>
   );
 };

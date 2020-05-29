@@ -21,6 +21,11 @@
     justify-content: space-between;
     margin: 5%;
 }
+.product-image {
+    width: 50%;
+    height: 250px;
+}
+
 .product-specs{
     display: flex;
     flex-direction: column;

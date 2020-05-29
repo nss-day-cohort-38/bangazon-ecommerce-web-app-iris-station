@@ -57,49 +57,25 @@ const NavbarView = () => {
       ) : (
         <>
           <h1>Navbar Element</h1>
-          <Navbar
-            navArray={[
-              {
-                title: "Customers",
-                route: "#",
-              },
-              {
-                title: "Payments of this",
-                dropdown: true,
-                options: [
-                  {
-                    title: "Here",
-                    route: " ",
-                  },
-                  {
-                    title: "test",
-                  },
-                ],
-              },
-            ]}
-          />
+        
           <h1>Code Block</h1>
+          <p>The bellow is an example of the above navabr</p>
           <pre>
             {`
             <Navbar
               navArray={[
+                { title: "Buttons", route: "/dl/buttons" },
+                { title: "Cards", route: "/dl/cards" },
+                { title: "Expansions", route: "/dl/exasions" },
+                { title: "Forms", route: "/dl/forms" },
+                { title: "Menus", route: "/dl/menus" },
                 {
-                  title: "Customers",
-                  route: "#",
+                  title: "Navbar",
+                  route: "/dl/navbar",
                 },
-                {
-                  title: "Payments of this",
-                  dropdown: true,
-                  options: [
-                    {
-                      title: "Here",
-                      route: "#",
-                    },
-                    {
-                      title: "#",
-                    },
-                  ],
-                },
+      
+                { title: "Papers", route: "/dl/papers" },
+                { title: "Tables", route: "/dl/tables" },
               ]}
             />
             `}
