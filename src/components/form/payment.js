@@ -8,7 +8,7 @@ import { Message } from "semantic-ui-react";
 export default function PaymentForm({
   handleSubmit,
   handleChange,
-  formState,
+  formState = { merchantName: "" },
   submitMessage,
 }) {
   return (

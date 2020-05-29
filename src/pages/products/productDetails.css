@@ -22,6 +22,11 @@
     justify-content: space-between;
     margin: 5%;
 }
+.product-image {
+    width: 50%;
+    height: 250px;
+}
+
 .product-specs{
     display: flex;
     flex-direction: column;
@@ -45,4 +50,19 @@
     -webkit-box-shadow: 2px 2px 3px 4px rgba(204, 204, 204, 0.781);  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
   -moz-box-shadow:    2px 2px 3px 4px rgba(204, 204, 204, 0.781);;  /* Firefox 3.5 - 3.6 */
   box-shadow:         2px 2px 3px 4px rgba(204, 204, 204, 0.781);; 
+}
+
+.product-form-container {
+    width: 50%;
+    margin: 10px;
+    padding: 10px;
+    margin: 15px auto;
+}
+
+.product-form-page {
+    /* display: flex; */
+    width: 100%
+}
+.product-form {
+    width: 100%;
 }

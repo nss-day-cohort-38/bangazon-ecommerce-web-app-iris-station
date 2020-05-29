@@ -1,43 +1,44 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import {Link} from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 
-
-import { UserForm } from './index'
+import { UserForm } from "./index";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      {"Copyright © "}
+      <Link to="/">
         Iris Station
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100vh",
+  },
   paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -45,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = props => {
-  let formData = {}
+const SignUp = (props) => {
+  let formData = {};
   if (props.formData) {
     formData = props.formData;
   }
@@ -56,7 +57,7 @@ const SignUp = props => {
   const handleSubmit = props.handleSubmit;
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={classes.root} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -65,7 +66,7 @@ const SignUp = props => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <UserForm 
+        <UserForm
           handleFieldChange={handleFieldChange}
           handleSubmit={handleSubmit}
           failedLogin={failedLogin}
@@ -74,7 +75,7 @@ const SignUp = props => {
         />
         <Grid container justify="flex-end">
           <Grid item>
-            <Link href="/login" variant="body2">
+            <Link to="/login" variant="body2">
               Already have an account? Sign in
             </Link>
           </Grid>
@@ -85,6 +86,6 @@ const SignUp = props => {
       </Box>
     </Container>
   );
-}
+};
 
-export default SignUp
+export default SignUp;

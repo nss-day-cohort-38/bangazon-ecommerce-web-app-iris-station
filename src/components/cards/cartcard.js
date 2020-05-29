@@ -19,9 +19,6 @@ const CartCard = props => {
       </Card.Content>
       <Card.Content extra>
         <div className='ui two buttons'>
-          <Button basic color='green'>
-            Add Another
-          </Button>
           <Button basic color='red' onClick={()=> props.deleteProductFromOrder(props.product.id)}>
             Remove
           </Button>

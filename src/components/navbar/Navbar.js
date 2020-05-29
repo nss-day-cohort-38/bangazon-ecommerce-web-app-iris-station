@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Collapse,
   Navbar,
@@ -16,15 +16,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, NavLink } from "react-router-dom";
 import "../../styles/Navbar.css";
 
-const Example = (props, {
-  navArray = props.navArray,
+const Example = ({
+  navArray = [],
   color = "light",
   light = true,
   extraText = "",
+  userInfo,
+  hasUser,
+  clearUser,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+ 
 
   return (
     <div>
@@ -77,45 +82,38 @@ const Example = (props, {
               }
             })}
           </Nav>
-          <NavbarText>
-            {props.hasUser
-            ? <>
-                <NavItem>
-                  <Link
-                    to="/profile/view"
-                    >
-                    Profile
-                  </Link>
+          <Nav navbar>
+            {hasUser ? (
+              <>
+                <NavItem className="navbar-item-link">
+                  <Link to="/profile/view">Profile</Link>
                 </NavItem>
                 {/* TODO: make this not inline styling */}
-                <NavItem>
+                {userInfo.is_staff && (
+                  <NavItem className="navbar-item-link">
+                    <Link to="/dl/home">Design Library</Link>
+                  </NavItem>
+                )}
+                <NavItem className="navbar-item-link">
                   <span
-                    style={{cursor: 'pointer', color: 'blue'}}
-                    onClick={props.clearUser}
+                    style={{ cursor: "pointer", color: "#4183c4" }}
+                    onClick={clearUser}
                   >
                     Logout
                   </span>
                 </NavItem>
               </>
-            : <>
-                <NavItem>
-                  <Link
-                    to="/login"
-                  >
-                    Login
-                  </Link>
+            ) : (
+              <>
+                <NavItem className="navbar-item-link">
+                  <Link to="/login">Login</Link>
                 </NavItem>
-                <NavItem>
-                  <Link
-                    to="/register"
-                  >
-                    Register
-                  </Link>
+                <NavItem className="navbar-item-link">
+                  <Link to="/register">Register</Link>
                 </NavItem>
               </>
-            }
-
-          </NavbarText>
+            )}
+          </Nav>
         </Collapse>
       </Navbar>
     </div>
