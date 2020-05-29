@@ -5,7 +5,7 @@ const CartCard = props => {
 //this will just return the card item for products in the users cart
 
     return(
-        <Card>
+        <Card className="ccard">
       <Card.Content>
         <Image
           floated='right'

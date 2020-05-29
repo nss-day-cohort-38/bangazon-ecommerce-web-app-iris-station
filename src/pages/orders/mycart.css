@@ -1,0 +1,26 @@
+.cart-holder{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    
+}
+.cart-header{
+    align-self: center;
+    margin-top: 5px;
+}
+.cart-button-container{
+    align-self: center;
+}
+.cart-contents{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.ccard{
+    margin: 10px !important;
+}
+
+.sorry{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
