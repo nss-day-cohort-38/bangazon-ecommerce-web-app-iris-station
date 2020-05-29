@@ -51,14 +51,19 @@ export default function MyListCard(props) {
     return(
       <div className="custom-card">
         <div className="cc-left">
-          
-          <div className="cc-img">
-            <img src={props.product.image_path} alt={props.product.title} />
+        <div
+            className="cc-img"
+            style={{
+              backgroundImage: `url(${props.product.image_path})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
           </div>
         </div>
-        <div className="cc-mid"><div className="cc-title">{props.product.title}</div><p className="text">{props.product.description}</p></div>
         <div className="cc-right">
-          <div></div>
+        <div className="cc-title">{props.product.title}</div><p className="text">{props.product.description}</p>
           <div className="cc-price">Only ${props.product.price}</div>
           <div className="cc-prod-buttons">
           <Button basic color='red' onClick={()=> props.deleteThisProduct(props.product.id)}>

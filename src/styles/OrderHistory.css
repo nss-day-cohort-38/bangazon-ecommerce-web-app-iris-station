@@ -6,8 +6,24 @@
     max-height: 85vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding: 0 !important;
     /* scroll-behavior: smooth; */
     
+}
+
+.order-details-title {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 900;
+    background-color: white;
+    padding: 10px;
+}
+
+.order-details-content {
+    padding: 10px;
 }
 
 .order-history-list {

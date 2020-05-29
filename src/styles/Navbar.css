@@ -3,3 +3,8 @@
     display: inline-block;
     line-height: 20px;
   }
+
+  .navbar-right-side{
+    display: flex;
+    justify-content: flex-end;
+  }
