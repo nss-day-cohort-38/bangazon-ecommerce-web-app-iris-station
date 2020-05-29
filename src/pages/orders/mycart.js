@@ -31,8 +31,10 @@ const MyCart = props => {
                 if(arr[0].payment_type_id === null){
                     setOrder({"order": arr[0]})
                     opm.getProductsbyOrder(token, arr[0].id).then(products=> {
-            
-                        setProducts(products)
+                        const realProducts = products.filter(prod=> prod.product.deleted === null)
+                        const deletedProducts = products.filter(prod=> prod.product.deleted !== null)
+                        deletedProducts.forEach(proddy=> deleteProductFromOrder(proddy.id))
+                        setProducts(realProducts)
                     })
                 }
             }
