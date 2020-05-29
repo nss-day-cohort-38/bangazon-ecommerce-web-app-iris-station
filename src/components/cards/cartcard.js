@@ -14,7 +14,7 @@ const CartCard = props => {
         />
         <Card.Header>{props.product.product.title}</Card.Header>
         <Card.Description>
-        <p maxlength="150">{props.product.product.description}</p>
+        <p maxLength="150">{props.product.product.description}</p>
         </Card.Description>
       </Card.Content>
       <Card.Content extra>

@@ -12,6 +12,7 @@ import ProductForm from "./products/ProductForm";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
+import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
 
 const Routes = () => {
@@ -25,7 +26,6 @@ const Routes = () => {
     setHasUser(isAuthenticated());
   };
 
-  // TODO: Implement this with router/navbar
   const clearUser = () => {
     sessionStorage.clear();
     setHasUser(isAuthenticated());
@@ -33,25 +33,22 @@ const Routes = () => {
 
   return (
     <Router>
-      {/* 
-        TODO: Login and register should conditionally display,
-        depending on if a user is logged in or not
-       */}
-
       <Navbar
         navArray={
           hasUser
             ? [
                 { title: "Sell a Product", route: "/products/form" },
-                { title: "Profile" },
-                { title: <i className="shopping cart icon"></i>, route: "/mycart" },
+                { title: "My Products", route: "/products/myproducts" },
+                {
+                  title: <i className="shopping cart icon"></i>,
+                  route: "/mycart",
+                }
               ]
             : [
-                { title: "Login", route: "login" },
-                { title: "Register", route: "register" },
               ]
         }
         hasUser={hasUser}
+        clearUser={clearUser}
       />
 
       <div className="body-container">
@@ -131,23 +128,35 @@ const Routes = () => {
               }
             }}
           />
-           {/* ROUTE FOR CHECKOUT */}
-        <Route 
-        exact path = "/checkout"
-        render = {props=> {
-          if(hasUser){
-            return (<Checkout {...props} />)
-          } else {
-            return <HomePage {...props} />
-          }
-        }}
-        />
+          {/* ROUTE FOR CHECKOUT */}
+          <Route
+            exact
+            path="/checkout"
+            render={(props) => {
+              if (hasUser) {
+                return <Checkout {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
           <Route
             exact
             path="/products/form"
             render={(props) => {
               if (hasUser) {
                 return <ProductForm {...props} />;
+              } else {
+                return <HomePage {...props} />;
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/products/myproducts"
+            render={(props) => {
+              if (hasUser) {
+                return <MyProducts {...props} />;
               } else {
                 return <HomePage {...props} />;
               }
@@ -186,7 +195,6 @@ const Routes = () => {
               }
             }}
           />
-          
 
           {/* Will redirect to home page if page does not exist */}
           <Redirect to="/" />
@@ -196,7 +204,6 @@ const Routes = () => {
   );
 };
 
-// const Home = () =>
 const Customer = () => "Customer page";
 const Order = () => "Orders page";
 const Payment = () => "Payment page";

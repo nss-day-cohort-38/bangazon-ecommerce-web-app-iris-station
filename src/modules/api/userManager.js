@@ -1,8 +1,8 @@
-const url = "http://localhost:8000"
+import baseurl from '../baseurl'
 
 export default {
   register(userToPost) {
-    return fetch(`${url}/register/`, {
+    return fetch(`${baseurl}/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -11,12 +11,42 @@ export default {
     }).then(result => result.json());
   },
   login(userToLogin) {
-    return fetch(`${url}/login/`, {
+    return fetch(`${baseurl}/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(userToLogin)
     }).then(result => result.json());
+  },
+  getCustomer(token) {
+    return fetch(`${baseurl}/customers`, {
+      method: "GET",
+      headers: {
+          'content-type': "application/json",
+          'Accept': 'application/json',
+          'Authorization': `Token ${token}`
+      }
+    }).then(result => result.json())
+  },
+  updateCustomer(token, customerId, updatedCustomer) {
+    return fetch(`${baseurl}/customers/${customerId}`, {
+      method: "PUT",
+      headers: {
+          'content-type': "application/json",
+          'Authorization': `Token ${token}`
+      },
+      body: JSON.stringify(updatedCustomer)
+    })
+  },
+  updateUser(token, userId, updatedUser) {
+    return fetch(`${baseurl}/users/${userId}`, {
+      method: "PUT",
+      headers: {
+          'content-type': "application/json",
+          'Authorization': `Token ${token}`
+      },
+      body: JSON.stringify(updatedUser)
+    })
   }
 }
