@@ -17,7 +17,6 @@ const PaymentPage = ({}) => {
   const getPayments = () => {
     PaymentDataManager.getAll(window.sessionStorage.getItem("token")).then(
       (resp) => {
-        console.log(resp);
 
         setPaymentType(resp);
         // Stops loading
@@ -37,7 +36,6 @@ const PaymentPage = ({}) => {
       window.sessionStorage.getItem("token"),
       paymentId
     ).then((resp) => {
-      console.log(resp);
       getPayments()
     });
   };
@@ -49,9 +47,9 @@ const PaymentPage = ({}) => {
 
     <div>
       {/* // Add grid to seperate this into two parts. */}
-      <h1>Your Orders</h1>
+      <h1>Your Payment Types</h1>
       <Grid container spacing={0}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           {listLoading ? (
             <Paper>
               <CircularProgress />

@@ -21,6 +21,11 @@
     justify-content: space-between;
     margin: 5%;
 }
+.product-image {
+    width: 50%;
+    height: 250px;
+}
+
 .product-specs{
     display: flex;
     flex-direction: column;
@@ -37,4 +42,19 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 5px;
+}
+
+.product-form-container {
+    width: 50%;
+    margin: 10px;
+    padding: 10px;
+    margin: 15px auto;
+}
+
+.product-form-page {
+    /* display: flex; */
+    width: 100%
+}
+.product-form {
+    width: 100%;
 }

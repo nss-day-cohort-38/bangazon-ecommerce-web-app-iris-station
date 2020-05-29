@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import { Button, Paper } from "../../components";
+import { Message } from "semantic-ui-react";
+import Typography from "@material-ui/core/Typography";
 
 const ProductForm = (props) => {
   const [product, setProduct] = useState({
@@ -8,10 +15,10 @@ const ProductForm = (props) => {
     quantity: "",
     location: "",
     image_path: "",
-    product_type_id: 1
+    product_type_id: "",
   });
   const [producttypes, setProducttypes] = useState([]);
-
+  const [submitMessage, setSubmitMessage] = useState("");
   const handleProductChange = (event) => {
     const stateToChange = { ...product };
     stateToChange[event.target.id] = event.target.value;
@@ -28,33 +35,47 @@ const ProductForm = (props) => {
       quantity: product.quantity,
       location: product.location,
       image_path: product.image_path,
-      product_type_id: product.product_type_id
+      product_type_id: product.product_type_id,
     };
-    if (typeof(newProduct.title) != "string" || newProduct.title.length === 0) { alert ("The title field must contain text.")}
-    else if (typeof(newProduct.description) != "string" || newProduct.description.length === 0) { alert ("The description field must contain text.")}
-    else if (typeof(newProduct.location) != "string" || newProduct.location.length === 0) { alert ("The location field must contain text.")}
-    else if (typeof(newProduct.image_path) != "string" || newProduct.image_path.length === 0) { alert ("The image URL field must contain text.")}
-    else if (newProduct.price.length === 0) { alert ("The price field must contain a number.")}
-    else if (newProduct.quantity.length === 0) { alert ("The quantity field must contain a number.")}
-    else{
-
-    fetch("http://localhost:8000/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": `Token ${sessionStorage.getItem("token")}`
-
-      },
-      body: JSON.stringify(newProduct),
-    })
-      .then((response) => response.json())
-      .then((parsedResponse) => {
-        props.history.push({
-          pathname: `/products/${parsedResponse.id}`,
+    if (typeof newProduct.title != "string" || newProduct.title.length === 0) {
+      alert("The title field must contain text.");
+    } else if (
+      typeof newProduct.description != "string" ||
+      newProduct.description.length === 0
+    ) {
+      alert("The description field must contain text.");
+    } else if (
+      typeof newProduct.location != "string" ||
+      newProduct.location.length === 0
+    ) {
+      alert("The location field must contain text.");
+    } else if (
+      typeof newProduct.image_path != "string" ||
+      newProduct.image_path.length === 0
+    ) {
+      alert("The image URL field must contain text.");
+    } else if (newProduct.price.length === 0) {
+      alert("The price field must contain a number.");
+    } else if (newProduct.quantity.length === 0) {
+      alert("The quantity field must contain a number.");
+    } else {
+      fetch("http://localhost:8000/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Token ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(newProduct),
+      })
+        .then((response) => response.json())
+        .then((parsedResponse) => {
+          props.history.push({
+            pathname: `/products/${parsedResponse.id}`,
+          });
         });
-      });
-  }};
+    }
+  };
 
   const getProductTypes = () => {
     fetch("http://localhost:8000/producttypes")
@@ -70,93 +91,100 @@ const ProductForm = (props) => {
   }, []);
 
   return (
-    <form className="product_form" onSubmit={handleSubmit}>
-      <h1 className="product_header">New Product Form</h1>
-      <fieldset>
-        <label htmlFor="title"> Title: </label>
-        <input
-          onChange={handleProductChange}
-          type="text"
-          id="title"
-          placeholder="Title"
-          required=""
-          autoFocus=""
-        />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="price"> Price: </label>
-        <input
-          onChange={handleProductChange}
-          type="number"
-          id="price"
-          placeholder="Price"
-          required=""
-          autoFocus=""
-          step=".01"
-        />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="description"> Description: </label>
-        <input
-          onChange={handleProductChange}
-          type="text"
-          id="description"
-          placeholder="Description"
-          required=""
-          autoFocus=""
-        />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="quantity"> Quantity: </label>
-        <input
-          onChange={handleProductChange}
-          type="number"
-          id="quantity"
-          placeholder="Quantity"
-          required=""
-          autoFocus=""
-        />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="location"> Location: </label>
-        <input
-          onChange={handleProductChange}
-          type="text"
-          id="location"
-          placeholder="Location"
-          required=""
-          autoFocus=""
-        />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="image_path"> Image URL: </label>
-        <input
-          onChange={handleProductChange}
-          type="text"
-          id="image_path"
-          placeholder="Image URL"
-          required=""
-          autoFocus=""
-        />
-      </fieldset>
-      <fieldset>
-        <label>Product Type: </label>
-        <select
-          id="product_type_id"
-          onChange={handleProductChange}
-          value={product.product_type_id}
-        >
-          {producttypes.map((producttype) => (
-            <option key={producttype.id} value={producttype.id}>
-              {producttype.name}
-            </option>
-          ))}
-        </select>
-      </fieldset>
-      <fieldset>
-        <button type="submit">Add New Product for Sale</button>
-      </fieldset>
-    </form>
+    <div className="product-form-page">
+      <Paper classProps="product-form-container">
+        <h1 className="product_header">New Product Form</h1>
+        <form className="product_form" onSubmit={handleSubmit}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="title"
+                label="Title"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                required
+                type="number"
+                id="price"
+                label="Price"
+                fullWidth
+                inputProps={{ step: 0.01 }}
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                required
+                type="number"
+                id="quantity"
+                label="Quantity"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="image_path"
+                label="Image URL"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                required
+                id="location"
+                label="Location"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <InputLabel htmlFor="age-native-simple">Product Type</InputLabel>
+              <Select
+                id="product_type_id"
+                native
+                // value={product.product_type_id}
+                onChange={handleProductChange}
+                fullWidth
+                required
+                label="Image URL"
+              >
+                <option aria-label="None" value="">
+                  Choose Item
+                </option>
+                {producttypes.map((producttype) => (
+                  <option key={producttype.id} value={producttype.id}>
+                    {producttype.name}
+                  </option>
+                ))}
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="description"
+                label="Description"
+                multiline
+                required
+                fullWidth
+                rowsMax={12}
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" content="Add New Product for Sale" />
+            </Grid>
+            
+          </Grid>
+        </form>
+      </Paper>
+    </div>
   );
 };
 
