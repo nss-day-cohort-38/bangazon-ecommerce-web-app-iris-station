@@ -3,49 +3,58 @@
 import React, { useState, useEffect } from "react";
 import productManager from "../../modules/productManager";
 import orderManager from "../../modules/orderManager";
+import { Message } from "semantic-ui-react";
+
 import order_product_manager from "../../modules/order_product_manager";
 import "./productDetails.css";
 
 const ProductDetails = (props) => {
   const [product, setProduct] = useState({});
   const token = sessionStorage.getItem("token");
-
+  const [submitMessage, setSubmitMessage] = useState("");
   const handleAddToCard = (productId) => {
-    orderManager.getOrders(token).then((arr) => {
-      if (arr.length > 0) {
-        if (arr[0].payment_type_id != null) {
-          orderManager.postOrder(token).then((obj) => {
-            const productRelationship = {
-              order_id: obj.id,
-              product_id: productId,
-            };
-            order_product_manager
-              .postNewOrder(token, productRelationship)
-              .then(() => props.history.push("/"));
-          });
-        } else {
-          const productRelationship = {
-            order_id: arr[0].id,
-            product_id: productId,
-          };
-          order_product_manager
-            .postNewOrder(token, productRelationship)
-            .then(() => props.history.push("/"));
-        }
-      } else {
-        orderManager.postOrder(token).then((obj) => {
-          const productRelationship = {
-            order_id: obj.id,
-            product_id: productId,
-          };
-          order_product_manager
-            .postNewOrder(token, productRelationship)
-            .then(() => props.history.push("/"));
-        });
-      }
-    });
+    token
+      ? orderManager.getOrders(token).then((arr) => {
+          if (arr.length > 0) {
+            if (arr[0].payment_type_id != null) {
+              orderManager.postOrder(token).then((obj) => {
+                const productRelationship = {
+                  order_id: obj.id,
+                  product_id: productId,
+                };
+                order_product_manager
+                  .postNewOrder(token, productRelationship)
+                  .then(() => props.history.push("/"));
+              });
+            } else {
+              const productRelationship = {
+                order_id: arr[0].id,
+                product_id: productId,
+              };
+              order_product_manager
+                .postNewOrder(token, productRelationship)
+                .then(() => props.history.push("/"));
+            }
+          } else {
+            orderManager.postOrder(token).then((obj) => {
+              const productRelationship = {
+                order_id: obj.id,
+                product_id: productId,
+              };
+              order_product_manager
+                .postNewOrder(token, productRelationship)
+                .then(() => props.history.push("/"));
+            });
+          }
+        })
+      : setMessage();
   };
 
+  const setMessage = ( message = "Login First To Add to cart") => {
+    setSubmitMessage(message);
+
+    window.setTimeout(() => setSubmitMessage(""), 2000);
+  };
   useEffect(() => {
     //fetch the product here
     productManager
@@ -81,7 +90,7 @@ const ProductDetails = (props) => {
           <div className="product-description">
             <p className="prod-description">{product.description}</p>
           </div>
-
+          {submitMessage && <Message negative>{submitMessage}</Message>}
           <div className="icon-container-details">
             <button
               className="ui button"

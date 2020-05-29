@@ -1,6 +1,6 @@
 // Made by Kurt this is just a card for the products on the home page  using semantic react
 
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -16,6 +16,8 @@ import { red } from "@material-ui/core/colors";
 // import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Message } from "semantic-ui-react";
+
 import "./homecss.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +47,7 @@ export default function HomeListCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const token = sessionStorage.getItem("token");
-
+  const [submitMessage, setSubmitMessage] = useState("");
   if (props.product.id % 5 === 0) {
     //this returns a different card to break up the same cards from displaying to the dom (same information but adds price)
     return (
@@ -60,6 +62,14 @@ export default function HomeListCard(props) {
               backgroundRepeat: "no-repeat",
             }}
           >
+            {props.addMessage && (
+              <Message
+                positive={props.addMessage === "Added to Cart"}
+                negative={props.addMessage !== "Added to Cart"}
+              >
+                {props.addMessage}
+              </Message>
+            )}
           </div>
         </div>
 
@@ -67,6 +77,7 @@ export default function HomeListCard(props) {
           <div className="cc-title">{props.product.title}</div>
           <div className="cc-price">Only ${props.product.price}</div>
           <p className="text">{props.product.description}</p>
+
           <div className="cc-prod-buttons">
             <IconButton
               aria-label="add to card"
@@ -74,6 +85,7 @@ export default function HomeListCard(props) {
             >
               <i className="plus icon"></i>
             </IconButton>
+
             <button
               className="ui button"
               onClick={() =>
@@ -95,7 +107,7 @@ export default function HomeListCard(props) {
           //       R
           //     </Avatar>
           //   }
-          
+
           title={props.product.title}
           subheader={props.product.created_at}
         />
@@ -119,9 +131,14 @@ export default function HomeListCard(props) {
           >
             <i className="plus icon"></i>
           </IconButton>
-          {/* <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton> */}
+          {props.addMessage && (
+            <Message
+              positive={props.addMessage === "Added to Cart"}
+              negative={props.addMessage !== "Added to Cart"}
+            >
+              {props.addMessage}
+            </Message>
+          )}
           <button
             className="ui button"
             onClick={() => props.history.push(`/products/${props.product.id}`)}

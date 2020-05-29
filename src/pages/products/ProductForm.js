@@ -3,6 +3,9 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
+import { Button, Paper } from "../../components";
+import { Message } from "semantic-ui-react";
+import Typography from "@material-ui/core/Typography";
 
 const ProductForm = (props) => {
   const [product, setProduct] = useState({
@@ -15,7 +18,7 @@ const ProductForm = (props) => {
     product_type_id: "",
   });
   const [producttypes, setProducttypes] = useState([]);
-
+  const [submitMessage, setSubmitMessage] = useState("");
   const handleProductChange = (event) => {
     const stateToChange = { ...product };
     stateToChange[event.target.id] = event.target.value;
@@ -88,94 +91,100 @@ const ProductForm = (props) => {
   }, []);
 
   return (
-    <form className="product_form" onSubmit={handleSubmit}>
-      <h1 className="product_header">New Product Form</h1>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="title"
-            label="Title"
-            fullWidth
-            onChange={handleProductChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            type="number"
-            id="price"
-            label="Price"
-            fullWidth
-            inputProps={{ step: 0.01 }}
-            onChange={handleProductChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="description"
-            label="Description"
-            multiline
-            required
-            fullWidth
-            rowsMax={12}
-            onChange={handleProductChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            type="number"
-            id="quantity"
-            label="Quantity"
-            fullWidth
-            onChange={handleProductChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="location"
-            label="Location"
-            fullWidth
-            onChange={handleProductChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="image_path"
-            label="Image URL"
-            fullWidth
-            onChange={handleProductChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputLabel htmlFor="age-native-simple">Product Type</InputLabel>
-          <Select
-            id="product_type_id"
-            native
-            // value={product.product_type_id}
-            onChange={handleProductChange}
-            fullWidth
-            required
-          >
-            <option aria-label="None" value="">
-              Choose Item
-            </option>
-            {producttypes.map((producttype) => (
-              <option key={producttype.id} value={producttype.id}>
-                {producttype.name}
-              </option>
-            ))}
-          </Select>
-        </Grid>
-      </Grid>
+    <div className="product-form-page">
+      <Paper classProps="product-form-container">
+        <h1 className="product_header">New Product Form</h1>
+        <form className="product_form" onSubmit={handleSubmit}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="title"
+                label="Title"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                required
+                type="number"
+                id="price"
+                label="Price"
+                fullWidth
+                inputProps={{ step: 0.01 }}
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                required
+                type="number"
+                id="quantity"
+                label="Quantity"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
 
-      <fieldset>
-        <button type="submit">Add New Product for Sale</button>
-      </fieldset>
-    </form>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="image_path"
+                label="Image URL"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <TextField
+                required
+                id="location"
+                label="Location"
+                fullWidth
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <InputLabel htmlFor="age-native-simple">Product Type</InputLabel>
+              <Select
+                id="product_type_id"
+                native
+                // value={product.product_type_id}
+                onChange={handleProductChange}
+                fullWidth
+                required
+                label="Image URL"
+              >
+                <option aria-label="None" value="">
+                  Choose Item
+                </option>
+                {producttypes.map((producttype) => (
+                  <option key={producttype.id} value={producttype.id}>
+                    {producttype.name}
+                  </option>
+                ))}
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="description"
+                label="Description"
+                multiline
+                required
+                fullWidth
+                rowsMax={12}
+                onChange={handleProductChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" content="Add New Product for Sale" />
+            </Grid>
+            
+          </Grid>
+        </form>
+      </Paper>
+    </div>
   );
 };
 
