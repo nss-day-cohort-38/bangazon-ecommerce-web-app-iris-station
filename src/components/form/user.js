@@ -39,7 +39,7 @@ const UserForm = props => {
               label="First Name"
               autoFocus
               onChange={handleFieldChange}
-              value={isEdit ? props.formData.firstName : ""}
+              value={isEdit ? props.formData.firstName : null}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -52,7 +52,7 @@ const UserForm = props => {
               name="lastName"
               autoComplete="lname"
               onChange={handleFieldChange}
-              value={isEdit ? props.formData.lastName : ""}
+              value={isEdit ? props.formData.lastName : null}
             />
           </Grid>
           <Grid item xs={12}>
@@ -65,7 +65,7 @@ const UserForm = props => {
               name="username"
               autoComplete="username"
               onChange={handleFieldChange}
-              value={isEdit ? props.formData.username : ""}
+              value={isEdit ? props.formData.username : null}
             />
           </Grid>
           <Grid item xs={12}>
@@ -78,7 +78,7 @@ const UserForm = props => {
               name="email"
               autoComplete="email"
               onChange={handleFieldChange}
-              value={isEdit ? props.formData.email : ""}
+              value={isEdit ? props.formData.email : null}
             />
           </Grid>
           {isEdit 
@@ -109,7 +109,7 @@ const UserForm = props => {
               id="address"
               autoComplete="address"
               onChange={handleFieldChange}
-              value={isEdit ? props.formData.address : ""}
+              value={isEdit ? props.formData.address : null}
             />
           </Grid>
           <Grid item xs={12}>
@@ -122,7 +122,7 @@ const UserForm = props => {
               id="phoneNumber"
               autoComplete="phoneNumber"
               onChange={handleFieldChange}
-              value={isEdit ? props.formData.phoneNumber : ""}
+              value={isEdit ? props.formData.phoneNumber : null}
             />
           </Grid>
           {/* <Grid item xs={12}>
