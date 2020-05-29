@@ -3,9 +3,10 @@ import PTM from "../../modules/kk-paymenttypes"
 import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
 import depleteProduct from "./depleteProduct"
+import "./checkout.css"
 
 const Checkout = props => {
-    const [order, setOrder] = useState({})
+    const [order, setOrder] = useState({"id": "", "created_at": "", "payment_type_id": "","customer":{"address":"","id": ""}})
     const [pTypes, setPTypes] = useState([])
     const [selectedPaymentId, setSelectedPaymentId] = useState("")
     const [products, setProducts] = useState([])
@@ -32,6 +33,7 @@ const Checkout = props => {
         OrderManager.getOrders(token).then(arr=> {
                     if(arr.length>=1){
                         if(arr[0].payment_type_id === null){
+                          
                             setOrder(arr[0])
                             opm.getProductsbyOrder(token, arr[0].id).then(products=> {
                     
@@ -44,18 +46,26 @@ const Checkout = props => {
 
     return(
         <>
-        <div className="center">
+        <div className="c-container">
+            <div className="checkout-container">
+            <div className="header"><h1>Review...</h1></div>
+            <div className="shipping-container">
+                <h2>Shipping Address:   {order=== ""? ('no address supplied'): order.customer.address}</h2>
+            </div>
+            <div className="select-container">
             <form>
                 <select onChange={selectPaymentId} value={selectedPaymentId}>
-                    <option value="" disabled>***Please choose one***</option>
+                    <option value="" disabled>---Please choose one---</option>
                     {pTypes.map(pt=>(
                         <option value={pt.id} key={pt.id} id="payment_id">{pt.merchant_name} ***{pt.account_number.substr(pt.account_number.length -4)}</option>
                     ))}
                 </select>
 
             </form>
+            </div>
             <div className="checkout-btn-container">
-                <button onClick={()=> handleSubmit()}>Checkout</button>
+                <button class="ui primary button" onClick={()=> handleSubmit()}>Checkout</button>
+            </div>
             </div>
         </div>
         </>

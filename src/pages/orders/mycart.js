@@ -5,12 +5,14 @@ import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
 import {Card} from 'semantic-ui-react'
 import CartCard from "../../components/cards/cartcard"
+import "./mycart.css"
 
 const MyCart = props => {
     const [products, setProducts] = useState([])
     const [order, setOrder] = useState({"order": null})
     const [reload, setReload] = useState(false)
     const token = sessionStorage.getItem('token')
+    
 
 
     const deleteProductFromOrder= (id)=> {
@@ -29,8 +31,10 @@ const MyCart = props => {
                 if(arr[0].payment_type_id === null){
                     setOrder({"order": arr[0]})
                     opm.getProductsbyOrder(token, arr[0].id).then(products=> {
-            
-                        setProducts(products)
+                        const realProducts = products.filter(prod=> prod.product.deleted === null)
+                        const deletedProducts = products.filter(prod=> prod.product.deleted !== null)
+                        deletedProducts.forEach(proddy=> deleteProductFromOrder(proddy.id))
+                        setProducts(realProducts)
                     })
                 }
             }
@@ -41,8 +45,10 @@ const MyCart = props => {
         //this will render if there is no current open order
         return (
             <>
+            <div className="sorry">
             <h1>Please start a new order to view your cart</h1>
             <h5>You can start a new order by adding a product to cart from the home or product details page</h5>
+            </div>
             </>
         )
     }else {
@@ -58,7 +64,7 @@ const MyCart = props => {
                     </Card.Group>
                 </div>
                 <div className="cart-button-container">
-                    <button onClick={()=> props.history.push('/checkout')}>Checkout</button>
+                    <button  class="ui primary button" onClick={()=> props.history.push('/checkout')}>Checkout</button>
                 </div>
             </div>
             </>
