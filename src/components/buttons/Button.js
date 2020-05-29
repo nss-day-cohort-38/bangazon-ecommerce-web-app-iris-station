@@ -5,7 +5,7 @@ import "semantic-ui-css/semantic.min.css";
 const Button = ({
   handleClick = () => "",
   content = "Button Text",
-  color = "",
+  color,
   circular = false,
   loading = false,
   disabled = false,
@@ -20,7 +20,7 @@ const Button = ({
     circular={circular}
     onClick={handleClick}
     icon={icon ? true : false}
-    labelPosition={icon ? "right" : false}
+    labelPosition={icon && "right"}
     type={type ? type : ""}
   >
     {children ? children : content}
