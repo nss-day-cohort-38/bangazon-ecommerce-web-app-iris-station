@@ -4,6 +4,7 @@ import {
   Route,
   Switch,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 import { DLHOME, Profile } from "./index";
 import { Navbar } from "../components";
@@ -17,10 +18,11 @@ import { MyCart, Checkout } from "./orders/index";
 import { userManager } from "../modules";
 
 const Routes = () => {
+  let history = useHistory();
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
-
   const [hasUser, setHasUser] = useState(isAuthenticated());
   const [userInfo, setUserInfo] = useState({});
+  const [showNav, setShowNav] = useState(true);
 
   const setUserToken = (resp) => {
     sessionStorage.setItem("token", resp.token);
@@ -42,12 +44,6 @@ const Routes = () => {
       });
   };
 
-  useEffect(() => {
-    if (hasUser !== Object.keys(userInfo) > 0) {
-      getUserInfo();
-    }
-  }, [hasUser]);
-
   return (
     <Router>
       <Navbar
@@ -67,9 +63,32 @@ const Routes = () => {
         userInfo={userInfo}
         clearUser={clearUser}
       />
+      )
+      <Switch>
+        <Route
+          exact
+          path="/login"
+          render={(props) =>
+            hasUser ? (
+              <Redirect to="/" />
+            ) : (
+              <Login setUserToken={setUserToken} {...props} />
+            )
+          }
+        />
 
-      <div className="body-container">
-        <Switch>
+        <div className="body-container">
+          <Route
+            exact
+            path="/register"
+            render={(props) =>
+              hasUser ? (
+                <Redirect to="/" />
+              ) : (
+                <Register setUserToken={setUserToken} {...props} />
+              )
+            }
+          />
           <Route exact path="/" render={(props) => <HomePage {...props} />} />
 
           <Route
@@ -97,30 +116,6 @@ const Routes = () => {
                 {...props}
               />
             )}
-          />
-
-          <Route
-            exact
-            path="/login"
-            render={(props) =>
-              hasUser ? (
-                <Redirect to="/" />
-              ) : (
-                <Login setUserToken={setUserToken} {...props} />
-              )
-            }
-          />
-
-          <Route
-            exact
-            path="/register"
-            render={(props) =>
-              hasUser ? (
-                <Redirect to="/" />
-              ) : (
-                <Register setUserToken={setUserToken} {...props} />
-              )
-            }
           />
 
           {/* If not Authenticated, this route will take you to the login page */}
@@ -153,7 +148,9 @@ const Routes = () => {
           <Route
             exact
             path="/dl/:component_name"
-            render={(props) => <DLHOME {...props} userInfo={userInfo} hasUser={hasUser}/>}
+            render={(props) => (
+              <DLHOME {...props} userInfo={userInfo} hasUser={hasUser} />
+            )}
           />
 
           {/* This will handle all routes that are for the profile section */}
@@ -171,18 +168,26 @@ const Routes = () => {
               hasUser ? <Profile {...props} /> : <Redirect to="/" />
             }
           />
-
-          {/* Will redirect to home page if page does not exist */}
-          <Redirect to="/" />
-        </Switch>
-      </div>
+        </div>
+        {/* Will redirect to home page if page does not exist */}
+        <Redirect to="/" />
+      </Switch>
     </Router>
   );
 };
 
-const Customer = () => "Customer page";
-const Order = () => "Orders page";
-const Payment = () => "Payment page";
-const Product = () => "Product page";
-
+const useReactPath = () => {
+  const [path, setPath] = React.useState(window.location.pathname);
+  const listenToPopstate = () => {
+    const winPath = window.location.pathname;
+    setPath(winPath);
+  };
+  React.useEffect(() => {
+    window.addEventListener("popstate", listenToPopstate);
+    return () => {
+      window.removeEventListener("popstate", listenToPopstate);
+    };
+  }, []);
+  return path;
+};
 export { Routes };
