@@ -45,8 +45,10 @@ const MyCart = props => {
         //this will render if there is no current open order
         return (
             <>
+            <div className="sorry">
             <h1>Please start a new order to view your cart</h1>
             <h5>You can start a new order by adding a product to cart from the home or product details page</h5>
+            </div>
             </>
         )
     }else {

@@ -18,3 +18,9 @@
 .ccard{
     margin: 10px !important;
 }
+
+.sorry{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
