@@ -41,7 +41,15 @@ const AddPaymentPage = () => {
       if (value > month) {
         setYearChoices([...Array(21).keys()].map((x) => x + Number(year)));
       } else {
-        setYearChoices([...Array(20).keys()].map((x) => x + Number(year) + 1));
+        let years = [...Array(20).keys()].map((x) => x + Number(year) + 1);
+        setYearChoices(years);
+
+        if (paymentForm.expirationYear == year) {
+          setPaymentForm((prevState) => ({
+            ...prevState,
+            expirationYear: years[0],
+          }));
+        }
       }
     }
   };

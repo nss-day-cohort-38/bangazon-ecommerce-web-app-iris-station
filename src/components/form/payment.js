@@ -58,7 +58,7 @@ export default function PaymentForm({
               <FormHelperText>{formErrors.merchantName}</FormHelperText>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={4}>
             <FormControl
               error={formErrors.accountNumber ? true : false}
               fullWidth
