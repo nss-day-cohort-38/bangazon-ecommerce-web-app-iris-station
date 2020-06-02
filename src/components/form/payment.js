@@ -15,10 +15,8 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: 0,
     padding: 0,
-  },
-  selectEmpty: {
-    // marginTop: theme.spacing(2),
-  },
+  }
+
 }));
 
 export default function PaymentForm({
@@ -147,7 +145,7 @@ export default function PaymentForm({
           </Grid>
           <Grid item xs={12}>
             {errorMessage && (
-              <Typography variant="h8" gutterBottom>
+              <Typography variant="h6" gutterBottom>
                 <Message negative>{errorMessage}</Message>
               </Typography>
             )}
