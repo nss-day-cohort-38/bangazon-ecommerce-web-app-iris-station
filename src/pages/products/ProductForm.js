@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { Button, Paper } from "../../components";
 import { Message } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
@@ -128,12 +130,29 @@ const ProductForm = (props) => {
                 onChange={handleProductChange}
               />
             </Grid>
-
+            {/* Reference: https://kiranvj.com/blog/blog/file-upload-in-material-ui/ */}
             <Grid item xs={12} md={6}>
               <TextField
+                style={{display: 'none'}}
+                fullWidth
+                accept="image/*"
+                id="upload-photo"
                 name="upload-photo"
+                label="Image"
                 type="file"
+                onChange={handleProductChange}
               />
+              {/* https://material-ui.com/components/buttons/#upload-button */}
+              <label htmlFor="upload-photo">
+                <IconButton
+                  variant="contained"
+                  aria-label="upload picture"
+                  color="default"
+                  component="span"
+                >
+                  <PhotoCamera /> Upload Photo
+                </IconButton>
+              </label>
               {/* OLD URL STYLE INPUT */}
               {/* <TextField
                 required
