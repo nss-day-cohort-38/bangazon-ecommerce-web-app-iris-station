@@ -56,6 +56,8 @@ const ProductForm = (props) => {
       alert("The image URL field must contain text.");
     } else if (newProduct.price.length === 0) {
       alert("The price field must contain a number.");
+    } else if (newProduct.price > 10000) {
+      alert("The listing price may not exceed $10,000.00");
     } else if (newProduct.quantity.length === 0) {
       alert("The quantity field must contain a number.");
     } else {
