@@ -129,12 +129,17 @@ const ProductForm = (props) => {
 
             <Grid item xs={12} md={6}>
               <TextField
+                name="upload-photo"
+                type="file"
+              />
+              {/* OLD URL STYLE INPUT */}
+              {/* <TextField
                 required
                 id="image_path"
                 label="Image URL"
                 fullWidth
                 onChange={handleProductChange}
-              />
+              /> */}
             </Grid>
             <Grid item xs={12} md={3}>
               <TextField
