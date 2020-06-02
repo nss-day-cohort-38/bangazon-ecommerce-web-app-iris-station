@@ -6,7 +6,8 @@ const AddPaymentPage = () => {
   const [paymentForm, setPaymentForm] = useState({
     merchantName: "",
     accountNumber: "",
-    expirationDate: "2020-02-01",
+    expirationMonth: "",
+    expirationYear: ""
   });
   const [submitMessage, setSubmitMessage] = useState("");
 
