@@ -81,6 +81,10 @@ const ProductForm = (props) => {
     }
   };
 
+  // TODO: A Keith Potempa Additon for File Upload
+  // Reference: https://upmostly.com/tutorials/upload-a-file-from-a-react-component
+  // End of Keith Potempa Addition
+
   const getProductTypes = () => {
     fetch("http://localhost:8000/producttypes")
       .then((result) => result.json())
@@ -130,6 +134,7 @@ const ProductForm = (props) => {
                 onChange={handleProductChange}
               />
             </Grid>
+            {/* A Keith Potempa Addition: Upload File */}
             {/* Reference: https://kiranvj.com/blog/blog/file-upload-in-material-ui/ */}
             <Grid item xs={12} md={6}>
               <TextField
@@ -153,15 +158,8 @@ const ProductForm = (props) => {
                   <PhotoCamera /> Upload Photo
                 </IconButton>
               </label>
-              {/* OLD URL STYLE INPUT */}
-              {/* <TextField
-                required
-                id="image_path"
-                label="Image URL"
-                fullWidth
-                onChange={handleProductChange}
-              /> */}
             </Grid>
+            {/* End of Keith Potempa Addition: Upload File */}
             <Grid item xs={12} md={3}>
               <TextField
                 required
