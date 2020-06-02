@@ -31,5 +31,14 @@ export default{
             },
             body: JSON.stringify(obj)
         })
+    },
+    deleteOrder(token, id){
+        return fetch(`${baseurl}/orders/${id}`, {
+            method: "DELETE",
+            headers: {
+                "content-type": "application/json",
+                "Authorization": `Token ${token}`
+            }
+        })
     }
 }
