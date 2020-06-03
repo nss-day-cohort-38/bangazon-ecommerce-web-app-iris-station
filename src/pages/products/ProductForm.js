@@ -77,7 +77,14 @@ const ProductForm = (props) => {
     formdata.append("price", product.price);
     formdata.append("description", product.description);
     formdata.append("quantity", product.quantity);
-    formdata.append("location", product.location);
+    // Kurt:
+    // If the "available for local delivery" box is unchecked
+    // no location is saved
+    if (isChecked===false) {
+      formdata.append("location", "")
+    } else {
+      formdata.append("location", product.location);
+    }
     formdata.append("product_type_id", product.product_type_id);
     formdata.append("image_path", product.image_path)
     return formdata
@@ -89,44 +96,14 @@ const ProductForm = (props) => {
   // rather than a constructed product to post
   const validProduct = () => {
     if (product.price > 10000) {
-      /*
-      else if(!isValid(newProduct.title)){
-      alert("The title can't contain the following characters: '!', '@', '#', '$', '%', '^', '&', '*', or '()'")
-
-  const getRightProduct = ()=> {
-    if(isChecked===false){
-      const newProduct = {
-      title: product.title,
-      price: product.price,
-      description: product.description,
-      quantity: product.quantity,
-      location: "",
-      image_path: product.image_path,
-      product_type_id: product.product_type_id,
-    }
-    return newProduct
-  }
-    else{
-      const newProduct = {
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        quantity: product.quantity,
-        location: product.location,
-        image_path: product.image_path,
-        product_type_id: product.product_type_id,
-      }
-      return newProduct
-    }
-  }
-
-    }
-      */
-
       alert("The listing price may not exceed $10,000.00");
       return false;
     } else if (product.image_path === "") {
       alert("Image uplaod required")
+      return false;
+    // Kurt: validating the characters on the title
+    } else if (!isValid(product.title)) {
+      alert("The title can't contain the following characters: '!', '@', '#', '$', '%', '^', '&', '*', or '()'")
       return false;
     } else {
       return true;
