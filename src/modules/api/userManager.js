@@ -1,4 +1,5 @@
-import baseurl from "../baseurl";
+// import baseurl from "../baseurl";
+const baseurl = "http://localhost:8000"
 
 export default {
   register(userToPost) {

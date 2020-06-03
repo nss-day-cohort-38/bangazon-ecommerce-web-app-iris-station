@@ -16,6 +16,8 @@ import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
 import { userManager } from "../modules";
+import { ProductType } from "./products/index"
+
 
 const Routes = () => {
   let history = useHistory();
@@ -103,6 +105,17 @@ const Routes = () => {
             path="/products/myproducts"
             render={(props) =>
               hasUser ? <MyProducts {...props} /> : <Redirect to="/" />
+            }
+          />
+          <Route
+            exact
+            path="/products/category/:productTypeId(\d+)"
+            render={(props) =>
+              hasUser ? <ProductType
+                productTypeId={parseInt(props.match.params.productTypeId)}
+                {...props}
+              />
+                : <Redirect to="/" />
             }
           />
 

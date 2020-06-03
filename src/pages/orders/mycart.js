@@ -64,7 +64,7 @@ const MyCart = props => {
                     </Card.Group>
                 </div>
                 <div className="cart-button-container">
-                    <button  class="ui primary button" onClick={()=> props.history.push('/checkout')}>Checkout</button>
+                    <button  className="ui primary button" onClick={()=> props.history.push('/checkout')}>Checkout</button>
                 </div>
             </div>
             </>

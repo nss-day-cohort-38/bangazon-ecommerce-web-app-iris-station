@@ -1,6 +1,5 @@
-import baseurl from "./baseurl";
-
-const remoteUrl = "http://localhost:8000";
+// import baseurl from "./baseurl";
+const baseurl = "http://localhost:8000"
 
 export default {
   getHomeList() {
@@ -34,5 +33,40 @@ export default {
       },
       body: JSON.stringify(obj),
     });
+  },
+  async getProductTypes() {
+    const r = await fetch(`${baseurl}/producttypes`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return await r.json();
+  },
+
+  async getProductsByProductType(productTypeId) {
+    const r = await fetch(`${baseurl}/products?productTypeId=${productTypeId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return await r.json();
+  },
+
+  async getProductTypeById(id) {
+    const r = await fetch(`${baseurl}/producttypes/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return await r.json();
   },
 };
