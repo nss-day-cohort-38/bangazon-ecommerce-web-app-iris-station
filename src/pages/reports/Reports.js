@@ -3,7 +3,6 @@ import { VerticalMenu } from "../../components";
 import {MultipleOpenReports} from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { userManager } from "../../modules";
 
 const Reports = ({ match }) => {
   const [reportsView, setReportsView] = useState("");
@@ -21,11 +20,6 @@ const Reports = ({ match }) => {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={2} md={2}>
-          {/* 
-              Edit Profile doesn't appear in the menu, 
-              because it is accessed from an edit button on /profile/view,
-              not the menu itself
-            */}
           <VerticalMenu
             menuData={[
               { title: "Multiple Orders", route: "/reports/multiple-orders" },

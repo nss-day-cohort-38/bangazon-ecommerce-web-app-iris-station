@@ -57,7 +57,11 @@ export default {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-    })
-      .then((resp) => resp.json())
+    }).then((resp) => resp.json());
+  },
+  customerMultipleOpen() {
+    return fetch(`${baseurl}/customers?multiple_open`).then((resp) =>
+      resp.json()
+    );
   },
 };
