@@ -20,6 +20,9 @@ const MyCart = props => {
             setReload(!reload)
         })
     }
+    const deleteWholeOrder=(id)=>{
+        OrderManager.deleteOrder(token, id).then(()=> props.history.push('/'))
+    }
 
     useEffect(()=> {
 //I start by grabbing all the orders and ten I see if there more than 0 orders and if so i check to see if there is an open order by seeing
@@ -64,7 +67,9 @@ const MyCart = props => {
                     </Card.Group>
                 </div>
                 <div className="cart-button-container">
+                    
                     <button  className="ui primary button" onClick={()=> props.history.push('/checkout')}>Checkout</button>
+                    {order.order != null ? <button  className="ui primary button" onClick={()=> deleteWholeOrder(order["order"].id)}>Cancel Order</button> : (<></>)}
                 </div>
             </div>
             </>

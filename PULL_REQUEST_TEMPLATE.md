@@ -19,3 +19,4 @@ Please include a summary of the change and which issue is fixed.
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have made corresponding changes to the documentation specific to my parts
 - [ ] My changes generate no new warnings
+- [ ] All tests pass with no new warnings
