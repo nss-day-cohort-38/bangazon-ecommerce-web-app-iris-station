@@ -138,9 +138,9 @@ const ProductForm = (props) => {
             </Grid>
             <Grid item xs={12} md={3}>
               <TextField
-                required
+                
                 id="location"
-                label="Location"
+                label="Location (optional)"
                 fullWidth
                 onChange={handleProductChange}
               />
