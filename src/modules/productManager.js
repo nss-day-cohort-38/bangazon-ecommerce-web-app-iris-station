@@ -6,6 +6,9 @@ export default {
   getHomeList() {
     return fetch(`${baseurl}/products?number`).then((r) => r.json());
   },
+  getAllProducts() {
+    return fetch(`${baseurl}/products`).then((r) => r.json());
+  },
   getOneProduct(id) {
     return fetch(`${baseurl}/products/${id}`).then((r) => r.json());
   },

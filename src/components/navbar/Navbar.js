@@ -15,6 +15,10 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, NavLink } from "react-router-dom";
 import "../../styles/Navbar.css";
+import { TextField } from "@material-ui/core";
+import { Button } from "../../components";
+import { TextArea } from "semantic-ui-react";
+import HomeListCard from "../cards/HomeListCard";
 
 const Example = ({
   navArray = [],
@@ -24,12 +28,13 @@ const Example = ({
   userInfo,
   hasUser,
   clearUser,
+  handleSearchChange,
+  searchField,
+  history,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
- 
 
   return (
     <div>
@@ -85,6 +90,18 @@ const Example = ({
           <Nav navbar>
             {hasUser ? (
               <>
+                <form>
+                  <TextField
+                    required
+                    type="text"
+                    id="keyword"
+                    label="Search"
+                    onChange={handleSearchChange}
+                  />
+                  <Link to="/search">
+                    <button className="ui button">Search</button>
+                  </Link>
+                </form>
                 <NavItem className="navbar-item-link">
                   <Link to="/profile/view">Profile</Link>
                 </NavItem>
@@ -101,6 +118,9 @@ const Example = ({
                   >
                     Logout
                   </span>
+                </NavItem>
+                <NavItem className="navbar-item-link">
+                  <Link to="/search">Search</Link>
                 </NavItem>
               </>
             ) : (
