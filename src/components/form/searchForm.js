@@ -1,4 +1,4 @@
-// renders the cards to the home as well as a simple welcome message
+// renders the appropriate cards to the home based on the users search as well as a simple welcome message
 
 import React, { useState, useEffect } from "react";
 import productManager from "../../modules/productManager";
@@ -117,6 +117,10 @@ const SearchForm = (props) => {
 
   return (
     <>
+      <div className="home-header">
+        <h1>Search Results</h1>
+        <h4>We hope you find what you're looking for...</h4>
+      </div>
       <div className="list-container">
         {prods.map((product, i) => (
           <HomeListCard
