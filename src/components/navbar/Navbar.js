@@ -10,11 +10,11 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../styles/Navbar.css";
+import { Input, Icon, Button } from "semantic-ui-react";
 
 const Example = ({
   navArray = [],
@@ -25,11 +25,11 @@ const Example = ({
   hasUser,
   clearUser,
 }) => {
+  let history = useHistory();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
- 
 
   return (
     <div>
@@ -141,3 +141,16 @@ const defaultArray = [
 ];
 
 export default Example;
+
+{
+  /* <NavItem>
+              <Input
+                placeholder="Search..."
+                action={
+                  <Link to="search">
+                    <Button inverted color="blue" icon="search" />
+                  </Link>
+                }
+              />
+            </NavItem> */
+}
