@@ -3,20 +3,21 @@ import PM from "../../modules/productManager"
 
 const depleteProduct=(arr, token)=> {
 
+    const obj = {}
     for(let i=0; i<arr.length; i++){
-        let updatedProduct = {...arr[i]}
-        if(updatedProduct.quantity===0){
-            return {'error': `product is out of stock`, 'id': updatedProduct.id}
-        }else {
-            PM.getOneProduct(arr[i].product.id).then(obj=> {
-                const newObj = obj
-                newObj.quantity = obj.quantity - 1
-                PM.updateQuantity(token, newObj)
-            })
-            // updatedProduct.quantity = updatedProduct.quantity -1
-            // console.log(updatedProduct)
-            // PM.updateQuantity(token, updatedProduct)
+        if(!obj[arr[i].product.id]){
+            obj[arr[i].product.id] = 1
+        } else{
+            obj[arr[i].product.id] +=1
         }
     }
+
+    for (let [productId, value] of Object.entries(obj)) {
+        PM.getOneProduct(productId).then(newObj=> {
+                newObj.quantity-= value
+                PM.updateQuantity(token, newObj)
+            })
+      }
+    
 }
 export default depleteProduct
