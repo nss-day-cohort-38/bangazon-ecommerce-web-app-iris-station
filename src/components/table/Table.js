@@ -22,8 +22,8 @@ export default function SimpleTable({ tableData = defaultData }) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            {tableData[0].map((item) => (
-              <TableCell>{item}</TableCell>
+            {tableData[0].map((item, i) => (
+              <TableCell key={i}>{item}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -32,16 +32,14 @@ export default function SimpleTable({ tableData = defaultData }) {
             if (i > 0) {
               return (
                 <TableRow key={i}>
-                  {row.map((rowItem) => (
-                    <TableCell component="th" scope="row">
+                  {row.map((rowItem, i) => (
+                    <TableCell key={i} component="th" scope="row">
                       {rowItem}
                     </TableCell>
                   ))}
                 </TableRow>
               );
-            } 
-
-            return ""
+            }
           })}
         </TableBody>
       </Table>
