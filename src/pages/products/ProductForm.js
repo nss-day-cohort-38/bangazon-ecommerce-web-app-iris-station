@@ -23,54 +23,82 @@ const ProductForm = (props) => {
   const [submitMessage, setSubmitMessage] = useState("");
   const handleProductChange = (event) => {
     const stateToChange = { ...product };
-    stateToChange[event.target.id] = event.target.value;
+    // From Keith:
+    // If the field being changed is the image path,
+    // rather than placing the event.target.value in state,
+    // you need to place the (only) file
+    if (event.target.id === "image_path") {
+      stateToChange[event.target.id] = event.target.files[0];
+    } else {
+      stateToChange[event.target.id] = event.target.value;
+    }
     setProduct(stateToChange);
   };
 
+  // From Keith:
+  // Because an image is not a string type, 
+  // json/stringify and content-type cannot be used in a fetch call
+  // so instead, we create the fetch's body like this
+  const gatherFormData = () => {
+    const formdata = new FormData();
+    formdata.append("title", product.title);
+    formdata.append("price", product.price);
+    formdata.append("description", product.description);
+    formdata.append("quantity", product.quantity);
+    formdata.append("location", product.location);
+    formdata.append("product_type_id", product.product_type_id);
+    formdata.append("image_path", product.image_path)
+    return formdata
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    // NEW METHOD
+    const newProduct = gatherFormData()
+    // OLD METHOD
+    // const newProduct = {
+    //   title: product.title,
+    //   price: product.price,
+    //   description: product.description,
+    //   quantity: product.quantity,
+    //   location: product.location,
+    //   image_path: product.image_path,
+    //   product_type_id: product.product_type_id,
+    // };
 
-    const newProduct = {
-      title: product.title,
-      price: product.price,
-      description: product.description,
-      quantity: product.quantity,
-      location: product.location,
-      image_path: product.image_path,
-      product_type_id: product.product_type_id,
-    };
-    if (typeof newProduct.title != "string" || newProduct.title.length === 0) {
-      alert("The title field must contain text.");
-    } else if (
-      typeof newProduct.description != "string" ||
-      newProduct.description.length === 0
-    ) {
-      alert("The description field must contain text.");
-    } else if (
-      typeof newProduct.location != "string" ||
-      newProduct.location.length === 0
-    ) {
-      alert("The location field must contain text.");
-    } else if (
-      typeof newProduct.image_path != "string" ||
-      newProduct.image_path.length === 0
-    ) {
-      alert("The image URL field must contain text.");
-    } else if (newProduct.price.length === 0) {
-      alert("The price field must contain a number.");
-    } else if (newProduct.price > 10000) {
-      alert("The listing price may not exceed $10,000.00");
-    } else if (newProduct.quantity.length === 0) {
-      alert("The quantity field must contain a number.");
-    } else {
+    // FIXME: Uncomment out, change validation to check /before/ gatherFormData()
+    // if (typeof newProduct.title != "string" || newProduct.title.length === 0) {
+    //   alert("The title field must contain text.");
+    // } else if (
+    //   typeof newProduct.description != "string" ||
+    //   newProduct.description.length === 0
+    // ) {
+    //   alert("The description field must contain text.");
+    // } else if (
+    //   typeof newProduct.location != "string" ||
+    //   newProduct.location.length === 0
+    // ) {
+    //   alert("The location field must contain text.");
+    // } else if (
+    //   typeof newProduct.image_path != "string" ||
+    //   newProduct.image_path.length === 0
+    // ) {
+    //   alert("The image URL field must contain text.");
+    // } else if (newProduct.price.length === 0) {
+    //   alert("The price field must contain a number.");
+    // } else if (newProduct.price > 10000) {
+    //   alert("The listing price may not exceed $10,000.00");
+    // } else if (newProduct.quantity.length === 0) {
+    //   alert("The quantity field must contain a number.");
+    // } else {
       fetch("http://localhost:8000/products", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          // Content-type cannot be set when uploading a file
+          // Accept: "application/json",
           Authorization: `Token ${sessionStorage.getItem("token")}`,
         },
-        body: JSON.stringify(newProduct),
+        body: newProduct
       })
         .then((response) => response.json())
         .then((parsedResponse) => {
@@ -78,11 +106,8 @@ const ProductForm = (props) => {
             pathname: `/products/${parsedResponse.id}`,
           });
         });
-    }
+    // }
   };
-
-  // TODO: A Keith Potempa Additon for File Upload
-  // Reference: https://upmostly.com/tutorials/upload-a-file-from-a-react-component
   // End of Keith Potempa Addition
 
   const getProductTypes = () => {
@@ -141,14 +166,14 @@ const ProductForm = (props) => {
                 style={{display: 'none'}}
                 fullWidth
                 accept="image/*"
-                id="upload-photo"
-                name="upload-photo"
+                id="image_path"
+                name="image_path"
                 label="Image"
                 type="file"
                 onChange={handleProductChange}
               />
               {/* https://material-ui.com/components/buttons/#upload-button */}
-              <label htmlFor="upload-photo">
+              <label htmlFor="image_path">
                 <IconButton
                   variant="contained"
                   aria-label="upload picture"
