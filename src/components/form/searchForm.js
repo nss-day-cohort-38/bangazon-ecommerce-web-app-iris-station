@@ -94,7 +94,6 @@ const SearchForm = (props) => {
           if (filteredArr.includes(product)) {
           } else {
             filteredArr.push(product);
-            console.log(product);
           }
         }
       });

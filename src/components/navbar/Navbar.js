@@ -119,9 +119,6 @@ const Example = ({
                     Logout
                   </span>
                 </NavItem>
-                <NavItem className="navbar-item-link">
-                  <Link to="/search">Search</Link>
-                </NavItem>
               </>
             ) : (
               <>
