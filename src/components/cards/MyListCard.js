@@ -46,36 +46,6 @@ export default function MyListCard(props) {
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-  if (props.product.id%5===0 ){
-    //this returns a different card to break up the same cards from displaying to the dom (same information but adds price)
-    return(
-      <div className="custom-card">
-        <div className="cc-left">
-        <div
-            className="cc-img"
-            style={{
-              backgroundImage: `url(${props.product.image_path})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-          </div>
-        </div>
-        <div className="cc-right">
-        <div className="cc-title">{props.product.title}</div><p className="text">{props.product.description}</p>
-          <div className="cc-price">Only ${props.product.price}</div>
-          <div className="cc-prod-buttons">
-          <Button basic color='red' onClick={()=> props.deleteThisProduct(props.product.id)}>
-            Remove
-          </Button>
-          <button className="ui button" onClick={()=> props.history.push(`/products/${props.product.id}`)}>See More</button>
-          </div>
-        </div>
-      </div>
-    )
-
-  }else{
     return (
       <Card className={classes.root} id="home-card">
         <CardHeader
@@ -96,6 +66,12 @@ export default function MyListCard(props) {
           <Typography variant="body2" color="textSecondary" component="div">
             <p className="text">{props.product.description}</p>
           </Typography>
+          <Typography variant="body2" color="textSecondary" component="div">
+            <p className="text"> Stock: {props.product.quantity}</p>
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="div">
+            <p className="text"> Amount Sold: {props.product.amount_sold}</p>
+          </Typography>
         </CardContent>
         <CardActions disableSpacing className="prod-card-button-container">
           <Button basic color='red' onClick={()=> props.deleteThisProduct(props.product.id)}>
@@ -106,4 +82,3 @@ export default function MyListCard(props) {
       </Card>
     );
   }
-}
