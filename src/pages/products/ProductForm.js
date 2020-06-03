@@ -51,50 +51,29 @@ const ProductForm = (props) => {
     return formdata
   }
 
+  // Keith:
+  // I broke this function out from handleSubmit,
+  // and updated its checks to look at the product in state, 
+  // rather than a constructed product to post
+  const validProduct = () => {
+    if (product.price > 10000) {
+      alert("The listing price may not exceed $10,000.00");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // NEW METHOD
-    const newProduct = gatherFormData()
-    // OLD METHOD
-    // const newProduct = {
-    //   title: product.title,
-    //   price: product.price,
-    //   description: product.description,
-    //   quantity: product.quantity,
-    //   location: product.location,
-    //   image_path: product.image_path,
-    //   product_type_id: product.product_type_id,
-    // };
-
-    // FIXME: Uncomment out, change validation to check /before/ gatherFormData()
-    // if (typeof newProduct.title != "string" || newProduct.title.length === 0) {
-    //   alert("The title field must contain text.");
-    // } else if (
-    //   typeof newProduct.description != "string" ||
-    //   newProduct.description.length === 0
-    // ) {
-    //   alert("The description field must contain text.");
-    // } else if (
-    //   typeof newProduct.location != "string" ||
-    //   newProduct.location.length === 0
-    // ) {
-    //   alert("The location field must contain text.");
-    // } else if (
-    //   typeof newProduct.image_path != "string" ||
-    //   newProduct.image_path.length === 0
-    // ) {
-    //   alert("The image URL field must contain text.");
-    // } else if (newProduct.price.length === 0) {
-    //   alert("The price field must contain a number.");
-    // } else if (newProduct.price > 10000) {
-    //   alert("The listing price may not exceed $10,000.00");
-    // } else if (newProduct.quantity.length === 0) {
-    //   alert("The quantity field must contain a number.");
-    // } else {
+    if (validProduct() === true) {
+      const newProduct = gatherFormData()
+      
       fetch("http://localhost:8000/products", {
         method: "POST",
         headers: {
-          // Content-type cannot be set when uploading a file
+          // Note: Content-type cannot be set when uploading a file
+          // "content-type": "application/json",
           // Accept: "application/json",
           Authorization: `Token ${sessionStorage.getItem("token")}`,
         },
@@ -106,7 +85,7 @@ const ProductForm = (props) => {
             pathname: `/products/${parsedResponse.id}`,
           });
         });
-    // }
+    }
   };
   // End of Keith Potempa Addition
 
@@ -159,7 +138,7 @@ const ProductForm = (props) => {
                 onChange={handleProductChange}
               />
             </Grid>
-            {/* A Keith Potempa Addition: Upload File */}
+            {/* Keith Potempa Addition: Upload File */}
             {/* Reference: https://kiranvj.com/blog/blog/file-upload-in-material-ui/ */}
             <Grid item xs={12} md={6}>
               <TextField
