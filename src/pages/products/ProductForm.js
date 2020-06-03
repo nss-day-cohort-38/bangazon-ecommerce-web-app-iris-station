@@ -23,14 +23,22 @@ const ProductForm = (props) => {
   const [submitMessage, setSubmitMessage] = useState("");
   const handleProductChange = (event) => {
     const stateToChange = { ...product };
-    // From Keith:
+    // Keith update:
+    // If the field is not the image, then business as usual
+    if (event.target.id !== "image_path") {
+      stateToChange[event.target.id] = event.target.value;
+    } 
     // If the field being changed is the image path,
     // rather than placing the event.target.value in state,
     // you need to place the (only) file
-    if (event.target.id === "image_path") {
-      stateToChange[event.target.id] = event.target.files[0];
-    } else {
-      stateToChange[event.target.id] = event.target.value;
+    else {
+      const inputFile = event.target.files[0]
+      // Do not set in state if the file is larger than 5MB
+      if (inputFile.size > 5000000) {
+        alert("File size cannot exceed 5MB")
+      } else {
+        stateToChange[event.target.id] = inputFile;
+      }
     }
     setProduct(stateToChange);
   };
@@ -58,6 +66,9 @@ const ProductForm = (props) => {
   const validProduct = () => {
     if (product.price > 10000) {
       alert("The listing price may not exceed $10,000.00");
+      return false;
+    } else if (product.image_path === "") {
+      alert("Image uplaod required")
       return false;
     } else {
       return true;
