@@ -46,7 +46,7 @@ const ProductForm = (props) => {
   };
   const handleChange = () => {
     setIsChecked(!isChecked);
-    console.log(isChecked)
+    
   };
 
   const getRightProduct = ()=> {
