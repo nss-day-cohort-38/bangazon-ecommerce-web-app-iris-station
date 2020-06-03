@@ -7,6 +7,24 @@ import { Button, Paper } from "../../components";
 import { Message } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
 import isValid from "./testCharacters";
+import { withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[600],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const ProductForm = (props) => {
   const [product, setProduct] = useState({
@@ -20,24 +38,50 @@ const ProductForm = (props) => {
   });
   const [producttypes, setProducttypes] = useState([]);
   const [submitMessage, setSubmitMessage] = useState("");
+  const [isChecked, setIsChecked] = useState(false)
   const handleProductChange = (event) => {
     const stateToChange = { ...product };
     stateToChange[event.target.id] = event.target.value;
     setProduct(stateToChange);
   };
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+    console.log(isChecked)
+  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const newProduct = {
+  const getRightProduct = ()=> {
+    if(isChecked===false){
+      const newProduct = {
       title: product.title,
       price: product.price,
       description: product.description,
       quantity: product.quantity,
-      location: product.location,
+      location: "",
       image_path: product.image_path,
       product_type_id: product.product_type_id,
-    };
+    }
+    return newProduct
+  }
+    else{
+      const newProduct = {
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        quantity: product.quantity,
+        location: product.location,
+        image_path: product.image_path,
+        product_type_id: product.product_type_id,
+      }
+      return newProduct
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+
+    const newProduct = getRightProduct()
+
     if (typeof newProduct.title != "string" || newProduct.title.length === 0) {
       alert("The title field must contain text.");
     } else if (
@@ -137,14 +181,24 @@ const ProductForm = (props) => {
               />
             </Grid>
             <Grid item xs={12} md={3}>
-              <TextField
-                
-                id="location"
-                label="Location (optional)"
-                fullWidth
-                onChange={handleProductChange}
-              />
+            <FormControlLabel
+        control={<Checkbox checked={isChecked} onChange={handleChange} name="checkedA" />}
+        label="Available For Local Delivery"
+      />
             </Grid>
+            {
+
+              isChecked===true ? (<Grid item xs={12} md={3}>
+                <TextField
+                  
+                  id="location"
+                  label="Location (optional)"
+                  fullWidth
+                  onChange={handleProductChange}
+                /> </Grid>) : <></>
+            }
+            
+           
             <Grid item xs={12} md={3}>
               <InputLabel htmlFor="age-native-simple">Product Type</InputLabel>
               <Select
