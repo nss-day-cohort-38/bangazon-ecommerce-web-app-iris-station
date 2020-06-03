@@ -6,7 +6,7 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
-import { DLHOME, Profile } from "./index";
+import { DLHOME, Profile, Reports } from "./index";
 import { Navbar } from "../components";
 import "../styles/Global.css";
 import ProductForm from "./products/ProductForm";
@@ -125,7 +125,7 @@ const Routes = () => {
             exact
             path="/reports"
             render={(props) =>
-              hasUser ? <Profile {...props} /> : <Redirect to="/" />
+              hasUser ? <Reports {...props} /> : <Redirect to="/" />
             }
           />
 
@@ -133,7 +133,7 @@ const Routes = () => {
             exact
             path="/reports/:report_type"
             render={(props) =>
-              hasUser ? <Profile {...props} /> : <Redirect to="/reports" />
+              hasUser ? <Reports {...props} /> : <Redirect to="/reports" />
             }
           />
 
