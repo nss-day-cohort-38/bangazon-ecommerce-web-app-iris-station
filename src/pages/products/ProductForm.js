@@ -6,6 +6,7 @@ import Select from "@material-ui/core/Select";
 import { Button, Paper } from "../../components";
 import { Message } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
+import isValid from "./testCharacters";
 
 const ProductForm = (props) => {
   const [product, setProduct] = useState({
@@ -44,11 +45,8 @@ const ProductForm = (props) => {
       newProduct.description.length === 0
     ) {
       alert("The description field must contain text.");
-    } else if (
-      typeof newProduct.location != "string" ||
-      newProduct.location.length === 0
-    ) {
-      alert("The location field must contain text.");
+    }else if(!isValid(newProduct.title)){
+      alert("The title can't contain the following characters: '!', '@', '#', '$', '%', '^', '&', '*', or '()'")
     } else if (
       typeof newProduct.image_path != "string" ||
       newProduct.image_path.length === 0
