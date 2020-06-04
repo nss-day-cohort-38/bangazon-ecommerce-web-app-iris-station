@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { PaymentDataManager } from "../../../modules";
 import { Paper, Expansion, Button } from "../../../components";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import { Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "../../../styles/OrderHistory.css";
@@ -17,7 +15,6 @@ const PaymentPage = ({}) => {
   const getPayments = () => {
     PaymentDataManager.getAll(window.sessionStorage.getItem("token")).then(
       (resp) => {
-
         setPaymentType(resp);
         // Stops loading
         setListLoading(false);
@@ -36,7 +33,7 @@ const PaymentPage = ({}) => {
       window.sessionStorage.getItem("token"),
       paymentId
     ).then((resp) => {
-      getPayments()
+      getPayments();
     });
   };
 
@@ -55,19 +52,87 @@ const PaymentPage = ({}) => {
               <CircularProgress />
             </Paper>
           ) : paymentType.length > 0 ? (
-            paymentType.map((item) => (
-              <Paper key={item.id} classProps="payment-list">
-                <h2>Merchant: {item.merchant_name}</h2>
-                <h2>Account_number: {item.account_number}</h2>
-                <h2>Date added: {item.created_at.split("T")[0]}</h2>
-                <h2>Expiration date: {item.expiration_date}</h2>
+            <>
+              <Paper>
+                <Grid container spacing={0}>
+                  <Grid container item spacing={0} xs={12}>
+                    <Grid item xs={6} className="card-number-column">
+                      Your payments
+                    </Grid>
+                    <Grid item xs={3}></Grid>
+                    <Grid item xs={3} className="card-expiration-column">
+                      Expires
+                    </Grid>
+                  </Grid>
 
-                <Button
-                  content="Delete Payment"
-                  handleClick={() => handleClick(item.id)}
-                />
+                  <Grid item xs={12}>
+                    {paymentType.map((item) => {
+                      let lastFourDigits = item.account_number.substring(
+                        item.account_number.length - 4
+                      );
+                      let splitExDate = `${
+                        item.expiration_date.split("-")[1]
+                      }/${item.expiration_date.split("-")[0]}`;
+
+                      let addedDateNoTime = item.created_at.split("T")[0];
+
+                      let splitAddedDate = `${addedDateNoTime.split("-")[1]}/${
+                        addedDateNoTime.split("-")[2]
+                      }/${addedDateNoTime.split("-")[0]}`;
+                      return (
+                        <Expansion
+                          key={item.id}
+                          classProps="payment-list"
+                          summary={
+                            <>
+                              <Grid container spacing={0}>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  md={6}
+                                  className="card-number-column"
+                                >
+                                  <img src="https://images-na.ssl-images-amazon.com/images/G/01/payments/instrument_image/debit._CB485933941_.gif" />{" "}
+                                  Debit Card ending in {lastFourDigits}
+                                </Grid>
+                                <Grid item xs={12} md={3}></Grid>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  md={3}
+                                  className="card-expiration-column"
+                                >
+                                  {splitExDate}
+                                </Grid>
+                              </Grid>
+                              <p></p> <p></p>
+                            </>
+                          }
+                          details={
+                            <>
+                              <Grid container spacing={0}>
+                                <Grid item xs={4}>
+                                  <p>Merchant: {item.merchant_name}</p>
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <p>Added On: {splitAddedDate}</p>
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <Button
+                                    content="Remove"
+                                    handleClick={() => handleClick(item.id)}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </>
+                          }
+                        />
+                      );
+                    })}
+                  </Grid>
+                </Grid>
               </Paper>
-            ))
+            </>
           ) : (
             <Paper classProps="payment-list">
               <h2>No Payments Added</h2>
