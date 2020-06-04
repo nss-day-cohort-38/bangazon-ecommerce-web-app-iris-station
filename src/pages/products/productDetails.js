@@ -90,7 +90,7 @@ const ProductDetails = (props) => {
               <p className="price spec">Price: ${product.price}</p>
               <p className="create_date spec">Posted: {product.created_at}</p>
               <p className="remaining spec">Stock: {product.quantity}</p>
-            <p className="location spec">Location: {product.location=== "NULL" ? str : product.location}</p>
+            <p className="location spec">Location: {product.location=== "" ? str : product.location}</p>
             </div>
           </div>
           <div className="product-description">
