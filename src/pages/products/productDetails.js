@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import productManager from "../../modules/productManager";
 import orderManager from "../../modules/orderManager";
 import { Message } from "semantic-ui-react";
-
+import { CartSnackbar } from "../../components";
 import order_product_manager from "../../modules/order_product_manager";
 import "./productDetails.css";
 
@@ -24,6 +24,7 @@ const ProductDetails = (props) => {
                 };
                 order_product_manager
                   .postNewOrder(token, productRelationship)
+                  .then(() => setMessage("Added to Cart"));
               });
             } else {
               const productRelationship = {
@@ -32,6 +33,7 @@ const ProductDetails = (props) => {
               };
               order_product_manager
                 .postNewOrder(token, productRelationship)
+                .then(() => setMessage("Added to Cart"));
             }
           } else {
             orderManager.postOrder(token).then((obj) => {
@@ -41,17 +43,19 @@ const ProductDetails = (props) => {
               };
               order_product_manager
                 .postNewOrder(token, productRelationship)
+                .then(() => setMessage("Added to Cart"));
             });
           }
         })
       : setMessage();
   };
 
-  const setMessage = ( message = "Login First To Add to cart") => {
+  const setMessage = (message = "Login First To Add to cart") => {
     setSubmitMessage(message);
 
     window.setTimeout(() => setSubmitMessage(""), 2000);
   };
+
   useEffect(() => {
     //fetch the product here
     productManager
@@ -87,7 +91,13 @@ const ProductDetails = (props) => {
           <div className="product-description">
             <p className="prod-description">{product.description}</p>
           </div>
-          {submitMessage && <Message negative>{submitMessage}</Message>}
+          {submitMessage && (
+            <CartSnackbar
+              message={submitMessage}
+              negative={submitMessage !== "Added to Cart"}
+              positive={submitMessage === "Added to Cart"}
+            />
+          )}
           <div className="icon-container-details">
             <button
               className="ui button"

@@ -53,7 +53,7 @@ const CartSnackbar = ({ message, negative = false, positive = true }) => {
         horizontal: "center",
       }}
       open={open}
-      autoHideDuration={12000}
+      autoHideDuration={10000}
       onClose={handleClose}
       onExited={handleExited}
       message={message}
@@ -69,11 +69,7 @@ const CartSnackbar = ({ message, negative = false, positive = true }) => {
           </IconButton>
         </>
       }
-    >
-      <Message size="big" floating positive={positive} negative={negative}>
-        {message}
-      </Message>
-    </Snackbar>
+    />
   );
 };
 

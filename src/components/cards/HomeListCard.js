@@ -60,7 +60,7 @@ export default function HomeListCard(props) {
           positive={props.addMessage === "Added to Cart"}
           message={
             props.addMessage === "Added to Cart"
-              ? `"${props.product.title}" added to Cart`
+              ? `"${props.product.title}" was added to your cart`
               : props.addMessage
           }
         />
