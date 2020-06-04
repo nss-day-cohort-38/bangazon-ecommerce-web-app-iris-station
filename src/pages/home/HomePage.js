@@ -9,14 +9,16 @@ import HomeListCard from "../../components/cards/HomeListCard";
 import { Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 // import { ProductType } from "../products/index";
-import {addToCartHelperFunction, setMessageHelperFunction} from "../../components/buttons/AddButton"
+// import {
+//   handleAddToCartHelper,
+//   setMessageHelper,
+// } from "../../components/buttons/AddButton";
 
 const HomePage = (props) => {
   const [prods, setProds] = useState([]);
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState({});
   const [productTypes, setProductTypes] = useState([]);
-  // const [products, setProducts] = useState([]);
 
   const productCategorySideBar = async () => {
     try {
@@ -27,16 +29,80 @@ const HomePage = (props) => {
     }
   };
 
-  // const getAllProductsOfCertainType = async (productId) => {
-  //   const getProductByProductType = await productManager.getProductsByProductType(
-  //     productId
-  //   );
-  //   setProducts(getProductByProductType);
-  // };
+  // const setMessage = setMessageHelper(setAddMessage);
+  // const handleAddToCard = handleAddToCartHelper(token, setMessage, props);
 
-  const setMessage = setMessageHelperFunction(setAddMessage);
-  const handleAddToCard = addToCartHelperFunction(token, setMessage, props);
- 
+  const handleAddToCard = (productId) => {
+    token
+      ? orderManager.getOrders(token).then((arr) => {
+          if (arr.length > 0) {
+            if (arr[0].payment_type_id != null) {
+              orderManager.postOrder(token).then((obj) => {
+                const productRelationship = {
+                  order_id: obj.id,
+                  product_id: productId,
+                };
+                order_product_manager
+                  .postNewOrder(token, productRelationship)
+                  .then(() => {
+                    setMessage(productId);
+
+                    props.history.push("/");
+                  });
+              });
+            } else {
+              const productRelationship = {
+                order_id: arr[0].id,
+                product_id: productId,
+              };
+              order_product_manager
+                .postNewOrder(token, productRelationship)
+                .then(() => {
+                  setMessage(productId);
+
+                  props.history.push("/");
+                });
+            }
+          } else {
+            orderManager.postOrder(token).then((obj) => {
+              const productRelationship = {
+                order_id: obj.id,
+                product_id: productId,
+              };
+              order_product_manager
+                .postNewOrder(token, productRelationship)
+                .then(() => {
+                  setMessage(productId);
+
+                  props.history.push("/");
+                });
+            });
+          }
+        })
+      : setMessage(productId, "You Have to Login");
+  };
+  
+  const setMessage = (productId, message = "Added to Cart") => {
+    setAddMessage((prevState) => {
+      let newObj = { ...prevState };
+      newObj[productId] = message;
+      return newObj;
+    });
+
+    window.setTimeout(
+      () =>
+        setAddMessage((prevState) => {
+          let newObj = { ...prevState };
+          newObj[productId] = "";
+          return newObj;
+        }),
+      2000
+    );
+  };
+
+
+
+
 
   useEffect(() => {
     productCategorySideBar();
@@ -44,11 +110,9 @@ const HomePage = (props) => {
       setProds(arr);
       setAddMessage((prevState) => {
         let newObj = {};
-
         arr.map((item, i) => {
           newObj[item.id] = "";
         });
-
         return newObj;
       });
     });
@@ -65,6 +129,8 @@ const HomePage = (props) => {
                 <Link
                   key={productType.id}
                   to={`/products/category/${productType.id}`}
+                  {...props}
+                  // to={`/products/${productType.name}`}
                 >
                   <Dropdown.Item text={productType.name} />
                 </Link>
@@ -73,29 +139,6 @@ const HomePage = (props) => {
           </Dropdown>
         </div>
       </div>
-
-      {/* 
-      <div className="product-category-container">
-        <div className="category-header">
-          Filter By Product Type
-          <Dropdown scrolling={true}>
-            <Dropdown.Menu className="ui four column relaxed equal height divided grid">
-              <select
-                required
-                id="productTypeId"
-                value={product.productTypeId}
-                type="text"
-                onClick={getAllProductsOfCertainType}
-
-              >
-              {productTypes.map((productType) => (
-                <option key={productType.id}>{productType.name}</option>
-              ))}
-              </select>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      </div> */}
 
       <div className="home-header">
         <h1>Welcome Back!</h1>
@@ -109,6 +152,7 @@ const HomePage = (props) => {
             handleAddToCard={handleAddToCard}
             {...props}
             addMessage={addMessage[product.id]}
+            setAddMessage={setAddMessage}
           />
         ))}
       </div>

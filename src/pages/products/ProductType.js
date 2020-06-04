@@ -1,41 +1,47 @@
 import React, { useState, useEffect, useRef } from "react";
 import productManager from "../../modules/productManager";
 import HomeListCard from "../../components/cards/HomeListCard";
-// import HomePage from "../../pages/home/HomePage";
 import {
-  addToCartHelperFunction,
-  setMessageHelperFunction,
+  handleAddToCartHelper,
+  setMessageHelper,
 } from "../../components/buttons/AddButton";
+import { withRouter } from "react-router-dom";
 
 const ProductType = (props) => {
   const [products, setProducts] = useState([]);
   const token = sessionStorage.getItem("token");
-  const [addMessage, setAddMessage] = useState({});
-  const isMountedRef = useRef(null);
+  const [addMessage, setAddMessage] = useState([]);
+  const isMountedRef = useRef(false);
 
-  const productId = props.productTypeId;
+  const { productTypeId } = props;
 
-  const getAllProductsOfCertainType = async (productId) => {
-    const getProductByProductType = await productManager.getProductsByProductType(productId);
-    setProducts(getProductByProductType);
-    setAddMessage((prevState) => {
-      let newObj = {};
-      getProductByProductType.map((item, i) => {
-        newObj[item.id] = "";
+  const getAllProductsOfCertainType = async (productTypeId) => {
+    try {
+      const getProductByProductType = await productManager.getProductsByProductType(
+        productTypeId
+      );
+      setProducts(getProductByProductType);
+      setAddMessage((prevState) => {
+        let newObj = {};
+        getProductByProductType.map((item, i) => {
+          newObj[item.id] = "";
+        });
+        return newObj;
       });
-      return newObj;
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const setMessage = setMessageHelperFunction(setAddMessage);
-  const handleAddToCard = addToCartHelperFunction(token, setMessage, props);
+  const setMessage = setMessageHelper(setAddMessage);
+  const handleAddToCard = handleAddToCartHelper(token, setMessage, props);
 
   useEffect(() => {
-    if (productId) {
-      getAllProductsOfCertainType(productId);
-    }
-    return () => productId;
-  }, [productId]);
+    isMountedRef.current = true;
+    getAllProductsOfCertainType(productTypeId);
+
+    return () => (isMountedRef.current = false);
+  }, [productTypeId]);
 
   return (
     <>
@@ -54,4 +60,4 @@ const ProductType = (props) => {
   );
 };
 
-export default ProductType;
+export default withRouter(ProductType);

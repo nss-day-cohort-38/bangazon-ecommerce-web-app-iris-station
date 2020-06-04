@@ -1,30 +1,30 @@
 import orderManager from "../../modules/orderManager";
 import order_product_manager from "../../modules/order_product_manager";
 
-export function setMessageHelperFunction(setAddMessage) {
-  return (productId, message = "Added to Cart") => {
-    setAddMessage((prevState) => {
-      let newObj = { ...prevState };
-      newObj[productId] = message;
-      return newObj;
-    });
-    window.setTimeout(
-      () =>
+export function setMessageHelper(setAddMessage) {
+    return (productId, message = "Added to Cart") => {
         setAddMessage((prevState) => {
-          let newObj = { ...prevState };
-          newObj[productId] = "";
-          return newObj;
-        }),
-      2000
-    );
-  };
+            let newObj = { ...prevState };
+            newObj[productId] = message;
+            return newObj;
+        })
+        local()
+        function local() {
+            window.setTimeout(() => setAddMessage((prevState) => {
+                console.log("prevSTATE", prevState);
+                console.log(productId);
+                let newObj = { ...prevState };
+                newObj[productId] = "";
+                return newObj;
+            }), 2000);
+        };
+    }
 }
 
-export function addToCartHelperFunction(token, setMessage, props) {
-  return (productId) => {
+export function handleAddToCartHelper(token, setMessage, props) {
+    return (productId) => {
     token
-        ? orderManager.getOrders(token).then((arr) => {
-          console.log({arr})
+      ? orderManager.getOrders(token).then((arr) => {
           if (arr.length > 0) {
             if (arr[0].payment_type_id != null) {
               orderManager.postOrder(token).then((obj) => {
@@ -34,7 +34,7 @@ export function addToCartHelperFunction(token, setMessage, props) {
                 };
                 order_product_manager
                   .postNewOrder(token, productRelationship)
-                    .then(() => {
+                  .then(() => {
                     setMessage(productId);
                     props.history.push("/");
                   });
@@ -44,10 +44,9 @@ export function addToCartHelperFunction(token, setMessage, props) {
                 order_id: arr[0].id,
                 product_id: productId,
               };
-                console.log({productRelationship})
               order_product_manager
                 .postNewOrder(token, productRelationship)
-                  .then(() => {
+                .then(() => {
                   setMessage(productId);
                   props.history.push("/");
                 });
@@ -60,7 +59,7 @@ export function addToCartHelperFunction(token, setMessage, props) {
               };
               order_product_manager
                 .postNewOrder(token, productRelationship)
-                  .then(() => {
+                .then(() => {
                   setMessage(productId);
                   props.history.push("/");
                 });

@@ -47,7 +47,7 @@ const Routes = () => {
   };
 
   return (
-    <Router>
+    <Router history={history}>
       <Navbar
         navArray={
           hasUser
@@ -79,7 +79,8 @@ const Routes = () => {
           }
         />
 
-        <div className="body-container">
+        <React.Fragment>
+          <div className="body-container">
           <Route
             exact
             path="/register"
@@ -109,10 +110,12 @@ const Routes = () => {
           />
           <Route
             exact
+            // path="/products/:productTypeName([\w ]+)"
             path="/products/category/:productTypeId(\d+)"
             render={(props) =>
               hasUser ? <ProductType
                 productTypeId={parseInt(props.match.params.productTypeId)}
+                // productTypeName={props.match.params.productTypeName}
                 {...props}
               />
                 : <Redirect to="/" />
@@ -180,8 +183,9 @@ const Routes = () => {
             render={(props) =>
               hasUser ? <Profile {...props} /> : <Redirect to="/" />
             }
-          />
-        </div>
+            />
+            </div>
+        </React.Fragment>
         {/* Will redirect to home page if page does not exist */}
         <Redirect to="/" />
       </Switch>
