@@ -16,8 +16,12 @@ import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
 import { userManager } from "../modules";
+import SearchForm from "../components/form/searchForm";
+import productManager from "../modules/productManager";
+import orderManager from "../modules/orderManager";
+import order_product_manager from "../modules/order_product_manager";
 
-const Routes = () => {
+const Routes = (props) => {
   let history = useHistory();
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
   const [hasUser, setHasUser] = useState(isAuthenticated());
@@ -34,6 +38,27 @@ const Routes = () => {
     setHasUser(isAuthenticated());
   };
 
+
+  const [prods, setProds] = useState([]);
+  const token = sessionStorage.getItem("token");
+  const [addMessage, setAddMessage] = useState({});
+  const [searchField, setSearchField] = useState({
+    keyword: "",
+  });
+  const [submittedSearchField, setSubmittedSearchField] = useState({
+    keyword: "",
+  });
+
+  const handleSearchChange = (e) => {
+    const stateToChange = { ...searchField };
+    stateToChange[e.target.id] = e.target.value.toLowerCase();
+    setSearchField(stateToChange);
+  };
+
+  const handleSubmit = () => {
+    setSubmittedSearchField(searchField)
+    console.log(searchField)
+  };
 
   return (
     <Router>
@@ -54,6 +79,10 @@ const Routes = () => {
         hasUser={hasUser}
         userInfo={userInfo}
         clearUser={clearUser}
+        searchField={searchField}
+        handleSearchChange={handleSearchChange}
+        history={history}
+        handleSubmit={handleSubmit}
       />
       )
       <Switch>
@@ -81,13 +110,33 @@ const Routes = () => {
               )
             }
           />
-          <Route exact path="/" render={(props) => <HomePage {...props} />} />
-
+          <Route
+            exact
+            path="/"
+            render={(props) =>
+              searchField ? (
+                <HomePage {...props} />
+              ) : (
+                <Redirect to="/search" />
+              )
+            }
+          />
           <Route
             exact
             path="/products/form"
             render={(props) =>
               hasUser ? <ProductForm {...props} /> : <Redirect to="/" />
+            }
+          />
+          <Route
+            exact
+            path="/search"
+            render={(props) =>
+              hasUser ? (
+                <SearchForm searchField={submittedSearchField} />
+              ) : (
+                <Redirect to="/" />
+              )
             }
           />
           <Route

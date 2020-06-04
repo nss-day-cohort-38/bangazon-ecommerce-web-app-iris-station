@@ -18,12 +18,20 @@ const MultipleOpenReports = () => {
   }, []);
 
   return (
-    <Table
-      tableData={[
-        ["First Name", "Last Name", "Open Orders"],
-        ...tableInformation,
-      ]}
-    />
+    <>
+      <Table
+        tableData={[
+          ["First Name", "Last Name", "Open Orders"],
+          ...tableInformation,
+        ]}
+      />
+
+      {tableInformation.length == 0 && (
+        <Table
+          tableData={[["There are no Customers with multiple orders open"]]}
+        />
+      )}
+    </>
   );
 };
 

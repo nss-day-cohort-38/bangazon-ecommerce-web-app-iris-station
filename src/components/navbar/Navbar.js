@@ -14,7 +14,9 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../styles/Navbar.css";
-import { Input, Icon, Button } from "semantic-ui-react";
+import { Input, Icon, Button, TextArea } from "semantic-ui-react";
+import { TextField } from "@material-ui/core";
+import HomeListCard from "../cards/HomeListCard";
 
 const Example = ({
   navArray = [],
@@ -24,8 +26,10 @@ const Example = ({
   userInfo,
   hasUser,
   clearUser,
+  handleSearchChange,
+  searchField,
+  handleSubmit,
 }) => {
-  let history = useHistory();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -85,6 +89,18 @@ const Example = ({
           <Nav navbar>
             {hasUser ? (
               <>
+                <form>
+                  <TextField
+                    required
+                    type="text"
+                    id="keyword"
+                    label="Search"
+                    onChange={handleSearchChange}
+                  />
+                  <Link to="/search" onClick={handleSubmit}>
+                    <button className="ui button">Search</button>
+                  </Link>
+                </form>
                 <NavItem className="navbar-item-link">
                   <Link to="/profile/view">Profile</Link>
                 </NavItem>
