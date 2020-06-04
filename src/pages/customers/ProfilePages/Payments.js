@@ -59,8 +59,8 @@ const PaymentPage = ({}) => {
               <Paper key={item.id} classProps="payment-list">
                 <h2>Merchant: {item.merchant_name}</h2>
                 <h2>Account_number: {item.account_number}</h2>
-                <h2>created_at {item.created_at}</h2>
-                <h2>expiration_date {item.expiration_date}</h2>
+                <h2>Date added: {item.created_at.split("T")[0]}</h2>
+                <h2>Expiration date: {item.expiration_date}</h2>
 
                 <Button
                   content="Delete Payment"
