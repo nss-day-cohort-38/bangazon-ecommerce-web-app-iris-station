@@ -57,7 +57,11 @@ export default function HomeListCard(props) {
           <div
             className="cc-img"
             style={{
-              backgroundImage: `url(${props.product.image_path})`,
+              // If there is no image, then fill it with a dummy image
+              backgroundImage: `url(${props.product.image_path === null 
+                ? "https://via.placeholder.com/100" 
+                : props.product.image_path
+              })`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
@@ -109,7 +113,10 @@ export default function HomeListCard(props) {
         />
         <CardMedia
           className={classes.media}
-          image={props.product.image_path}
+          image={props.product.image_path === null 
+            ? "https://via.placeholder.com/100" 
+            : props.product.image_path
+          }
           title={props.product.title}
         />
         <CardContent>
