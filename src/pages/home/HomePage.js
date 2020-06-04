@@ -108,24 +108,25 @@ const HomePage = (props) => {
 
   return (
     <>
-      <div className="product-category-container">
-        <div className="category-header">
+        {/* <div className="category-header">
           Filter By Product Type
-          <Dropdown scrolling={true}>
-            <Dropdown.Menu className="ui four column relaxed equal height divided grid">
+          </div> */}
+      <div className="product-category-container">
+          {/* <Dropdown scrolling={true}>
+            <Dropdown.Menu className="ui four column relaxed equal height divided grid"> */}
+            <div className="category-items">
               {productTypes.map((productType) => (
                 <Link
                   key={productType.id}
                   to={`/products/category/${productType.id}`}
-                  {...props}
-                  // to={`/products/${productType.name}`}
                 >
                   <Dropdown.Item text={productType.name} />
                 </Link>
               ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+              </div>
+
+            {/* </Dropdown.Menu>
+          </Dropdown> */}
       </div>
 
       <div className="home-header">
