@@ -16,9 +16,17 @@ const MyCart = props => {
 
 
     const deleteProductFromOrder= (id)=> {
+        if(products.length===1){
+            opm.deleteRelationship(id).then(()=> {
+                setReload(!reload)
+            }).then(()=> {
+                deleteWholeOrder(order["order"].id)
+            })
+
+        }else{
         opm.deleteRelationship(id).then(()=> {
             setReload(!reload)
-        })
+        })}
     }
     const deleteWholeOrder=(id)=>{
         OrderManager.deleteOrder(token, id).then(()=> props.history.push('/'))
