@@ -71,7 +71,10 @@ const ProductDetails = (props) => {
             <div
               className="product-image"
               style={{
-                backgroundImage: `url(${product.image_path})`,
+                backgroundImage: `url(${product.image_path === null
+                  ? "https://via.placeholder.com/100" 
+                  : product.image_path
+                })`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",

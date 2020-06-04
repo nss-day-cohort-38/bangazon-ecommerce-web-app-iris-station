@@ -80,7 +80,13 @@ const OrderDetails = ({ loading, currentOrder }) => {
                         </div>
 
                         <div className="paper-image-container">
-                          <img className="paper-image" src={item.image_path} />
+                          <img 
+                            className="paper-image" 
+                            src={item.image_path === null 
+                              ? "https://via.placeholder.com/100" 
+                              : item.image_path
+                            } 
+                          />
                         </div>
                       </div>
                     </Paper>

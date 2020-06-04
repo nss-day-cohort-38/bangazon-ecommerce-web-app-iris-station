@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { Button, Paper } from "../../components";
 import { Message } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
@@ -41,7 +43,23 @@ const ProductForm = (props) => {
   const [isChecked, setIsChecked] = useState(false)
   const handleProductChange = (event) => {
     const stateToChange = { ...product };
-    stateToChange[event.target.id] = event.target.value;
+    // Keith update:
+    // If the field is not the image, then business as usual
+    if (event.target.id !== "image_path") {
+      stateToChange[event.target.id] = event.target.value;
+    } 
+    // If the field being changed is the image path,
+    // rather than placing the event.target.value in state,
+    // you need to place the (only) file
+    else {
+      const inputFile = event.target.files[0]
+      // Do not set in state if the file is larger than 5MB
+      if (inputFile.size > 5000000) {
+        alert("File size cannot exceed 5MB")
+      } else {
+        stateToChange[event.target.id] = inputFile;
+      }
+    }
     setProduct(stateToChange);
   };
   const handleChange = () => {
@@ -49,68 +67,69 @@ const ProductForm = (props) => {
     
   };
 
-  const getRightProduct = ()=> {
-    if(isChecked===false){
-      const newProduct = {
-      title: product.title,
-      price: product.price,
-      description: product.description,
-      quantity: product.quantity,
-      location: "",
-      image_path: product.image_path,
-      product_type_id: product.product_type_id,
+  // From Keith:
+  // Because an image is not a string type, 
+  // json/stringify and content-type cannot be used in a fetch call
+  // so instead, we create the fetch's body like this
+  const gatherFormData = () => {
+    const formdata = new FormData();
+    formdata.append("title", product.title);
+    formdata.append("price", product.price);
+    formdata.append("description", product.description);
+    formdata.append("quantity", product.quantity);
+    formdata.append("product_type_id", product.product_type_id);
+    // Kurt:
+    // If the "available for local delivery" box is unchecked
+    // no location is saved
+    if (isChecked===false) {
+      formdata.append("location", "")
+    } else {
+      formdata.append("location", product.location);
     }
-    return newProduct
+    if (product.image_path === "") {
+      formdata.append("image_path", null);
+    } else {
+      formdata.append("image_path", product.image_path);
+    }
+    return formdata
   }
-    else{
-      const newProduct = {
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        quantity: product.quantity,
-        location: product.location,
-        image_path: product.image_path,
-        product_type_id: product.product_type_id,
-      }
-      return newProduct
+
+  // Keith:
+  // I broke this function out from handleSubmit,
+  // and updated its checks to look at the product in state, 
+  // rather than a constructed product to post
+  const validProduct = () => {
+    if (product.price > 10000) {
+      alert("The listing price may not exceed $10,000.00");
+      return false;
+    // Kurt: validating the characters on the title
+    } else if (!isValid(product.title)) {
+      alert("The title can't contain the following characters: '!', '@', '#', '$', '%', '^', '&', '*', or '()'")
+      return false;
+    } else {
+      return true;
     }
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-
-    const newProduct = getRightProduct()
-
-    if (typeof newProduct.title != "string" || newProduct.title.length === 0) {
-      alert("The title field must contain text.");
-    } else if (
-      typeof newProduct.description != "string" ||
-      newProduct.description.length === 0
-    ) {
-      alert("The description field must contain text.");
-    }else if(!isValid(newProduct.title)){
-      alert("The title can't contain the following characters: '!', '@', '#', '$', '%', '^', '&', '*', or '()'")
-    } else if (
-      typeof newProduct.image_path != "string" ||
-      newProduct.image_path.length === 0
-    ) {
-      alert("The image URL field must contain text.");
-    } else if (newProduct.price.length === 0) {
-      alert("The price field must contain a number.");
-    } else if (newProduct.price > 10000) {
-      alert("The listing price may not exceed $10,000.00");
-    } else if (newProduct.quantity.length === 0) {
-      alert("The quantity field must contain a number.");
-    } else {
+    if (validProduct() === true) {
+      const newProduct = gatherFormData()
+      // Note: Content-type cannot be set when uploading a file
+      const headers = {
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      }
+      // If there is no image, 
+      // then content-type and accept are needed in the fetch call
+      if (newProduct.image_path === null) { 
+        headers["Accept"] = "application/json";
+        headers["Content-Type"] = "application/json";
+      } 
+      
       fetch("http://localhost:8000/products", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Token ${sessionStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(newProduct),
+        headers: headers,
+        body: newProduct
       })
         .then((response) => response.json())
         .then((parsedResponse) => {
@@ -120,6 +139,7 @@ const ProductForm = (props) => {
         });
     }
   };
+  // End of Keith Potempa Addition
 
   const getProductTypes = () => {
     fetch("http://localhost:8000/producttypes")
@@ -170,16 +190,32 @@ const ProductForm = (props) => {
                 onChange={handleProductChange}
               />
             </Grid>
-
+            {/* Keith Potempa Addition: Upload File */}
+            {/* Reference: https://kiranvj.com/blog/blog/file-upload-in-material-ui/ */}
             <Grid item xs={12} md={6}>
               <TextField
-                required
-                id="image_path"
-                label="Image URL"
+                style={{display: 'none'}}
                 fullWidth
+                accept="image/*"
+                id="image_path"
+                name="image_path"
+                label="Image"
+                type="file"
                 onChange={handleProductChange}
               />
+              {/* https://material-ui.com/components/buttons/#upload-button */}
+              <label htmlFor="image_path">
+                <IconButton
+                  variant="contained"
+                  aria-label="upload picture"
+                  color="default"
+                  component="span"
+                >
+                  <PhotoCamera /> Upload Photo
+                </IconButton>
+              </label>
             </Grid>
+            {/* End of Keith Potempa Addition: Upload File */}
             <Grid item xs={12} md={3}>
             <FormControlLabel
         control={<Checkbox checked={isChecked} onChange={handleChange} name="checkedA" />}
