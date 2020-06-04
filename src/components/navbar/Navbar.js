@@ -92,7 +92,7 @@ const Example = ({
                   placeholder="Search..."
                   onChange={handleSearchChange}
                   action={
-                    <Link to="search" onClick={handleSubmit}>
+                    <Link to="/search" onClick={handleSubmit}>
                       <Button
                         color="blue"
                         className="navbar-search-button"
