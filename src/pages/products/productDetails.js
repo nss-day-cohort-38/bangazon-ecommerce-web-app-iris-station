@@ -12,6 +12,7 @@ const ProductDetails = (props) => {
   const [product, setProduct] = useState({});
   const token = sessionStorage.getItem("token");
   const [submitMessage, setSubmitMessage] = useState("");
+  const str = "Not Available for Local Delivery"
   const handleAddToCard = (productId) => {
     token
       ? orderManager.getOrders(token).then((arr) => {
@@ -75,9 +76,10 @@ const ProductDetails = (props) => {
             <div
               className="product-image"
               style={{
-                backgroundImage: `url(${product.image_path === null
-                  ? "https://via.placeholder.com/100" 
-                  : product.image_path
+                backgroundImage: `url(${
+                  product.image_path === null
+                    ? "https://via.placeholder.com/100"
+                    : product.image_path
                 })`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
@@ -87,8 +89,14 @@ const ProductDetails = (props) => {
 
             <div className="product-specs">
               <p className="price spec">Price: ${product.price}</p>
-              <p className="create_date spec">Posted: {product.created_at}</p>
+              <p className="create_date spec">
+                Posted:{" "}
+                {product.created_at == undefined
+                  ? ""
+                  : product.created_at.split("T")[0]}
+              </p>
               <p className="remaining spec">Stock: {product.quantity}</p>
+            <p className="location spec">Location: {product.location=== "" ? str : product.location}</p>
             </div>
           </div>
           <div className="product-description">
