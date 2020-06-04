@@ -82,7 +82,7 @@ const ProductForm = (props) => {
     // If the "available for local delivery" box is unchecked
     // no location is saved
     if (isChecked===false) {
-      formdata.append("location", "")
+      formdata.append("location", null)
     } else {
       formdata.append("location", product.location);
     }
