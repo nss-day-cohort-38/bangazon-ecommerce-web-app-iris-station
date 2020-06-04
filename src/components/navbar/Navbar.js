@@ -86,7 +86,7 @@ const Example = ({
             {hasUser ? (
               <>
                 <form>
-                  <NavItem>
+                  <NavItem className="navbar-item-link">
                     <Input
                       required
                       type="text"
@@ -95,7 +95,12 @@ const Example = ({
                       onChange={handleSearchChange}
                       action={
                         <Link to="search" onClick={handleSubmit}>
-                          <Button inverted color="blue" icon="search" />
+                          <Button
+                          
+                            color="blue"
+                            className="navbar-search-button"
+                            icon="search"
+                          />
                         </Link>
                       }
                     />
@@ -103,7 +108,9 @@ const Example = ({
                 </form>
 
                 <NavItem className="navbar-item-link">
-                  <Link to="/profile/view">Profile</Link>
+                  <Link to="/profile/view" className="right-side-link">
+                    Profile
+                  </Link>
                 </NavItem>
                 {/* TODO: make this not inline styling */}
                 {userInfo.is_staff && (
@@ -111,13 +118,11 @@ const Example = ({
                     <Link to="/dl/home">Design Library</Link>
                   </NavItem>
                 )}
-                <NavItem className="navbar-item-link">
-                  <span
-                    style={{ cursor: "pointer", color: "#4183c4" }}
-                    onClick={clearUser}
-                  >
-                    Logout
-                  </span>
+                <NavItem
+                  className="navbar-item-link logout-link"
+                  onClick={clearUser}
+                >
+                  Logout
                 </NavItem>
               </>
             ) : (
