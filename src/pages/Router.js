@@ -6,7 +6,7 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
-import { DLHOME, Profile } from "./index";
+import { DLHOME, Profile, Reports } from "./index";
 import { Navbar } from "../components";
 import "../styles/Global.css";
 import ProductForm from "./products/ProductForm";
@@ -16,8 +16,12 @@ import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
 import { userManager } from "../modules";
+import SearchForm from "../components/form/searchForm";
+import productManager from "../modules/productManager";
+import orderManager from "../modules/orderManager";
+import order_product_manager from "../modules/order_product_manager";
 
-const Routes = () => {
+const Routes = (props) => {
   let history = useHistory();
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
   const [hasUser, setHasUser] = useState(isAuthenticated());
@@ -34,14 +38,26 @@ const Routes = () => {
     setHasUser(isAuthenticated());
   };
 
-  const getUserInfo = () => {
-    userManager
-      .getUser({ token: window.sessionStorage.getItem("token") })
-      .then((resp) => {
-        setUserInfo((prevState) => {
-          return resp;
-        });
-      });
+
+  const [prods, setProds] = useState([]);
+  const token = sessionStorage.getItem("token");
+  const [addMessage, setAddMessage] = useState({});
+  const [searchField, setSearchField] = useState({
+    keyword: "",
+  });
+  const [submittedSearchField, setSubmittedSearchField] = useState({
+    keyword: "",
+  });
+
+  const handleSearchChange = (e) => {
+    const stateToChange = { ...searchField };
+    stateToChange[e.target.id] = e.target.value.toLowerCase();
+    setSearchField(stateToChange);
+  };
+
+  const handleSubmit = () => {
+    setSubmittedSearchField(searchField)
+    console.log(searchField)
   };
 
   return (
@@ -52,6 +68,7 @@ const Routes = () => {
             ? [
                 { title: "Sell a Product", route: "/products/form" },
                 { title: "My Products", route: "/products/myproducts" },
+                { title: "Reports", route: "/reports" },
                 {
                   title: <i className="shopping cart icon"></i>,
                   route: "/mycart",
@@ -62,6 +79,10 @@ const Routes = () => {
         hasUser={hasUser}
         userInfo={userInfo}
         clearUser={clearUser}
+        searchField={searchField}
+        handleSearchChange={handleSearchChange}
+        history={history}
+        handleSubmit={handleSubmit}
       />
       )
       <Switch>
@@ -89,13 +110,33 @@ const Routes = () => {
               )
             }
           />
-          <Route exact path="/" render={(props) => <HomePage {...props} />} />
-
+          <Route
+            exact
+            path="/"
+            render={(props) =>
+              searchField ? (
+                <HomePage {...props} />
+              ) : (
+                <Redirect to="/search" />
+              )
+            }
+          />
           <Route
             exact
             path="/products/form"
             render={(props) =>
               hasUser ? <ProductForm {...props} /> : <Redirect to="/" />
+            }
+          />
+          <Route
+            exact
+            path="/search"
+            render={(props) =>
+              hasUser ? (
+                <SearchForm searchField={submittedSearchField} />
+              ) : (
+                <Redirect to="/" />
+              )
             }
           />
           <Route
@@ -124,6 +165,24 @@ const Routes = () => {
             path="/profile"
             render={(props) =>
               hasUser ? <Profile {...props} /> : <Redirect to="/login" />
+            }
+          />
+
+          {/* If not Authenticated, this route will take you to the home page */}
+          {/* Routes for Reports */}
+          <Route
+            exact
+            path="/reports"
+            render={(props) =>
+              hasUser ? <Reports {...props} /> : <Redirect to="/" />
+            }
+          />
+
+          <Route
+            exact
+            path="/reports/:report_type"
+            render={(props) =>
+              hasUser ? <Reports {...props} /> : <Redirect to="/reports" />
             }
           />
 

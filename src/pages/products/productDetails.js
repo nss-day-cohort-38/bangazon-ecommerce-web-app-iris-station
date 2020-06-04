@@ -24,7 +24,6 @@ const ProductDetails = (props) => {
                 };
                 order_product_manager
                   .postNewOrder(token, productRelationship)
-                  .then(() => props.history.push("/"));
               });
             } else {
               const productRelationship = {
@@ -33,7 +32,6 @@ const ProductDetails = (props) => {
               };
               order_product_manager
                 .postNewOrder(token, productRelationship)
-                .then(() => props.history.push("/"));
             }
           } else {
             orderManager.postOrder(token).then((obj) => {
@@ -43,7 +41,6 @@ const ProductDetails = (props) => {
               };
               order_product_manager
                 .postNewOrder(token, productRelationship)
-                .then(() => props.history.push("/"));
             });
           }
         })

@@ -17,6 +17,7 @@ import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Message } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 import "./homecss.css";
 
@@ -90,14 +91,9 @@ export default function HomeListCard(props) {
               <i className="plus icon"></i>
             </IconButton>
 
-            <button
-              className="ui button"
-              onClick={() =>
-                props.history.push(`/products/${props.product.id}`)
-              }
-            >
-              See More
-            </button>
+            <Link to={`/products/${props.product.id}`}>
+              <button className="ui button">See More</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -129,9 +125,6 @@ export default function HomeListCard(props) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing className="prod-card-button-container">
-          {/* <IconButton aria-label="add to wishlist">
-            <FavoriteIcon />
-          </IconButton> */}
           <IconButton
             aria-label="add to card"
             onClick={() => props.handleAddToCard(props.product.id)}
@@ -146,12 +139,9 @@ export default function HomeListCard(props) {
               {props.addMessage}
             </Message>
           )}
-          <button
-            className="ui button"
-            onClick={() => props.history.push(`/products/${props.product.id}`)}
-          >
-            See More
-          </button>
+          <Link to={`/products/${props.product.id}`}>
+            <button className="ui button">See More</button>
+          </Link>
         </CardActions>
       </Card>
     );
