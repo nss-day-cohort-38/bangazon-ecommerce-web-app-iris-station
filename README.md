@@ -4,6 +4,7 @@ Iris Station is an E-commerce application that allows a logged in user to do the
 - Sell A Product
     - Create a new product listing
     - Set products to be available for local delivery/pickup (optional)
+    - Upload an image (stored and retrieved from back-end API media folder)
 - My Products
     - View the products that a logged in user has posted to sell
     - View the amount of times a product has been sold
@@ -48,3 +49,12 @@ Iris Station is an E-commerce application that allows a logged in user to do the
 1. Material UI 
 1. Semantic UI
 1. ReactStrap
+
+
+
+## Contributors
+Kurt Krafft
+Andrew Green
+Trinity Terry
+Keith Potempa
+Matt Crook
