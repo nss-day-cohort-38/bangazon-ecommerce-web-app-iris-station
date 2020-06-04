@@ -98,9 +98,6 @@ const ProductForm = (props) => {
     if (product.price > 10000) {
       alert("The listing price may not exceed $10,000.00");
       return false;
-    } else if (product.image_path === "") {
-      alert("Image uplaod required")
-      return false;
     // Kurt: validating the characters on the title
     } else if (!isValid(product.title)) {
       alert("The title can't contain the following characters: '!', '@', '#', '$', '%', '^', '&', '*', or '()'")
