@@ -77,6 +77,7 @@ const ProductForm = (props) => {
     formdata.append("price", product.price);
     formdata.append("description", product.description);
     formdata.append("quantity", product.quantity);
+    formdata.append("product_type_id", product.product_type_id);
     // Kurt:
     // If the "available for local delivery" box is unchecked
     // no location is saved
@@ -85,8 +86,11 @@ const ProductForm = (props) => {
     } else {
       formdata.append("location", product.location);
     }
-    formdata.append("product_type_id", product.product_type_id);
-    formdata.append("image_path", product.image_path)
+    if (product.image_path === "") {
+      formdata.append("image_path", null);
+    } else {
+      formdata.append("image_path", product.image_path);
+    }
     return formdata
   }
 
@@ -111,15 +115,20 @@ const ProductForm = (props) => {
     event.preventDefault();
     if (validProduct() === true) {
       const newProduct = gatherFormData()
+      // Note: Content-type cannot be set when uploading a file
+      const headers = {
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      }
+      // If there is no image, 
+      // then content-type and accept are needed in the fetch call
+      if (newProduct.image_path === null) { 
+        headers["Accept"] = "application/json";
+        headers["Content-Type"] = "application/json";
+      } 
       
       fetch("http://localhost:8000/products", {
         method: "POST",
-        headers: {
-          // Note: Content-type cannot be set when uploading a file
-          // "content-type": "application/json",
-          // Accept: "application/json",
-          Authorization: `Token ${sessionStorage.getItem("token")}`,
-        },
+        headers: headers,
         body: newProduct
       })
         .then((response) => response.json())
