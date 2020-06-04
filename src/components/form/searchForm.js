@@ -112,7 +112,6 @@ const SearchForm = (props) => {
 
   useEffect(() => {
     handleSearch();
-    console.log("you working?")
   }, [searchField]);
 
   return (

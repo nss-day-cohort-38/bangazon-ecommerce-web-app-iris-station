@@ -56,7 +56,6 @@ const Routes = (props) => {
 
   const handleSubmit = () => {
     setSubmittedSearchField(searchField);
-    console.log(searchField);
   };
 
   return (
@@ -138,7 +137,7 @@ const Routes = (props) => {
               hasUser ? <MyProducts {...props} /> : <Redirect to="/" />
             }
           />
-          
+
 
           {/* this will route to a product detail page */}
           <Route
