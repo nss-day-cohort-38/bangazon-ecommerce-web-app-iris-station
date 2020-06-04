@@ -63,12 +63,6 @@ const ProductDetails = (props) => {
       .then((prod) => setProduct(prod));
   }, [props.productId]);
 
-  if (product.created_at == undefined) {
-    product.created_at = ""
-  } else {
-    product.created_at = product.created_at.split("T")[0]
-  }
-
   return (
     //return jsx here
     <>
@@ -81,9 +75,10 @@ const ProductDetails = (props) => {
             <div
               className="product-image"
               style={{
-                backgroundImage: `url(${product.image_path === null
-                  ? "https://via.placeholder.com/100" 
-                  : product.image_path
+                backgroundImage: `url(${
+                  product.image_path === null
+                    ? "https://via.placeholder.com/100"
+                    : product.image_path
                 })`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
@@ -93,7 +88,12 @@ const ProductDetails = (props) => {
 
             <div className="product-specs">
               <p className="price spec">Price: ${product.price}</p>
-              <p className="create_date spec">Posted: {product.created_at}</p>
+              <p className="create_date spec">
+                Posted:{" "}
+                {product.created_at == undefined
+                  ? ""
+                  : product.created_at.split("T")[0]}
+              </p>
               <p className="remaining spec">Stock: {product.quantity}</p>
             </div>
           </div>
