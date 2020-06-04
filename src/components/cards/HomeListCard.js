@@ -12,11 +12,13 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
+
+import { CartSnackbar } from "../../components";
 // import FavoriteIcon from '@material-ui/icons/Favorite';
 // import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { Message } from "semantic-ui-react";
+
 import { Link } from "react-router-dom";
 
 import "./homecss.css";
@@ -49,94 +51,82 @@ export default function HomeListCard(props) {
   const [expanded, setExpanded] = React.useState(false);
   const token = sessionStorage.getItem("token");
   const [submitMessage, setSubmitMessage] = useState("");
-  if (props.product.id % 5 === 0) {
-    //this returns a different card to break up the same cards from displaying to the dom (same information but adds price)
-    return (
-      <div className="custom-card">
-        <div className="cc-left">
-          <div
-            className="cc-img"
-            style={{
-              backgroundImage: `url(${props.product.image_path})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            {props.addMessage && (
-              <Message
-                positive={props.addMessage === "Added to Cart"}
-                negative={props.addMessage !== "Added to Cart"}
+
+  return (
+    <>
+      {props.addMessage && (
+        <CartSnackbar
+          negative={props.addMessage !== "Added to Cart"}
+          positive={props.addMessage === "Added to Cart"}
+          message={
+            props.addMessage === "Added to Cart"
+              ? `"${props.product.title}" added to Cart`
+              : props.addMessage
+          }
+        />
+      )}
+      {props.product.id % 5 === 0 ? (
+        <div className="custom-card">
+          <div className="cc-left">
+            <div
+              className="cc-img"
+              style={{
+                backgroundImage: `url(${props.product.image_path})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}
+            ></div>
+          </div>
+
+          <div className="cc-right">
+            <div className="cc-title">{props.product.title}</div>
+            <div className="cc-price">Only ${props.product.price}</div>
+            <p className="text">{props.product.description}</p>
+
+            <div className="cc-prod-buttons">
+              <IconButton
+                aria-label="add to card"
+                onClick={() => props.handleAddToCard(props.product.id)}
               >
-                {props.addMessage}
-              </Message>
-            )}
+                <i className="plus icon"></i>
+              </IconButton>
+
+              <Link to={`/products/${props.product.id}`}>
+                <button className="ui button">See More</button>
+              </Link>
+            </div>
           </div>
         </div>
-
-        <div className="cc-right">
-          <div className="cc-title">{props.product.title}</div>
-          <div className="cc-price">Only ${props.product.price}</div>
-          <p className="text">{props.product.description}</p>
-
-          <div className="cc-prod-buttons">
+      ) : (
+        <Card className={classes.root} id="home-card">
+          <CardHeader
+            title={props.product.title}
+            subheader={props.product.created_at}
+          />
+          <CardMedia
+            className={classes.media}
+            image={props.product.image_path}
+            title={props.product.title}
+          />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="div">
+              <p className="text">{props.product.description}</p>
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing className="prod-card-button-container">
             <IconButton
               aria-label="add to card"
               onClick={() => props.handleAddToCard(props.product.id)}
             >
               <i className="plus icon"></i>
             </IconButton>
-
             <Link to={`/products/${props.product.id}`}>
               <button className="ui button">See More</button>
             </Link>
-          </div>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <Card className={classes.root} id="home-card">
-        <CardHeader
-          //   avatar={
-          //     <Avatar aria-label="recipe" className={classes.avatar}>
-          //       R
-          //     </Avatar>
-          //   }
-
-          title={props.product.title}
-          subheader={props.product.created_at}
-        />
-        <CardMedia
-          className={classes.media}
-          image={props.product.image_path}
-          title={props.product.title}
-        />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="div">
-            <p className="text">{props.product.description}</p>
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing className="prod-card-button-container">
-          <IconButton
-            aria-label="add to card"
-            onClick={() => props.handleAddToCard(props.product.id)}
-          >
-            <i className="plus icon"></i>
-          </IconButton>
-          {props.addMessage && (
-            <Message
-              positive={props.addMessage === "Added to Cart"}
-              negative={props.addMessage !== "Added to Cart"}
-            >
-              {props.addMessage}
-            </Message>
-          )}
-          <Link to={`/products/${props.product.id}`}>
-            <button className="ui button">See More</button>
-          </Link>
-        </CardActions>
-      </Card>
-    );
-  }
+          </CardActions>
+        </Card>
+      )}
+    </>
+  );
 }
