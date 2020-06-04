@@ -109,7 +109,7 @@ const OrderHistory = ({ itemId }) => {
       {/* // Add grid to seperate this into two parts. */}
       <h1>Your Orders</h1>
       <Grid container spacing={0}>
-        <Grid item xs={itemId ? 6 : 12}>
+        <Grid item xs={12} md={itemId ? 6 : 12}>
           {listLoading ? (
             <Paper>
               <CircularProgress />
@@ -117,10 +117,32 @@ const OrderHistory = ({ itemId }) => {
           ) : orderHistory.length > 0 ? (
             orderHistory.map((item) => (
               <Paper key={item.created_at} classProps="order-history-list">
-                <h2>Order placed on: {item.created_at.split("T")[0]}</h2>
-                <Link to={`/profile/order-history/${item.id}`}>
-                  <h3>Details</h3>
-                </Link>
+                <div className="order-details-main-view">
+                  <h2>Order placed on: {item.created_at.split("T")[0]}</h2>
+                  <Link to={`/profile/order-history/${item.id}`}>
+                    <h3>Details</h3>
+                  </Link>
+                </div>
+                <Expansion
+                  className="order-details-mobile-view"
+                  arrowLink={`/profile/order-history/${item.id}`}
+                  summary={
+                    <>
+                      <h2>Order placed on: {item.created_at.split("T")[0]}</h2>
+                    </>
+                  }
+                  details={
+                    item.id == itemId && (
+                      <OrderDetails
+                        currentOrder={currentOrder}
+                        loading={detailsLoading}
+                      />
+                    )
+                  }
+                  routeClose={`/profile/order-history/`}
+                  routeOpen={`/profile/order-history/${item.id}`}
+                  isOpen={item.id == itemId}
+                />
               </Paper>
             ))
           ) : (
@@ -134,7 +156,11 @@ const OrderHistory = ({ itemId }) => {
           )}
         </Grid>
         {itemId && (
-          <OrderDetails currentOrder={currentOrder} loading={detailsLoading} />
+          <OrderDetails
+            className="order-details-main-view"
+            currentOrder={currentOrder}
+            loading={detailsLoading}
+          />
         )}
       </Grid>
     </div>

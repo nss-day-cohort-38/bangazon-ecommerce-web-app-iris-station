@@ -26,6 +26,11 @@
     padding: 10px;
 }
 
+
+.order-details-mobile-view {
+    display: none;
+}
+
 .order-history-list {
     display: flex;
     padding: 0 15px;
@@ -40,3 +45,13 @@
 .card-expiration-column {
     text-align: left;
 }
+
+@media screen and (max-width: 960px) {
+    .order-details-mobile-view {
+        display: block;
+    }
+
+    .order-details-main-view {
+        display: none !important;
+    }
+  }
