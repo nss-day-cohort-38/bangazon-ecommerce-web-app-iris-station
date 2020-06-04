@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Menu } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function VerticalMenu({ menuData = defaultData, firstActive }) {
+  let history = useHistory();
   const [activeItem, setActiveItem] = useState("");
 
   useEffect(() => {
     setActiveItem(firstActive);
   }, [firstActive]);
 
-  const handleItemClick = (e, { name }) => setActiveItem(name);
+  const handleItemClick = (name, route) => {
+    history.push(route);
+    
+    setActiveItem(name);
+  };
 
   return (
     <Menu pointing secondary vertical>
@@ -18,15 +23,14 @@ export default function VerticalMenu({ menuData = defaultData, firstActive }) {
         let lowercase = routesplit[2].toLowerCase();
 
         return (
-          <Link key={item.route} to={item.route}>
-            <Menu.Item
-              name={lowercase}
-              active={activeItem === lowercase}
-              onClick={handleItemClick}
-            >
-              {item.title}
-            </Menu.Item>
-          </Link>
+          <Menu.Item
+            key={item.route}
+            name={lowercase}
+            active={activeItem === lowercase}
+            onClick={(e) => handleItemClick(lowercase, item.route)}
+          >
+            {item.title}
+          </Menu.Item>
         );
       })}
     </Menu>
