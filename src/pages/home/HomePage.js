@@ -58,7 +58,7 @@ const HomePage = (props) => {
             });
           }
         })
-      : setMessage(productId, "You Have to Login");
+      : setMessage(productId, "Login to add items to cart");
   };
   
   const setMessage = (productId, message = "Added to Cart") => {
