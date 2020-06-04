@@ -2,27 +2,28 @@ import orderManager from "../../modules/orderManager";
 import order_product_manager from "../../modules/order_product_manager";
 
 export function setMessageHelper(setAddMessage) {
-    return (productId, message = "Added to Cart") => {
+  console.log(setAddMessage);
+  return (productId, message = "Added to Cart") => {
+    setAddMessage((prevState) => {
+      let newObj = { ...prevState };
+      newObj[productId] = message;
+      return newObj;
+    });
+    window.setTimeout(() =>
         setAddMessage((prevState) => {
-            let newObj = { ...prevState };
-            newObj[productId] = message;
-            return newObj;
-        })
-        local()
-        function local() {
-            window.setTimeout(() => setAddMessage((prevState) => {
-                console.log("prevSTATE", prevState);
-                console.log(productId);
-                let newObj = { ...prevState };
-                newObj[productId] = "";
-                return newObj;
-            }), 2000);
-        };
-    }
+          console.log("prevSTATE", prevState);
+          console.log(productId);
+          let newObj = { ...prevState };
+          newObj[productId] = "";
+          return newObj;
+        }),
+      2000
+    );
+  };
 }
 
 export function handleAddToCartHelper(token, setMessage, props) {
-    return (productId) => {
+  return (productId) => {
     token
       ? orderManager.getOrders(token).then((arr) => {
           if (arr.length > 0) {
@@ -36,7 +37,7 @@ export function handleAddToCartHelper(token, setMessage, props) {
                   .postNewOrder(token, productRelationship)
                   .then(() => {
                     setMessage(productId);
-                    props.history.push("/");
+                    // props.history.push("/");
                   });
               });
             } else {
@@ -48,7 +49,7 @@ export function handleAddToCartHelper(token, setMessage, props) {
                 .postNewOrder(token, productRelationship)
                 .then(() => {
                   setMessage(productId);
-                  props.history.push("/");
+                  //   props.history.push("/");
                 });
             }
           } else {
@@ -61,7 +62,7 @@ export function handleAddToCartHelper(token, setMessage, props) {
                 .postNewOrder(token, productRelationship)
                 .then(() => {
                   setMessage(productId);
-                  props.history.push("/");
+                  //   props.history.push("/");
                 });
             });
           }

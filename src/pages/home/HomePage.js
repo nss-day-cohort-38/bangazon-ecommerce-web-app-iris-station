@@ -8,11 +8,7 @@ import HomeListCard from "../../components/cards/HomeListCard";
 // import "./HomePage.css"
 import { Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-// import { ProductType } from "../products/index";
-// import {
-//   handleAddToCartHelper,
-//   setMessageHelper,
-// } from "../../components/buttons/AddButton";
+
 
 const HomePage = (props) => {
   const [prods, setProds] = useState([]);
@@ -28,10 +24,6 @@ const HomePage = (props) => {
       console.log(err);
     }
   };
-
-  // const setMessage = setMessageHelper(setAddMessage);
-  // const handleAddToCard = handleAddToCartHelper(token, setMessage, props);
-
   const handleAddToCard = (productId) => {
     token
       ? orderManager.getOrders(token).then((arr) => {
@@ -47,7 +39,7 @@ const HomePage = (props) => {
                   .then(() => {
                     setMessage(productId);
 
-                    props.history.push("/");
+                    // props.history.push("/");
                   });
               });
             } else {
@@ -60,7 +52,7 @@ const HomePage = (props) => {
                 .then(() => {
                   setMessage(productId);
 
-                  props.history.push("/");
+                  // props.history.push("/");
                 });
             }
           } else {
@@ -74,14 +66,14 @@ const HomePage = (props) => {
                 .then(() => {
                   setMessage(productId);
 
-                  props.history.push("/");
+                  // props.history.push("/");
                 });
             });
           }
         })
       : setMessage(productId, "You Have to Login");
   };
-  
+
   const setMessage = (productId, message = "Added to Cart") => {
     setAddMessage((prevState) => {
       let newObj = { ...prevState };
@@ -99,10 +91,6 @@ const HomePage = (props) => {
       2000
     );
   };
-
-
-
-
 
   useEffect(() => {
     productCategorySideBar();

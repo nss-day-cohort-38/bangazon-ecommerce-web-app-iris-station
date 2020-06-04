@@ -38,10 +38,10 @@ const ProductType = (props) => {
 
   useEffect(() => {
     isMountedRef.current = true;
-    getAllProductsOfCertainType(productTypeId);
+      getAllProductsOfCertainType(productTypeId);
 
     return () => (isMountedRef.current = false);
-  }, [productTypeId]);
+  }, [productTypeId, setAddMessage]);
 
   return (
     <>
