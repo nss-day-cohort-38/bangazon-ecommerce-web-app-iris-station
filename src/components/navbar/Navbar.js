@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -12,25 +12,21 @@ import {
   DropdownItem,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/Navbar.css";
-import { Input, Icon, Button, TextArea } from "semantic-ui-react";
+import { Input, Button } from "semantic-ui-react";
 import { TextField } from "@material-ui/core";
-import HomeListCard from "../cards/HomeListCard";
 
 const Example = ({
-  navArray = [],
+  navArray = defaultArray,
   color = "light",
   light = true,
-  extraText = "",
   userInfo,
   hasUser,
   clearUser,
   handleSearchChange,
-  searchField,
   handleSubmit,
 }) => {
-
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -90,17 +86,22 @@ const Example = ({
             {hasUser ? (
               <>
                 <form>
-                  <TextField
-                    required
-                    type="text"
-                    id="keyword"
-                    label="Search"
-                    onChange={handleSearchChange}
-                  />
-                  <Link to="/search" onClick={handleSubmit}>
-                    <button className="ui button">Search</button>
-                  </Link>
+                  <NavItem>
+                    <Input
+                      required
+                      type="text"
+                      id="keyword"
+                      placeholder="Search..."
+                      onChange={handleSearchChange}
+                      action={
+                        <Link to="search" onClick={handleSubmit}>
+                          <Button inverted color="blue" icon="search" />
+                        </Link>
+                      }
+                    />
+                  </NavItem>
                 </form>
+
                 <NavItem className="navbar-item-link">
                   <Link to="/profile/view">Profile</Link>
                 </NavItem>
