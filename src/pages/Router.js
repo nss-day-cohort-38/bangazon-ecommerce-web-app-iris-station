@@ -54,11 +54,19 @@ const Routes = (props) => {
   const [searchField, setSearchField] = useState({
     keyword: "",
   });
+  const [submittedSearchField, setSubmittedSearchField] = useState({
+    keyword: "",
+  });
 
   const handleSearchChange = (e) => {
     const stateToChange = { ...searchField };
     stateToChange[e.target.id] = e.target.value.toLowerCase();
     setSearchField(stateToChange);
+  };
+
+  const handleSubmit = () => {
+    setSubmittedSearchField(searchField)
+    console.log(searchField)
   };
 
   return (
@@ -82,6 +90,7 @@ const Routes = (props) => {
         searchField={searchField}
         handleSearchChange={handleSearchChange}
         history={history}
+        handleSubmit={handleSubmit}
       />
       )
       <Switch>
@@ -114,14 +123,9 @@ const Routes = (props) => {
             path="/"
             render={(props) =>
               searchField ? (
-                <HomePage
-                  {...props}
-                />
+                <HomePage {...props} />
               ) : (
-                <SearchForm
-                  {...props}
-                  searchField={searchField}
-                />
+                <Redirect to="/search" />
               )
             }
           />
@@ -135,7 +139,13 @@ const Routes = (props) => {
           <Route
             exact
             path="/search"
-            render={(props) => (hasUser ? <SearchForm searchField={searchField}/> : <Redirect to="/" />)}
+            render={(props) =>
+              hasUser ? (
+                <SearchForm searchField={submittedSearchField} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
           />
           <Route
             exact

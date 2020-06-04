@@ -31,6 +31,7 @@ const Example = ({
   handleSearchChange,
   searchField,
   history,
+  handleSubmit,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -98,7 +99,7 @@ const Example = ({
                     label="Search"
                     onChange={handleSearchChange}
                   />
-                  <Link to="/search">
+                  <Link to="/search" onClick={handleSubmit}>
                     <button className="ui button">Search</button>
                   </Link>
                 </form>
