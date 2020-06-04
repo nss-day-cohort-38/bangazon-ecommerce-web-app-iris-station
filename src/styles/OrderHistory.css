@@ -32,3 +32,11 @@
     justify-content: space-around;
     /* height: 100 */
 }
+
+.card-number-column {
+    text-align: left;
+}
+
+.card-expiration-column {
+    text-align: left;
+}
