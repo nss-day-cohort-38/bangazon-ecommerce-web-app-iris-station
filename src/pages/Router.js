@@ -6,7 +6,7 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
-import { DLHOME, Profile } from "./index";
+import { DLHOME, Profile, Reports } from "./index";
 import { Navbar } from "../components";
 import "../styles/Global.css";
 import ProductForm from "./products/ProductForm";
@@ -38,15 +38,6 @@ const Routes = (props) => {
     setHasUser(isAuthenticated());
   };
 
-  const getUserInfo = () => {
-    userManager
-      .getUser({ token: window.sessionStorage.getItem("token") })
-      .then((resp) => {
-        setUserInfo((prevState) => {
-          return resp;
-        });
-      });
-  };
 
   const [prods, setProds] = useState([]);
   const token = sessionStorage.getItem("token");
@@ -77,6 +68,7 @@ const Routes = (props) => {
             ? [
                 { title: "Sell a Product", route: "/products/form" },
                 { title: "My Products", route: "/products/myproducts" },
+                { title: "Reports", route: "/reports" },
                 {
                   title: <i className="shopping cart icon"></i>,
                   route: "/mycart",
@@ -173,6 +165,24 @@ const Routes = (props) => {
             path="/profile"
             render={(props) =>
               hasUser ? <Profile {...props} /> : <Redirect to="/login" />
+            }
+          />
+
+          {/* If not Authenticated, this route will take you to the home page */}
+          {/* Routes for Reports */}
+          <Route
+            exact
+            path="/reports"
+            render={(props) =>
+              hasUser ? <Reports {...props} /> : <Redirect to="/" />
+            }
+          />
+
+          <Route
+            exact
+            path="/reports/:report_type"
+            render={(props) =>
+              hasUser ? <Reports {...props} /> : <Redirect to="/reports" />
             }
           />
 

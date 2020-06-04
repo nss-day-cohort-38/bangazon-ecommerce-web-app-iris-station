@@ -10,14 +10,12 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import "../../styles/Navbar.css";
+import { Input, Icon, Button, TextArea } from "semantic-ui-react";
 import { TextField } from "@material-ui/core";
-import { Button } from "../../components";
-import { TextArea } from "semantic-ui-react";
 import HomeListCard from "../cards/HomeListCard";
 
 const Example = ({
@@ -30,9 +28,9 @@ const Example = ({
   clearUser,
   handleSearchChange,
   searchField,
-  history,
   handleSubmit,
 }) => {
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -159,3 +157,16 @@ const defaultArray = [
 ];
 
 export default Example;
+
+{
+  /* <NavItem>
+              <Input
+                placeholder="Search..."
+                action={
+                  <Link to="search">
+                    <Button inverted color="blue" icon="search" />
+                  </Link>
+                }
+              />
+            </NavItem> */
+}
