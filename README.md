@@ -53,8 +53,8 @@ Iris Station is an E-commerce application that allows a logged in user to do the
 
 
 ## Contributors
-Kurt Krafft
-Andrew Green
-Trinity Terry
-Keith Potempa
-Matt Crook
+- Kurt Krafft
+- Andrew Green
+- Trinity Terry
+- Keith Potempa
+- Matt Crook
