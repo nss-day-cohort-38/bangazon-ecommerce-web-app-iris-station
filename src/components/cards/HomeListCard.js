@@ -118,9 +118,6 @@ export default function HomeListCard(props) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing className="prod-card-button-container">
-          {/* <IconButton aria-label="add to wishlist">
-            <FavoriteIcon />
-          </IconButton> */}
           <IconButton
             aria-label="add to card"
             onClick={() => props.handleAddToCard(props.product.id)}

@@ -29,7 +29,7 @@ const SearchForm = (props) => {
                   .then(() => {
                     setMessage(productId);
 
-                    props.history.push("/");
+                    // props.history.push("/");
                   });
               });
             } else {
@@ -42,7 +42,7 @@ const SearchForm = (props) => {
                 .then(() => {
                   setMessage(productId);
 
-                  props.history.push("/");
+                  // props.history.push("/");
                 });
             }
           } else {
@@ -56,7 +56,7 @@ const SearchForm = (props) => {
                 .then(() => {
                   setMessage(productId);
 
-                  props.history.push("/");
+                  // props.history.push("/");
                 });
             });
           }
