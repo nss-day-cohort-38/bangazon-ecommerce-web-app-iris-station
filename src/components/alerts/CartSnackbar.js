@@ -1,26 +1,5 @@
-// import React from "react";
-// import Snackbar from "@material-ui/core/Snackbar";
-// import Slide from "@material-ui/core/Slide";
-// import { Message } from "semantic-ui-react";
-
-// const CartSnackBar = ({ message, positive = false, negative = false }) => {
-//   return (
-//     <Snackbar
-//       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-//       open={message ? true : false}
-//       autoHideDuration={6000}
-//       TransitionComponent={(props) => <Slide {...props} direction="up" />}
-//     >
-//       <Message positive={positive} negative={negative}>
-//         {message}
-//       </Message>
-//     </Snackbar>
-//   );
-// };
-
-// export default CartSnackBar;
-
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Message } from "semantic-ui-react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -33,16 +12,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ConsecutiveSnackbars({
-  message,
-  negative = false,
-  positive = true,
-}) {
-  const [snackPack, setSnackPack] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [messageInfo, setMessageInfo] = React.useState(undefined);
+const CartSnackbar = ({ message, negative = false, positive = true }) => {
+  const [snackPack, setSnackPack] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [messageInfo, setMessageInfo] = useState(undefined);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (snackPack.length && !messageInfo) {
       // Set a new snack when we don't have an active one
       setMessageInfo({ ...snackPack[0] });
@@ -75,10 +50,10 @@ export default function ConsecutiveSnackbars({
       key={messageInfo ? messageInfo.key : undefined}
       anchorOrigin={{
         vertical: "bottom",
-        horizontal: "left",
+        horizontal: "center",
       }}
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={12000}
       onClose={handleClose}
       onExited={handleExited}
       message={message}
@@ -94,6 +69,12 @@ export default function ConsecutiveSnackbars({
           </IconButton>
         </>
       }
-    />
+    >
+      <Message size="big" floating positive={positive} negative={negative}>
+        {message}
+      </Message>
+    </Snackbar>
   );
-}
+};
+
+export default CartSnackbar;
