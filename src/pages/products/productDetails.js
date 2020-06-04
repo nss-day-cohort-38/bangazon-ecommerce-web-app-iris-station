@@ -50,7 +50,7 @@ const ProductDetails = (props) => {
       : setMessage();
   };
 
-  const setMessage = (message = "Login First To Add to cart") => {
+  const setMessage = (message = "Login to add items to cart") => {
     setSubmitMessage(message);
 
     window.setTimeout(() => setSubmitMessage(""), 2000);

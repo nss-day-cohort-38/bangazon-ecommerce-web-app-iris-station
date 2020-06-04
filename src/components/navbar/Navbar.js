@@ -83,30 +83,28 @@ const Example = ({
             })}
           </Nav>
           <Nav navbar>
+            <form>
+              <NavItem className="navbar-item-link">
+                <Input
+                  required
+                  type="text"
+                  id="keyword"
+                  placeholder="Search..."
+                  onChange={handleSearchChange}
+                  action={
+                    <Link to="search" onClick={handleSubmit}>
+                      <Button
+                        color="blue"
+                        className="navbar-search-button"
+                        icon="search"
+                      />
+                    </Link>
+                  }
+                />
+              </NavItem>
+            </form>
             {hasUser ? (
               <>
-                <form>
-                  <NavItem className="navbar-item-link">
-                    <Input
-                      required
-                      type="text"
-                      id="keyword"
-                      placeholder="Search..."
-                      onChange={handleSearchChange}
-                      action={
-                        <Link to="search" onClick={handleSubmit}>
-                          <Button
-                          
-                            color="blue"
-                            className="navbar-search-button"
-                            icon="search"
-                          />
-                        </Link>
-                      }
-                    />
-                  </NavItem>
-                </form>
-
                 <NavItem className="navbar-item-link">
                   <Link to="/profile/view" className="right-side-link">
                     Profile
@@ -128,10 +126,14 @@ const Example = ({
             ) : (
               <>
                 <NavItem className="navbar-item-link">
-                  <Link to="/login">Login</Link>
+                  <Link className="right-side-link" to="/login">
+                    Login
+                  </Link>
                 </NavItem>
                 <NavItem className="navbar-item-link">
-                  <Link to="/register">Register</Link>
+                  <Link className="right-side-link" to="/register">
+                    Register
+                  </Link>
                 </NavItem>
               </>
             )}
