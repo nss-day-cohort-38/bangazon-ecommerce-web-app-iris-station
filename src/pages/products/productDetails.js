@@ -63,6 +63,12 @@ const ProductDetails = (props) => {
       .then((prod) => setProduct(prod));
   }, [props.productId]);
 
+  if (product.created_at == undefined) {
+    product.created_at = ""
+  } else {
+    product.created_at = product.created_at.split("T")[0]
+  }
+
   return (
     //return jsx here
     <>
