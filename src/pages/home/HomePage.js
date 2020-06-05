@@ -16,14 +16,46 @@ const HomePage = (props) => {
   const [addMessage, setAddMessage] = useState({});
   const [productTypes, setProductTypes] = useState([]);
 
-  const productCategorySideBar = async () => {
+  console.log(productTypes)
+
+
+  const productCategories = async () => {
     try {
       const getAllProductTypes = await productManager.getProductTypes();
-      setProductTypes(getAllProductTypes);
+      const productTypeMap = getAllProductTypes.map(productType => {
+        const productTypeId = productType.id;
+        return productTypeId;
+      });
+      let promises = [];
+      let productTypeArray = [];
+      let newObj = {};
+      productTypeMap.forEach(id => {
+        promises.push(productManager.getProductsByProductType(id));
+      });
+      Promise.all(promises).then(data => {
+        data.forEach(productType => {
+          const len = productType.length;
+          const mapName = productType.map(product => product.product_type.name)
+          const name = mapName[0]
+          const mapId = productType.map(product => product.product_type.id)
+          const id = mapId[0]
+          newObj = {
+            id: id,
+            name: name,
+            count: len
+          }
+          productTypeArray.push(newObj)
+        });
+        setProductTypes(productTypeArray)
+      })
+        .catch(error => {
+        console.log(error)
+      })
     } catch (err) {
       console.log(err);
     }
   };
+
   const handleAddToCard = (productId) => {
     token
       ? orderManager.getOrders(token).then((arr) => {
@@ -39,7 +71,6 @@ const HomePage = (props) => {
                   .then(() => {
                     setMessage(productId);
 
-                    // props.history.push("/");
                   });
               });
             } else {
@@ -52,7 +83,6 @@ const HomePage = (props) => {
                 .then(() => {
                   setMessage(productId);
 
-                  // props.history.push("/");
                 });
             }
           } else {
@@ -66,7 +96,6 @@ const HomePage = (props) => {
                 .then(() => {
                   setMessage(productId);
 
-                  // props.history.push("/");
                 });
             });
           }
@@ -93,7 +122,7 @@ const HomePage = (props) => {
   };
 
   useEffect(() => {
-    productCategorySideBar();
+    productCategories();
     productManager.getHomeList().then((arr) => {
       setProds(arr);
       setAddMessage((prevState) => {
@@ -108,25 +137,19 @@ const HomePage = (props) => {
 
   return (
     <>
-        {/* <div className="category-header">
-          Filter By Product Type
-          </div> */}
+
       <div className="product-category-container">
-          {/* <Dropdown scrolling={true}>
-            <Dropdown.Menu className="ui four column relaxed equal height divided grid"> */}
+
             <div className="category-items">
-              {productTypes.map((productType) => (
+          {productTypes.map((productType) => (
                 <Link
                   key={productType.id}
                   to={`/products/category/${productType.id}`}
                 >
-                  <Dropdown.Item text={productType.name} />
+              <span>{productType.name} ({productType.count})</span>
                 </Link>
               ))}
               </div>
-
-            {/* </Dropdown.Menu>
-          </Dropdown> */}
       </div>
 
       <div className="home-header">

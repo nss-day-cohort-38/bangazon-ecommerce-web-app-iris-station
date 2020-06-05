@@ -11,6 +11,7 @@ const ProductType = (props) => {
   const [products, setProducts] = useState([]);
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState([]);
+  const [productCount, setProductCount] = useState([]);
   const isMountedRef = useRef(false);
 
   const { productTypeId } = props;
@@ -21,6 +22,8 @@ const ProductType = (props) => {
         productTypeId
       );
       setProducts(getProductByProductType);
+      const len = getProductByProductType.length;
+      setProductCount(len);
       setAddMessage((prevState) => {
         let newObj = {};
         getProductByProductType.map((item, i) => {
@@ -38,7 +41,7 @@ const ProductType = (props) => {
 
   useEffect(() => {
     isMountedRef.current = true;
-      getAllProductsOfCertainType(productTypeId);
+    getAllProductsOfCertainType(productTypeId);
 
     return () => (isMountedRef.current = false);
   }, [productTypeId, setAddMessage]);
@@ -52,6 +55,7 @@ const ProductType = (props) => {
             product={product}
             handleAddToCard={handleAddToCard}
             addMessage={addMessage[product.id]}
+            productCount={productCount}
             {...props}
           />
         ))}

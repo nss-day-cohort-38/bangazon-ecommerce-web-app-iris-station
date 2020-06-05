@@ -2,7 +2,6 @@ import orderManager from "../../modules/orderManager";
 import order_product_manager from "../../modules/order_product_manager";
 
 export function setMessageHelper(setAddMessage) {
-  console.log(setAddMessage);
   return (productId, message = "Added to Cart") => {
     setAddMessage((prevState) => {
       let newObj = { ...prevState };
