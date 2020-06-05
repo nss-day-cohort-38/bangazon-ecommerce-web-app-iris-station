@@ -51,9 +51,12 @@ const MenuView = () => {
         <>
           <h1>Normal</h1>
           <h3>This is a normal button with nothing passed down to it</h3>
-
-          <Link onClick={() => toggleMenu()}>Categories</Link>
-
+          <hr />
+          <h1>Drawer Menu</h1>
+          <Link onClick={() => toggleMenu()}>Click me to See Example</Link>
+          <pre>{`
+                <Link onClick={() => toggleMenu()}>Click me to See Example</Link>
+              `}</pre>
           <Drawer
             position="left"
             isOpen={drawerOpen}
@@ -73,6 +76,47 @@ const MenuView = () => {
               </div>,
             ]}
           />
+          <p>
+            This component taakes in:
+            <br />
+            - position (top, bottom, left, right)
+            <br />
+            - isOpen which controls whether or not the drawer is open [true,
+            false].
+            <br />- a close method to handle when drawer is closed
+            <pre>
+              {`
+                const toggleMenu = () => {
+                  setDrawerOpen(!drawerOpen);
+                };
+              `}
+            </pre>
+            <br />- an array that will be mapped over to create the items in
+            drawer.
+          </p>
+          <pre>
+            {`
+              <Drawer
+                position="left"
+                isOpen={drawerOpen}
+                close={() => toggleMenu()}
+                drawerInfo={[
+                  <div>
+                    <Link to="#">Category Name</Link>
+                    <p>Item</p>
+                    <p>Item</p>
+                    <p>Item</p>
+                  </div>,
+                  <div>
+                    Category Name
+                    <p>Item</p>
+                    <p>Item</p>
+                    <p>Item</p>
+                  </div>,
+                ]}
+              />
+          `}
+          </pre>
         </>
       )}
     </>
