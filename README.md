@@ -34,9 +34,20 @@ Iris Station is an E-commerce application that allows a logged in user to do the
 
 1. Run `npm install` and wait for all dependencies to be installed.
 
+1. enter the following code into your terminal 
+    `cd src/modules && touch baseurl.js`
+
+1. you just created a file to hold your API url. The next step will tell you how to start that. Once it is running take the url for the API and insert in the baseurl.js file like so....
+`const baseurl = "http://localhost:8000"`
+`export default baseurl`
+
+1. note: typically the url for our app is the one listed above, however, it could change so keep that in mind.
+
 1. Go to https://github.com/nss-day-cohort-38/bangazon-ecommerce-api-iris-station and follow the instructions to set up the API in a seperate directory from the Bangazon Client directory. Then complete the next two steps.
 
+
 1. Run `npm start` to verify that installation was successful and start the application.
+
 
 1. Go to http://localhost:3000/ to view the app. 
 
