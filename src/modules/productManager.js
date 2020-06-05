@@ -1,3 +1,4 @@
+//Made by Kurt Krafft and Andrew Green to handle dealing with the product viewset in the API
 import baseurl from "./baseurl";
 
 const remoteUrl = "http://localhost:8000";
