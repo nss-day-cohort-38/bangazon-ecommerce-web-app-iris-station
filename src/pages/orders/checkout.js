@@ -81,7 +81,7 @@ const Checkout = props => {
             </form>
             </div>
             <div className="checkout-btn-container">
-                <button class="ui primary button" onClick={()=> handleSubmit()}>Checkout</button>
+                <button className="ui primary button" onClick={()=> handleSubmit()}>Checkout</button>
             </div>
             </div>
         </div>

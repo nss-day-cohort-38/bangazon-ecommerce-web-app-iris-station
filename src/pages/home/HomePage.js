@@ -5,6 +5,7 @@ import productManager from "../../modules/productManager";
 import orderManager from "../../modules/orderManager";
 import order_product_manager from "../../modules/order_product_manager";
 import HomeListCard from "../../components/cards/HomeListCard";
+import checkQuantity from "./checkQuantity";
 // import "./HomePage.css"
 
 const HomePage = (props) => {
@@ -12,10 +13,41 @@ const HomePage = (props) => {
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState({});
   const handleAddToCard = (productId) => {
-    token
-      ? orderManager.getOrders(token).then((arr) => {
-          if (arr.length > 0) {
-            if (arr[0].payment_type_id != null) {
+
+    productManager.getOneProduct(productId).then(product=> {
+      // console.log(prod)
+      if (product.quantity>0){
+        token
+        ? orderManager.getOrders(token).then((arr) => {
+            if (arr.length > 0) {
+              if (arr[0].payment_type_id != null) {
+                orderManager.postOrder(token).then((obj) => {
+                  const productRelationship = {
+                    order_id: obj.id,
+                    product_id: productId,
+                  };
+                  order_product_manager
+                    .postNewOrder(token, productRelationship)
+                    .then(() => {
+                      setMessage(productId);
+  
+                      props.history.push("/");
+                    });
+                });
+              } else {
+                const productRelationship = {
+                  order_id: arr[0].id,
+                  product_id: productId,
+                };
+                order_product_manager
+                  .postNewOrder(token, productRelationship)
+                  .then(() => {
+                    setMessage(productId);
+  
+                    props.history.push("/");
+                  });
+              }
+            } else {
               orderManager.postOrder(token).then((obj) => {
                 const productRelationship = {
                   order_id: obj.id,
@@ -25,40 +57,19 @@ const HomePage = (props) => {
                   .postNewOrder(token, productRelationship)
                   .then(() => {
                     setMessage(productId);
-
+  
                     props.history.push("/");
                   });
               });
-            } else {
-              const productRelationship = {
-                order_id: arr[0].id,
-                product_id: productId,
-              };
-              order_product_manager
-                .postNewOrder(token, productRelationship)
-                .then(() => {
-                  setMessage(productId);
-
-                  props.history.push("/");
-                });
             }
-          } else {
-            orderManager.postOrder(token).then((obj) => {
-              const productRelationship = {
-                order_id: obj.id,
-                product_id: productId,
-              };
-              order_product_manager
-                .postNewOrder(token, productRelationship)
-                .then(() => {
-                  setMessage(productId);
+          })
+        : setMessage(productId, "Login to add items to cart");
 
-                  props.history.push("/");
-                });
-            });
-          }
-        })
-      : setMessage(productId, "Login to add items to cart");
+
+      } else {
+        alert("This product is out of stock, Sorry!")
+      }
+  })
   };
   
   const setMessage = (productId, message = "Added to Cart") => {
