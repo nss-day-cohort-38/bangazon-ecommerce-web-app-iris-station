@@ -28,7 +28,7 @@ export default function SimpleExpansionPanel({
   return (
     <div className={`${className} expansion-panel`}>
       <ExpansionPanel expanded={isOpen}>
-        {isOpen ? (
+        {routeClose ? (
           <Link to={isOpen ? routeClose : routeOpen}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
