@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Button, Table, VerticalMenu } from "../../../components";
+import { Link } from "react-router-dom";
+
+import { Button, Table, VerticalMenu, Drawer } from "../../../components";
 const MenuView = () => {
   const [showProps, setShowProps] = useState(false);
-
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleMenu = () => {
+    setDrawerOpen(!drawerOpen);
+  };
   return (
     <>
       <Button handleClick={() => setShowProps(!showProps)}>
@@ -46,7 +51,72 @@ const MenuView = () => {
         <>
           <h1>Normal</h1>
           <h3>This is a normal button with nothing passed down to it</h3>
-          <VerticalMenu />
+          <hr />
+          <h1>Drawer Menu</h1>
+          <Link onClick={() => toggleMenu()}>Click me to See Example</Link>
+          <pre>{`
+                <Link onClick={() => toggleMenu()}>Click me to See Example</Link>
+              `}</pre>
+          <Drawer
+            position="left"
+            isOpen={drawerOpen}
+            close={() => toggleMenu()}
+            drawerInfo={[
+              <div>
+                <Link to="#">Category Name</Link>
+                <p>Item</p>
+                <p>Item</p>
+                <p>Item</p>
+              </div>,
+              <div>
+                Category Name
+                <p>Item</p>
+                <p>Item</p>
+                <p>Item</p>
+              </div>,
+            ]}
+          />
+          <p>
+            This component taakes in:
+            <br />
+            - position (top, bottom, left, right)
+            <br />
+            - isOpen which controls whether or not the drawer is open [true,
+            false].
+            <br />- a close method to handle when drawer is closed
+            <pre>
+              {`
+                const toggleMenu = () => {
+                  setDrawerOpen(!drawerOpen);
+                };
+              `}
+            </pre>
+            <br />- an array that will be mapped over to create the items in
+            drawer.
+          </p>
+          <pre>
+            {`
+              <Drawer
+                position="left"
+                isOpen={drawerOpen}
+                close={() => toggleMenu()}
+                drawerInfo={[
+                  <div>
+                    <Link to="#">Category Name</Link>
+                    <p>Item</p>
+                    <p>Item</p>
+                    <p>Item</p>
+                  </div>,
+                  <div>
+                    Category Name
+                    <p>Item</p>
+                    <p>Item</p>
+                    <p>Item</p>
+                  </div>,
+                ]}
+              />
+          `}
+          </pre>
         </>
       )}
     </>

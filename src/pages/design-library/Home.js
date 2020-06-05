@@ -38,7 +38,7 @@ const DLHOME = ({ match, userInfo, hasUser }) => {
       {pageView === "cards" && <ButtonsView />}
       {pageView === "expansions" && <ButtonsView />}
       {pageView === "forms" && <FormsView />}
-      {pageView === "menues" && <MenuView />}
+      {pageView === "menus" && <MenuView />}
       {pageView === "navbar" && <NavbarView />}
       {pageView === "papers" && <PaperView />}
       {pageView === "tables" && <PaperView />}
