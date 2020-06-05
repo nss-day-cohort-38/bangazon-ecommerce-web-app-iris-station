@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "../../../styles/OrderHistory.css";
 
-const OrderDetails = ({ loading, currentOrder }) => {
+const OrderDetails = ({ loading, currentOrder, className }) => {
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12} md={6} className={className}>
       {loading ? (
         <Paper>
           <CircularProgress />
@@ -80,12 +80,13 @@ const OrderDetails = ({ loading, currentOrder }) => {
                         </div>
 
                         <div className="paper-image-container">
-                          <img 
-                            className="paper-image" 
-                            src={item.image_path === null 
-                              ? "https://via.placeholder.com/100" 
-                              : item.image_path
-                            } 
+                          <img
+                            className="paper-image"
+                            src={
+                              item.image_path === null
+                                ? "https://via.placeholder.com/100"
+                                : item.image_path
+                            }
                           />
                         </div>
                       </div>

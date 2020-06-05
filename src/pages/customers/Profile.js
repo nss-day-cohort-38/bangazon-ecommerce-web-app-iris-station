@@ -3,7 +3,7 @@ import { VerticalMenu } from "../../components";
 import { AddPaymentPage, OrderHistory, PaymentPage, View, Edit } from "./index";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {userManager} from '../../modules';
+import { userManager } from "../../modules";
 
 const ProfilePage = ({ match }) => {
   const [profileView, setProfileView] = useState("");
@@ -13,11 +13,10 @@ const ProfilePage = ({ match }) => {
 
   const getUserData = () => {
     const token = window.sessionStorage.getItem("token");
-    userManager.getCustomer(token)
-      .then(resp => {
-        setUserData(resp)
-      })
-  }
+    userManager.getCustomer(token).then((resp) => {
+      setUserData(resp);
+    });
+  };
 
   useEffect(() => {
     if (match.params.category) {
@@ -36,7 +35,7 @@ const ProfilePage = ({ match }) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={2} md={2}>
+        <Grid item xs={12} md={3}>
           {/* 
             Edit Profile doesn't appear in the menu, 
             because it is accessed from an edit button on /profile/view,
@@ -52,23 +51,33 @@ const ProfilePage = ({ match }) => {
             firstActive={profileView}
           />
         </Grid>
-        <Grid item xs={8} md={9}>
-          {profileView === "view" && <View userData={userData} setProfileView={setProfileView}/>}
-          {profileView === "edit" && <Edit userData={userData} setProfileView={setProfileView} getUserData={getUserData}/>}
+        <Grid item xs={12} md={8}>
+          {profileView === "view" && (
+            <View userData={userData} setProfileView={setProfileView} />
+          )}
+          {profileView === "edit" && (
+            <Edit
+              userData={userData}
+              setProfileView={setProfileView}
+              getUserData={getUserData}
+            />
+          )}
           {profileView === "add-payment" && <AddPaymentPage />}
           {profileView === "order-history" && <OrderHistory itemId={itemId} />}
           {profileView === "payment-types" && <PaymentPage />}
         </Grid>
+        <Grid item xs={0} md={1}></Grid>
       </Grid>
     </div>
-  )
-}
+  );
+};
 
 export default ProfilePage;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    padding: "10px 0"
   },
   paper: {
     padding: theme.spacing(2),

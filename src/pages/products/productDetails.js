@@ -61,9 +61,25 @@ const ProductDetails = (props) => {
     //fetch the product here
     productManager
       .getOneProduct(props.productId)
-      .then((prod) => setProduct(prod));
+      .then((prod) => {console.log(prod); setProduct(prod)});
+      
   }, [props.productId]);
 
+  if(product["error"]==="Does Not Exist"){
+    return (
+    <>
+    <div className="details-container">
+        <div className="product-container">
+          <div className="error-container">
+            <img src="https://cdn.pixabay.com/photo/2013/07/12/13/58/warning-147699_1280.png" alt="error image" className="error-image" width="100px"/>
+         <h2>We are sorry, this product has been deleted or does not exist!</h2>
+         </div>
+        </div>
+      </div>
+    </>
+    )
+
+  }else {
   return (
     //return jsx here
     <>
@@ -120,6 +136,6 @@ const ProductDetails = (props) => {
         </div>
       </div>
     </>
-  );
+  );}
 };
 export default ProductDetails;
