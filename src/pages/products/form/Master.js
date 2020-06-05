@@ -24,14 +24,10 @@ const Master = (props) => {
   const [isChecked, setIsChecked] = useState(false)
 
   const handleImageUpload = (event) => {
-    // If the field being changed is the image path,
-    // rather than placing the event.target.value in state,
-    // you need to place the (only) file
-    const stateToChange = { ...product };
     const inputFile = event.target.files[0];
-    console.log(inputFile);
-
+    
     // A hackey way of kicking the file out of the input
+    // when validations fail
     const clearInput = () => document.getElementById("image_path").value = "";
 
     // First check if the user actually ended up uploading a file
@@ -40,13 +36,14 @@ const Master = (props) => {
       if (!inputFile.type.startsWith("image/")) {
         alert("Only image files are supported");
         clearInput();
-      // Then check if it's smaller than 5MB
+        // Then check if it's smaller than 5MB
       } else if (inputFile.size > 5000000) {
         alert("File size cannot exceed 5MB");
         clearInput();
       } else {
         // The image is only set in state
         // if the above validations pass
+        const stateToChange = { ...product };
         stateToChange[event.target.id] = inputFile;
         setProduct(stateToChange);
       }
@@ -94,8 +91,6 @@ const Master = (props) => {
     }
     return formdata
   }
-
-  // *jpeg, *gif, *png, *jpg
 
   const validProduct = () => {
     if (product.price > 10000) {
