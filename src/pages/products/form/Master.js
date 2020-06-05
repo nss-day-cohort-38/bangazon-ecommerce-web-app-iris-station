@@ -34,17 +34,22 @@ const Master = (props) => {
     // A hackey way of kicking the file out of the input
     const clearInput = () => document.getElementById("image_path").value = "";
 
-    if (!inputFile.type.startsWith("image/")) {
-      alert("Only image files are supported");
-      clearInput();
-    } else if (inputFile.size > 5000000) {
-      alert("File size cannot exceed 5MB");
-      clearInput();
-    } else {
-      // The image is only set in state
-      // if the above validations pass
-      stateToChange[event.target.id] = inputFile;
-      setProduct(stateToChange);
+    // First check if the user actually ended up uploading a file
+    if (inputFile) {
+      // Then, check if it's an image      
+      if (!inputFile.type.startsWith("image/")) {
+        alert("Only image files are supported");
+        clearInput();
+      // Then check if it's smaller than 5MB
+      } else if (inputFile.size > 5000000) {
+        alert("File size cannot exceed 5MB");
+        clearInput();
+      } else {
+        // The image is only set in state
+        // if the above validations pass
+        stateToChange[event.target.id] = inputFile;
+        setProduct(stateToChange);
+      }
     }
   }
 
