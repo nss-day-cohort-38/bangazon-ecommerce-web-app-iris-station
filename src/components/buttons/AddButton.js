@@ -10,8 +10,6 @@ export function setMessageHelper(setAddMessage) {
     });
     window.setTimeout(() =>
         setAddMessage((prevState) => {
-          console.log("prevSTATE", prevState);
-          console.log(productId);
           let newObj = { ...prevState };
           newObj[productId] = "";
           return newObj;
@@ -36,7 +34,6 @@ export function handleAddToCartHelper(token, setMessage, props) {
                   .postNewOrder(token, productRelationship)
                   .then(() => {
                     setMessage(productId);
-                    // props.history.push("/");
                   });
               });
             } else {
@@ -48,7 +45,6 @@ export function handleAddToCartHelper(token, setMessage, props) {
                 .postNewOrder(token, productRelationship)
                 .then(() => {
                   setMessage(productId);
-                  //   props.history.push("/");
                 });
             }
           } else {
@@ -61,7 +57,6 @@ export function handleAddToCartHelper(token, setMessage, props) {
                 .postNewOrder(token, productRelationship)
                 .then(() => {
                   setMessage(productId);
-                  //   props.history.push("/");
                 });
             });
           }
