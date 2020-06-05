@@ -7,15 +7,17 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { Button, Paper } from "..";
 
 const ProductForm = props => {
-  // STOPPED HERE
   const handleProductChange = props.handleProductChange;
   const producttypes = props.producttypes; 
   const handleSubmit = props.handleSubmit;
   const handleChange = props.handleChange;
   const isChecked = props.isChecked;
+  const image_filename = props.image_filename;
 
   return (
     <>
@@ -54,9 +56,29 @@ const ProductForm = props => {
                   onChange={handleProductChange}
                 />
             </Grid>
-            {/* Keith Potempa Addition: Upload File */}
+            {/* Upload File */}
             {/* Reference: https://kiranvj.com/blog/blog/file-upload-in-material-ui/ */}
             <Grid item xs={12} md={6}>
+              <p>
+                <label htmlFor="image_path">
+                  <IconButton
+                    variant="contained"
+                    aria-label="upload picture"
+                    color="default"
+                    component="span"
+                    >
+                    <PhotoCamera />   
+                  </IconButton>
+                  {/* This field displays the filename of a file once uploaded */}
+                  {/* It truncates it down to the last x characters */}
+                  {image_filename
+                      ? "..." + image_filename.substring(image_filename.length -30, image_filename.length)
+                      : "Upload file"
+                  }
+                </label>
+              </p>
+              {/* https://material-ui.com/components/buttons/#upload-button */}
+              {/* This field is hidden, but contains any image uploaded to it */}
               <TextField
                 style={{display: 'none'}}
                 fullWidth
@@ -67,19 +89,8 @@ const ProductForm = props => {
                 type="file"
                 onChange={handleProductChange}
               />
-              {/* https://material-ui.com/components/buttons/#upload-button */}
-              <label htmlFor="image_path">
-                <IconButton
-                  variant="contained"
-                  aria-label="upload picture"
-                  color="default"
-                  component="span"
-                >
-                  <PhotoCamera /> Upload Photo
-                </IconButton>
-              </label>
             </Grid>
-            {/* End of Keith Potempa Addition: Upload File */}
+            {/* End of Upload File */}
             <Grid item xs={12} md={3}>
             <FormControlLabel
               control={<Checkbox checked={isChecked} onChange={handleChange} name="checkedA" />}

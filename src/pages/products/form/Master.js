@@ -23,25 +23,42 @@ const Master = (props) => {
   // const [submitMessage, setSubmitMessage] = useState("");
   const [isChecked, setIsChecked] = useState(false)
 
-  const handleProductChange = (event) => {
-    const stateToChange = { ...product };
-    // If the field is not the image, then business as usual
-    if (event.target.id !== "image_path") {
-      stateToChange[event.target.id] = event.target.value;
-    } 
+  const handleImageUpload = (event) => {
     // If the field being changed is the image path,
     // rather than placing the event.target.value in state,
     // you need to place the (only) file
-    else {
-      const inputFile = event.target.files[0]
-      // Do not set in state if the file is larger than 5MB
-      if (inputFile.size > 5000000) {
-        alert("File size cannot exceed 5MB")
-      } else {
-        stateToChange[event.target.id] = inputFile;
-      }
+    const stateToChange = { ...product };
+    const inputFile = event.target.files[0];
+    console.log(inputFile);
+
+    // A hackey way of kicking the file out of the input
+    const clearInput = () => document.getElementById("image_path").value = "";
+
+    if (!inputFile.type.startsWith("image/")) {
+      alert("Only image files are supported");
+      clearInput();
+    } else if (inputFile.size > 5000000) {
+      alert("File size cannot exceed 5MB");
+      clearInput();
+    } else {
+      // The image is only set in state
+      // if the above validations pass
+      stateToChange[event.target.id] = inputFile;
+      setProduct(stateToChange);
     }
-    setProduct(stateToChange);
+  }
+
+  const handleFieldChange = (event) => {
+    // If the field is not the image, then business as usual
+    if (event.target.id !== "image_path") {
+      const stateToChange = { ...product };
+      stateToChange[event.target.id] = event.target.value;
+      setProduct(stateToChange);
+    } 
+    // Otherwise, send it to the image handler
+    else {
+      handleImageUpload(event)
+    }
   };
 
   const handleChange = () => {
@@ -72,6 +89,8 @@ const Master = (props) => {
     }
     return formdata
   }
+
+  // *jpeg, *gif, *png, *jpg
 
   const validProduct = () => {
     if (product.price > 10000) {
@@ -110,11 +129,12 @@ const Master = (props) => {
   return (
     <>
       <ProductForm 
-        handleProductChange={handleProductChange}
+        handleProductChange={handleFieldChange}
         producttypes={producttypes}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         isChecked={isChecked}
+        image_filename={product.image_path.name}
       />
     </>
   );
