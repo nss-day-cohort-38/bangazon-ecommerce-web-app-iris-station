@@ -28,7 +28,19 @@ export default function SimpleExpansionPanel({
   return (
     <div className={`${className} expansion-panel`}>
       <ExpansionPanel expanded={isOpen}>
-        <Link to={isOpen ? routeClose : routeOpen}>
+        {isOpen ? (
+          <Link to={isOpen ? routeClose : routeOpen}>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className="expansion-panel-summary">
+                {summary}
+              </Typography>
+            </ExpansionPanelSummary>
+          </Link>
+        ) : (
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -38,7 +50,7 @@ export default function SimpleExpansionPanel({
               {summary}
             </Typography>
           </ExpansionPanelSummary>
-        </Link>
+        )}
         <ExpansionPanelDetails>
           <Typography className="expansion-panel-summary">{details}</Typography>
         </ExpansionPanelDetails>
