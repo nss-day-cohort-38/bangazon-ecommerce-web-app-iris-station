@@ -61,7 +61,7 @@ const ProductDetails = (props) => {
     //fetch the product here
     productManager
       .getOneProduct(props.productId)
-      .then((prod) => {console.log(prod); setProduct(prod)});
+      .then((prod) => {setProduct(prod)});
       
   }, [props.productId]);
 
