@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Button, Table, VerticalMenu } from "../../../components";
+import { Link } from "react-router-dom";
+
+import { Button, Table, VerticalMenu, Drawer } from "../../../components";
 const MenuView = () => {
   const [showProps, setShowProps] = useState(false);
-
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleMenu = () => {
+    setDrawerOpen(!drawerOpen);
+  };
   return (
     <>
       <Button handleClick={() => setShowProps(!showProps)}>
@@ -46,7 +51,28 @@ const MenuView = () => {
         <>
           <h1>Normal</h1>
           <h3>This is a normal button with nothing passed down to it</h3>
-          <VerticalMenu />
+
+          <Link onClick={() => toggleMenu()}>Categories</Link>
+
+          <Drawer
+            position="left"
+            isOpen={drawerOpen}
+            close={() => toggleMenu()}
+            drawerInfo={[
+              <div>
+                <Link to="#">Category Name</Link>
+                <p>Item</p>
+                <p>Item</p>
+                <p>Item</p>
+              </div>,
+              <div>
+                Category Name
+                <p>Item</p>
+                <p>Item</p>
+                <p>Item</p>
+              </div>,
+            ]}
+          />
         </>
       )}
     </>
