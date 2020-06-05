@@ -10,7 +10,7 @@ export default {
     return fetch(`${baseurl}/products`).then((r) => r.json());
   },
   getOneProduct(id) {
-    return fetch(`${baseurl}/products/${id}`).then((r) => r.json());
+    return fetch(`${baseurl}/products/${id}`).then(r => r.json())
   },
   getProductByUser() {
     return fetch(`${baseurl}/products?user`, {
