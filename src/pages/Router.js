@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -18,7 +18,6 @@ import { MyCart, Checkout } from "./orders/index";
 import { ProductType } from "./products/index"
 import SearchForm from "../components/form/searchForm";
 
-
 const Routes = (props) => {
   let history = useHistory();
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
@@ -35,7 +34,6 @@ const Routes = (props) => {
     setHasUser(isAuthenticated());
   };
 
-  const token = sessionStorage.getItem("token");
   const [searchField, setSearchField] = useState({
     keyword: "",
   });

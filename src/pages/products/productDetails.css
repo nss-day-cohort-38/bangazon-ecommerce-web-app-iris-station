@@ -66,3 +66,11 @@
 .product-form {
     width: 100%;
 }
+.error-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.error-image{
+    margin-bottom: 20px;
+}
