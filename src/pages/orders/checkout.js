@@ -6,6 +6,9 @@ import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
 import depleteProduct from "./depleteProduct"
 import "./checkout.css"
+import UIfx from 'uifx'
+import wooshAudio from "../../sound_fx/fun_bell.mp3"
+
 
 const Checkout = props => {
     const [order, setOrder] = useState({"id": "", "created_at": "", "payment_type_id": "","customer":{"address":"","id": ""}})
@@ -18,8 +21,16 @@ const Checkout = props => {
     const selectPaymentId= e => {
         setSelectedPaymentId(e.target.value)
     }
+    const woosh = new UIfx(
+        wooshAudio,
+        {
+            volume: 0.2,
+            throttleMs: 100
+        }
+    )
 
     const handleSubmit=()=> {
+        woosh.play()
         if(selectedPaymentId===""){
             alert('Please Select a Payment Method')
         }else{
