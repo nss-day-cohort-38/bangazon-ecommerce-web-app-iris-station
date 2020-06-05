@@ -7,7 +7,6 @@ const CartCard = props => {
     //   ? "https://via.placeholder.com/100" 
     //   : `${props.product.image_path}`
 
-    // console.log(props.product.image_path)
     return(
         <Card className="ccard">
       <Card.Content>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import productManager from "../../modules/productManager";
 import orderManager from "../../modules/orderManager";
 import { Message } from "semantic-ui-react";
-
+import { CartSnackbar } from "../../components";
 import order_product_manager from "../../modules/order_product_manager";
 import "./productDetails.css";
 
@@ -12,6 +12,7 @@ const ProductDetails = (props) => {
   const [product, setProduct] = useState({});
   const token = sessionStorage.getItem("token");
   const [submitMessage, setSubmitMessage] = useState("");
+  const str = "Not Available for Local Delivery"
   const handleAddToCard = (productId) => {
     token
       ? orderManager.getOrders(token).then((arr) => {
@@ -24,6 +25,7 @@ const ProductDetails = (props) => {
                 };
                 order_product_manager
                   .postNewOrder(token, productRelationship)
+                  .then(() => setMessage("Added to Cart"));
               });
             } else {
               const productRelationship = {
@@ -32,6 +34,7 @@ const ProductDetails = (props) => {
               };
               order_product_manager
                 .postNewOrder(token, productRelationship)
+                .then(() => setMessage("Added to Cart"));
             }
           } else {
             orderManager.postOrder(token).then((obj) => {
@@ -41,17 +44,19 @@ const ProductDetails = (props) => {
               };
               order_product_manager
                 .postNewOrder(token, productRelationship)
+                .then(() => setMessage("Added to Cart"));
             });
           }
         })
       : setMessage();
   };
 
-  const setMessage = ( message = "Login First To Add to cart") => {
+  const setMessage = (message = "Login to add items to cart") => {
     setSubmitMessage(message);
 
     window.setTimeout(() => setSubmitMessage(""), 2000);
   };
+
   useEffect(() => {
     //fetch the product here
     productManager
@@ -71,9 +76,10 @@ const ProductDetails = (props) => {
             <div
               className="product-image"
               style={{
-                backgroundImage: `url(${product.image_path === null
-                  ? "https://via.placeholder.com/100" 
-                  : product.image_path
+                backgroundImage: `url(${
+                  product.image_path === null
+                    ? "https://via.placeholder.com/100"
+                    : product.image_path
                 })`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
@@ -83,14 +89,26 @@ const ProductDetails = (props) => {
 
             <div className="product-specs">
               <p className="price spec">Price: ${product.price}</p>
-              <p className="create_date spec">Posted: {product.created_at}</p>
+              <p className="create_date spec">
+                Posted:{" "}
+                {product.created_at == undefined
+                  ? ""
+                  : product.created_at.split("T")[0]}
+              </p>
               <p className="remaining spec">Stock: {product.quantity}</p>
+            <p className="location spec">Location: {product.location=== "" ? str : product.location}</p>
             </div>
           </div>
           <div className="product-description">
             <p className="prod-description">{product.description}</p>
           </div>
-          {submitMessage && <Message negative>{submitMessage}</Message>}
+          {submitMessage && (
+            <CartSnackbar
+              message={submitMessage}
+              negative={submitMessage !== "Added to Cart"}
+              positive={submitMessage === "Added to Cart"}
+            />
+          )}
           <div className="icon-container-details">
             <button
               className="ui button"

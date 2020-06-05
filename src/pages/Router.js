@@ -40,7 +40,6 @@ const Routes = (props) => {
     setHasUser(isAuthenticated());
   };
 
-
   const [prods, setProds] = useState([]);
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState({});
@@ -58,8 +57,7 @@ const Routes = (props) => {
   };
 
   const handleSubmit = () => {
-    setSubmittedSearchField(searchField)
-    console.log(searchField)
+    setSubmittedSearchField(searchField);
   };
 
   return (
@@ -113,15 +111,12 @@ const Routes = (props) => {
               )
             }
           />
+
           <Route
             exact
             path="/"
             render={(props) =>
-              searchField ? (
-                <HomePage {...props} />
-              ) : (
-                <Redirect to="/search" />
-              )
+              searchField ? <HomePage {...props} /> : <Redirect to="/search" />
             }
           />
           <Route
@@ -134,13 +129,9 @@ const Routes = (props) => {
           <Route
             exact
             path="/search"
-            render={(props) =>
-              hasUser ? (
-                <SearchForm searchField={submittedSearchField} />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
+            render={(props) => (
+              <SearchForm searchField={submittedSearchField} />
+            )}
           />
           <Route
             exact
@@ -162,6 +153,7 @@ const Routes = (props) => {
                 : <Redirect to="/" />
             }
           />
+
 
           {/* this will route to a product detail page */}
           <Route

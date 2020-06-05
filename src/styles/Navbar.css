@@ -1,10 +1,24 @@
 .navbar-item-link {
     padding: 15px;
-    display: inline-block;
+    display: flex;
     line-height: 20px;
   }
+
+.right-side-link{
+    margin: auto 0;
+}
 
   .navbar-right-side{
     display: flex;
     justify-content: flex-end;
   }
+
+.logout-link {
+  margin: auto 0;
+  cursor: pointer;
+  color: #4183c4;
+}
+
+.navbar-search-button {
+  color: #ffffff !important;
+}

@@ -55,7 +55,7 @@ export default function MyListCard(props) {
             </IconButton>
           }
           title={props.product.title}
-          subheader={props.product.created_at}
+          subheader={props.product.created_at.split("T")[0]}
         />
         <CardMedia
           className={classes.media}
