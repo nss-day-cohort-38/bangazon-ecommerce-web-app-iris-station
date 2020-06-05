@@ -158,14 +158,13 @@ const HomePage = (props) => {
                   </DropdownToggle>
                   {prods.map((product) => {
                 <DropdownMenu right>
-                    if (product.product_type_id === productType.id) {
-                      return (
+                    {product.product_type_id === productType.id && (
+                      
                         <DropdownItem key={product.id}>
                           {product.title}
-                        </DropdownItem>
-                      );
-                    }
+                  </DropdownItem>
                 </DropdownMenu>
+                        }
                   })}
               </Dropdown>
             );
