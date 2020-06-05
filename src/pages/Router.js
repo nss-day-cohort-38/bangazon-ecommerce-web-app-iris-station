@@ -15,20 +15,15 @@ import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
-import { userManager } from "../modules";
 import { ProductType } from "./products/index"
-
 import SearchForm from "../components/form/searchForm";
-import productManager from "../modules/productManager";
-import orderManager from "../modules/orderManager";
-import order_product_manager from "../modules/order_product_manager";
+
 
 const Routes = (props) => {
   let history = useHistory();
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
   const [hasUser, setHasUser] = useState(isAuthenticated());
   const [userInfo, setUserInfo] = useState({});
-  const [showNav, setShowNav] = useState(true);
 
   const setUserToken = (resp) => {
     sessionStorage.setItem("token", resp.token);
@@ -40,9 +35,7 @@ const Routes = (props) => {
     setHasUser(isAuthenticated());
   };
 
-  const [prods, setProds] = useState([]);
   const token = sessionStorage.getItem("token");
-  const [addMessage, setAddMessage] = useState({});
   const [searchField, setSearchField] = useState({
     keyword: "",
   });
@@ -139,7 +132,9 @@ const Routes = (props) => {
             render={(props) =>
               hasUser ? <MyProducts {...props} /> : <Redirect to="/" />
             }
-          />
+            />
+
+          {/* this will route will filter HomePage to product types */}
           <Route
             exact
             // path="/products/:productTypeName([\w ]+)"
