@@ -77,7 +77,7 @@ const Master = (props) => {
     if (product.price > 10000) {
       alert("The listing price may not exceed $10,000.00");
       return false;
-    // Validating the characters on the title
+      // Validating the characters on the title
     } else if (!isValid(product.title)) {
       alert("The title can't contain the following characters: '!', '@', '#', '$', '%', '^', '&', '*', or '()'")
       return false;
