@@ -1,3 +1,5 @@
+//Made by Kurt Krafft
+
 import React, {useState, useEffect} from 'react';
 import PTM from "../../modules/kk-paymenttypes"
 import OrderManager from "../../modules/orderManager"
@@ -7,6 +9,7 @@ import "./checkout.css"
 
 const Checkout = props => {
     const [order, setOrder] = useState({"id": "", "created_at": "", "payment_type_id": "","customer":{"address":"","id": ""}})
+    //below is rhe payment types
     const [pTypes, setPTypes] = useState([])
     const [selectedPaymentId, setSelectedPaymentId] = useState("")
     const [products, setProducts] = useState([])
@@ -29,9 +32,12 @@ const Checkout = props => {
     }
 
     useEffect(()=> {
+        //get all the payment types associated with the user
         PTM.getAllPaymentTypesByUser(token).then(array=>setPTypes(array))
         OrderManager.getOrders(token).then(arr=> {
+            // get the must recent order by the user
                     if(arr.length>=1){
+                        //see if they havent paid yet (orders are ordered by created at so the most recent will always be the first one)
                         if(arr[0].payment_type_id === null){
                           
                             setOrder(arr[0])
