@@ -60,7 +60,7 @@ export default function MyListCard(props) {
         <CardMedia
           className={classes.media}
           image={props.product.image_path === null 
-            ? "https://via.placeholder.com/100" 
+            ? `${process.env.PUBLIC_URL}/noimage.png` 
             : props.product.image_path
           }
           title={props.product.title}
