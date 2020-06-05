@@ -1,5 +1,5 @@
 // renders the cards to the home as well as a simple welcome message
-
+//made by Kurt Krafft
 import React, { useState, useEffect } from "react";
 import productManager from "../../modules/productManager";
 import orderManager from "../../modules/orderManager";

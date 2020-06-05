@@ -1,12 +1,18 @@
+//Made by Kurt Krafft
+
 import React, {useState, useEffect} from 'react';
 import PTM from "../../modules/kk-paymenttypes"
 import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
 import depleteProduct from "./depleteProduct"
 import "./checkout.css"
+import UIfx from 'uifx'
+import wooshAudio from "../../sound_fx/fun_bell.mp3"
+
 
 const Checkout = props => {
     const [order, setOrder] = useState({"id": "", "created_at": "", "payment_type_id": "","customer":{"address":"","id": ""}})
+    //below is rhe payment types
     const [pTypes, setPTypes] = useState([])
     const [selectedPaymentId, setSelectedPaymentId] = useState("")
     const [products, setProducts] = useState([])
@@ -15,8 +21,16 @@ const Checkout = props => {
     const selectPaymentId= e => {
         setSelectedPaymentId(e.target.value)
     }
+    const woosh = new UIfx(
+        wooshAudio,
+        {
+            volume: 0.2,
+            throttleMs: 100
+        }
+    )
 
     const handleSubmit=()=> {
+        woosh.play()
         if(selectedPaymentId===""){
             alert('Please Select a Payment Method')
         }else{
@@ -29,9 +43,12 @@ const Checkout = props => {
     }
 
     useEffect(()=> {
+        //get all the payment types associated with the user
         PTM.getAllPaymentTypesByUser(token).then(array=>setPTypes(array))
         OrderManager.getOrders(token).then(arr=> {
+            // get the must recent order by the user
                     if(arr.length>=1){
+                        //see if they havent paid yet (orders are ordered by created at so the most recent will always be the first one)
                         if(arr[0].payment_type_id === null){
                           
                             setOrder(arr[0])

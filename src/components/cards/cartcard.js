@@ -1,3 +1,4 @@
+//Made by Kurt Krafft
 import React from 'react'
 import { Button, Card, Image } from "semantic-ui-react"
 
@@ -13,6 +14,7 @@ const CartCard = props => {
         <Image
           floated='right'
           size='mini'
+          //if the image is null use a default image else use the user selected image
           src={props.product.product.image_path === null 
               ? "https://via.placeholder.com/100" 
               : `${props.product.product.image_path}`}
