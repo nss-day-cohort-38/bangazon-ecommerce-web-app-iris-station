@@ -1,5 +1,5 @@
-// import baseurl from "./baseurl";
-const baseurl = "http://localhost:8000"
+import baseurl from "./baseurl";
+
 
 
 export default{

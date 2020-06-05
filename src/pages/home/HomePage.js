@@ -6,7 +6,7 @@ import orderManager from "../../modules/orderManager";
 import order_product_manager from "../../modules/order_product_manager";
 import HomeListCard from "../../components/cards/HomeListCard";
 // import "./HomePage.css"
-import { Dropdown } from "semantic-ui-react";
+// import { Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 
@@ -16,7 +16,6 @@ const HomePage = (props) => {
   const [addMessage, setAddMessage] = useState({});
   const [productTypes, setProductTypes] = useState([]);
 
-  console.log(productTypes)
 
 
   const productCategories = async () => {
