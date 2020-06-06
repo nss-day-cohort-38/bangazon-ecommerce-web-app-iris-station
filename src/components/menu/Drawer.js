@@ -1,23 +1,23 @@
 import React from "react";
-import clsx from "clsx";
+// import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-const useStyles = makeStyles({
+// import CssBaseline from "@material-ui/core/CssBaseline";
+import { Link } from "react-router-dom";
+
+
+const drawerWidth = 500;
+const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
   },
   fullList: {
-    width: "auto",
+    width: drawerWidth,
   },
-});
+}));
 
 export default function TemporaryDrawer({
   position = "left",
@@ -28,18 +28,24 @@ export default function TemporaryDrawer({
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.fullList}>
       <React.Fragment key={position}>
+        {/* <CssBaseline/> */}
         <Drawer anchor={position} open={isOpen} onClose={() => close()}>
-          <List>
+          <List className={classes.list}>
+            <h4 className="product-types-header">Product Types</h4>
+            <Divider />
+            <Link to="/" className="all-products">All Products</Link>
+            <Divider />
             {drawerInfo.map((info, i) => {
               return (
-                <ListItem key={i}>
+                <ListItem button key={i}>
                   {info}
                 </ListItem>
               );
             })}
           </List>
+          <Divider />
         </Drawer>
       </React.Fragment>
     </div>

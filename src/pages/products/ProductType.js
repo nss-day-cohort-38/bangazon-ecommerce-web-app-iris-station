@@ -6,22 +6,29 @@ import {
   setMessageHelper,
 } from "../../components/buttons/AddButton";
 import { withRouter } from "react-router-dom";
+import { Drawer } from "../../components/menu/index";
+import Divider from "@material-ui/core/Divider";
+import { Dropdown } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const ProductType = (props) => {
   const [products, setProducts] = useState([]);
+  const [productTypes, setProductTypes] = useState([]);
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState([]);
   const [productCount, setProductCount] = useState([]);
+  //   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const isMountedRef = useRef(false);
-
   const { productTypeId } = props;
 
   const getAllProductsOfCertainType = async (productTypeId) => {
     try {
-      const getProductByProductType = await productManager.getProductsByProductType(
-        productTypeId
-      );
+      const getProductByProductType = await productManager.getProductsByProductType(productTypeId);
+      const getAllProductTypes = await productManager.getProductTypes();
       setProducts(getProductByProductType);
+      setProductTypes(getAllProductTypes);
+
       const len = getProductByProductType.length;
       setProductCount(len);
       setAddMessage((prevState) => {
@@ -39,6 +46,10 @@ const ProductType = (props) => {
   const setMessage = setMessageHelper(setAddMessage);
   const handleAddToCard = handleAddToCartHelper(token, setMessage, props);
 
+  const toggleMenu = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
   useEffect(() => {
     isMountedRef.current = true;
     getAllProductsOfCertainType(productTypeId);
@@ -48,6 +59,46 @@ const ProductType = (props) => {
 
   return (
     <>
+      <div className="product-category-container">
+        <div className="category-items">
+          <Link onClick={() => toggleMenu()}>Search by Product Categories</Link>
+          <Drawer
+            position="left"
+            isOpen={drawerOpen}
+            close={() => toggleMenu()}
+            {...props}
+            drawerInfo={productTypes.map((productType, id) => {
+              return (
+                <>
+                  <div>
+                    <Divider />
+                    {/* <Dropdown.Divider/> */}
+                    <Link key={id} to={`/products/category/${productType.id}`}>
+                      <span>
+                        {productType.name} {productType.count}
+                      </span>
+                    </Link>
+                    {/* <Dropdown scrolling> */}
+                    <Dropdown.Menu>
+                      {/* <Dropdown.Divider/> */}
+                      {products.map((product) => {
+                        return (
+                          <ul className="top-products-container">
+                            <Dropdown.Item key={product.id}>
+                              <li>{product.title}</li>
+                            </Dropdown.Item>
+                          </ul>
+                        );
+                      })}
+                    </Dropdown.Menu>
+                    {/* </Dropdown> */}
+                  </div>
+                </>
+              );
+            })}
+          />
+        </div>
+      </div>
       <div className="list-container">
         {products.map((product, i) => (
           <HomeListCard

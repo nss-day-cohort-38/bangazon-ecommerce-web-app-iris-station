@@ -23,18 +23,19 @@
   width: 20%; */
   padding-top: 10px;
   padding-bottom: 15px;
-  justify-content: center;
+  padding-left: 20px;
+  /* justify-content: center; */
   background-color: #f8f9fa;
 }
 
 .category-header {
   display: flex;
-  justify-content: center;
+  /* justify-content: left; */
   font-size: 20px;
 }
 
 .category-items {
 display: flex;
-justify-content: space-evenly;
+justify-content: left;
 flex-direction: row;
 }

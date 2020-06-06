@@ -17,7 +17,6 @@ import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
 import { ProductType } from "./products/index"
 import SearchForm from "../components/form/searchForm";
-// import { ProductTypeDropdown } from "../components/menu/ProductTypeDropdown"
 
 const Routes = (props) => {
   let history = useHistory();
