@@ -25,6 +25,10 @@ const HomePage = (props) => {
   // const [dropdownOpen, setDropdownOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+
+  // Function that maps the producttype id's to the products table where the product_type_id is, and counts the number of products under the specific producttype. 
+  // Then creates a new custom object inside an array that is set to state so the data is easily iterable.
+  // This function renders data for the Drawer.
   const productCategories = async () => {
     try {
       const getAllProductTypes = await productManager.getProductTypes();
@@ -169,7 +173,7 @@ const HomePage = (props) => {
                     {/* <Dropdown scrolling> */}
                     <Dropdown.Menu>
                       {/* <Dropdown.Divider/> */}
-                      {prods.map((product) => {
+                      {prods.slice(5).map((product) => {
                         if (product.product_type_id === productType.id) {
                           return (
                             <ul className="top-products-container">

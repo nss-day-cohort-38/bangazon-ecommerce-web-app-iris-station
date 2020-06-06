@@ -19,15 +19,19 @@ const ProductType = (props) => {
   const [productCount, setProductCount] = useState([]);
   //   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [prods, setProds] = useState([]);
   const isMountedRef = useRef(false);
   const { productTypeId } = props;
+
 
   const getAllProductsOfCertainType = async (productTypeId) => {
     try {
       const getProductByProductType = await productManager.getProductsByProductType(productTypeId);
       const getAllProductTypes = await productManager.getProductTypes();
+      const getAllProducts = await productManager.getAllProducts();
       setProducts(getProductByProductType);
       setProductTypes(getAllProductTypes);
+      setProds(getAllProducts);
 
       const len = getProductByProductType.length;
       setProductCount(len);
@@ -81,14 +85,16 @@ const ProductType = (props) => {
                     {/* <Dropdown scrolling> */}
                     <Dropdown.Menu>
                       {/* <Dropdown.Divider/> */}
-                      {products.map((product) => {
-                        return (
-                          <ul className="top-products-container">
-                            <Dropdown.Item key={product.id}>
-                              <li>{product.title}</li>
-                            </Dropdown.Item>
-                          </ul>
-                        );
+                      {prods.slice(5).map((product) => {
+                        if (product.product_type_id === productType.id) {
+                          return (
+                            <ul className="top-products-container">
+                              <Dropdown.Item key={product.id}>
+                                <li>{product.title}</li>
+                              </Dropdown.Item>
+                            </ul>
+                          );
+                        }
                       })}
                     </Dropdown.Menu>
                     {/* </Dropdown> */}
