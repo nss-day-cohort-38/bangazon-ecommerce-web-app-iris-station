@@ -47,20 +47,20 @@ const Example = ({
                     </DropdownToggle>
                     <DropdownMenu right>
                       {item.options.map((dropitem) => {
-                        // return (
-                        //   <Link
-                        //     to={
-                        //       dropitem.route
-                        //         ? dropitem.route
-                        //         : `/${dropitem.title
-                        //             .split(" ")
-                        //             .join("-")
-                        //             .toLowerCase()}`
-                        //     }
-                        //   >
-                        //     <DropdownItem>{dropitem.title}</DropdownItem>
-                        //   </Link>
-                        // );
+                        return (
+                          <Link
+                            to={
+                              dropitem.route
+                                ? dropitem.route
+                                : `/${dropitem.title
+                                    .split(" ")
+                                    .join("-")
+                                    .toLowerCase()}`
+                            }
+                          >
+                            <DropdownItem>{dropitem.title}</DropdownItem>
+                          </Link>
+                        );
                       })}
                     </DropdownMenu>
                   </UncontrolledDropdown>
