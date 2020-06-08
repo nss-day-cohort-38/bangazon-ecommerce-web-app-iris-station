@@ -5,10 +5,6 @@ import {
   handleAddToCartHelper,
   setMessageHelper,
 } from "../../components/buttons/AddButton";
-import { Drawer } from "../../components/menu/index";
-import Divider from "@material-ui/core/Divider";
-import { Dropdown } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 
 const ProductType = (props) => {
   const [products, setProducts] = useState([]);
@@ -16,10 +12,10 @@ const ProductType = (props) => {
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState([]);
   const [productCount, setProductCount] = useState([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [prods, setProds] = useState([]);
   const isMountedRef = useRef(false);
   const { productTypeId } = props;
+
 
   const getAllProductsOfCertainType = async (productTypeId) => {
     try {
@@ -49,9 +45,6 @@ const ProductType = (props) => {
   const setMessage = setMessageHelper(setAddMessage);
   const handleAddToCard = handleAddToCartHelper(token, setMessage, props);
 
-  const toggleMenu = () => {
-    setDrawerOpen(!drawerOpen);
-  };
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -62,44 +55,6 @@ const ProductType = (props) => {
 
   return (
     <>
-      <div className="product-category-container">
-        <div className="category-items">
-          <Link onClick={() => toggleMenu()}>Search by Product Categories</Link>
-          <Drawer
-            position="left"
-            isOpen={drawerOpen}
-            close={() => toggleMenu()}
-            drawerInfo={productTypes.map((productType) => {
-              return (
-                <>
-                  <div>
-                    <Divider />
-                    <Link
-                      key={productType.id}
-                      to={`/products/category/${productType.id}`}
-                    >
-                      <span>
-                        {productType.name} {productType.count}
-                      </span>
-                    </Link>
-                    {prods.map((product) => {
-                      if (product.product_type_id === productType.id) {
-                        return (
-                          <ul className="top-products-container">
-                            <Link to={`/products/${product.id}`}key={product.id}>
-                              <li>{product.title}</li>
-                            </Link>
-                          </ul>
-                        );
-                      }
-                    })}
-                  </div>
-                </>
-              );
-            })}
-          />
-        </div>
-      </div>
       <div className="list-container">
         {products.map((product, i) => (
           <HomeListCard
@@ -108,6 +63,7 @@ const ProductType = (props) => {
             handleAddToCard={handleAddToCard}
             addMessage={addMessage[product.id]}
             productCount={productCount}
+            prods={prods}
             {...props}
           />
         ))}

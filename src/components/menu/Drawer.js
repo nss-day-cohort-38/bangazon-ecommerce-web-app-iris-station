@@ -5,9 +5,9 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import CssBaseline from "@material-ui/core/CssBaseline";
+// import CssBaseline from "@material-ui/core/CssBaseline";
 import { Link } from "react-router-dom";
-
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 const drawerWidth = 500;
 const useStyles = makeStyles((theme) => ({
@@ -28,16 +28,19 @@ export default function TemporaryDrawer({
   const classes = useStyles();
 
   return (
-    <div className={classes.fullList}>
-      {['left'].map((anchor) => (
+    <div className="drawer-container">
+      {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
           {/* <CssBaseline /> */}
           <Drawer anchor={position} open={isOpen} onClose={() => close()}>
-            <List className={classes.list}>
+            <List>
               <h4 className="product-types-header">Product Types</h4>
-              {/* <Divider /> */}
-              <Link to="/" className="all-products">All Products</Link>
-              {/* <Divider /> */}
+              <Divider />
+              <Link to="/" className="all-products">
+                All Products
+                <ChevronRightIcon />
+              </Link>
+              <Divider />
               {drawerInfo.map((info) => {
                 return (
                   <ListItem button key={info.id}>

@@ -12,31 +12,3 @@
     display: none !important;
   }
 }
-
-.drawer-container {
-  width: 30%;
-}
-
-div.menu.transition.visible {
-  width: 25%;
-}
-
-.top-products-container {
-    width: 50%;
-}
-
-div.MuiPaper-root.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiPaper-elevation16 {
-  overflow-y: visible;
-  width: 15%;
-}
-
-.product-types-header {
-    display: flex;
-    justify-content: center;
-    background-color: #4183c4;
-    color: white;
-}
-
-.all-products {
-    padding-left: 16px;
-}
