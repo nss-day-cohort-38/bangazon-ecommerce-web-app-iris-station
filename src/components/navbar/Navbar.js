@@ -15,7 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "../../styles/Navbar.css";
 import { Input, Button } from "semantic-ui-react";
-import { TextField } from "@material-ui/core";
+import Switch from "@material-ui/core/Switch";
 
 const Example = ({
   navArray = defaultArray,
@@ -26,6 +26,8 @@ const Example = ({
   clearUser,
   handleSearchChange,
   handleSubmit,
+  handleHotdog,
+  hotdog
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,11 +36,11 @@ const Example = ({
   return (
     <div>
       <Navbar color={color} light={light} expand="md" fixed="top">
-        <NavbarBrand>
-          <Link to="/">
-            <img src={`${process.env.PUBLIC_URL}/navlogo.png`} />
-          </Link>
-        </NavbarBrand>
+        {/* <NavbarBrand> */}
+        <Link to="/">
+          <img src={`${process.env.PUBLIC_URL}/navlogo.png`} />
+        </Link>
+        {/* </NavbarBrand> */}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -109,6 +111,15 @@ const Example = ({
             </form>
             {hasUser ? (
               <>
+                <NavItem className="navbar-item-link">
+                  <Switch
+                    checked={hotdog}
+                    onChange={handleHotdog}
+                    color="primary"
+                    name="checkedB"
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />
+                </NavItem>
                 <NavItem className="navbar-item-link">
                   <Link to="/profile/view" className="right-side-link">
                     Profile

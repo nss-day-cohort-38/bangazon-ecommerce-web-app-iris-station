@@ -5,5 +5,5 @@ export {Reports} from "./reports"
 export {} from "./orders";
 export {} from "./orders";
 export {} from "./payments";
-export {default as DefaultContainer} from "./DefaultContainer"
+
 export { DLHOME } from "./design-library";
