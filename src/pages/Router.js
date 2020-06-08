@@ -82,7 +82,7 @@ const Routes = (props) => {
     setHotdog(false);
     setHasUser(isAuthenticated());
   };
-  
+
   const [searchField, setSearchField] = useState({
     keyword: "",
   });
@@ -102,7 +102,7 @@ const Routes = (props) => {
 
   // Add hotdog image url here
   document.body.style.cursor = hotdog
-    ? `url("${process.env.PUBLIC_URL}/favicon.ico"), pointer`
+    ? `url("${process.env.PUBLIC_URL}/hotdog.png"), pointer`
     : "default";
 
   return (
