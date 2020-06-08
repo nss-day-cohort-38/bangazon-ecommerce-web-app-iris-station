@@ -25,7 +25,6 @@ const Routes = (props) => {
 
   useEffect(() => {
     setHotdog(JSON.parse(window.sessionStorage.getItem("hotdog")));
-    console.log(window.sessionStorage.getItem("hotdog"));
   }, []);
 
   const handleHotdog = () => {

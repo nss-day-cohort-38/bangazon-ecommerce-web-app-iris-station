@@ -37,7 +37,6 @@ const Register = (props) => {
       }
     }
 
-    console.log(errors);
     if (errors.length > 0) {
       setFailedLogin(true);
       setFailedLoginMessage(
