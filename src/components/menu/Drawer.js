@@ -5,7 +5,7 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-// import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { Link } from "react-router-dom";
 
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TemporaryDrawer({
-  position = "left",
+  position,
   isOpen = false,
   close,
   drawerInfo = [],
@@ -29,25 +29,27 @@ export default function TemporaryDrawer({
 
   return (
     <div className={classes.fullList}>
-      <React.Fragment key={position}>
-        {/* <CssBaseline/> */}
-        <Drawer anchor={position} open={isOpen} onClose={() => close()}>
-          <List className={classes.list}>
-            <h4 className="product-types-header">Product Types</h4>
+      {['left'].map((anchor) => (
+        <React.Fragment key={anchor}>
+          {/* <CssBaseline /> */}
+          <Drawer anchor={position} open={isOpen} onClose={() => close()}>
+            <List className={classes.list}>
+              <h4 className="product-types-header">Product Types</h4>
+              {/* <Divider /> */}
+              <Link to="/" className="all-products">All Products</Link>
+              {/* <Divider /> */}
+              {drawerInfo.map((info) => {
+                return (
+                  <ListItem button key={info.id}>
+                    {info}
+                  </ListItem>
+                );
+              })}
+            </List>
             <Divider />
-            <Link to="/" className="all-products">All Products</Link>
-            <Divider />
-            {drawerInfo.map((info, i) => {
-              return (
-                <ListItem button key={i}>
-                  {info}
-                </ListItem>
-              );
-            })}
-          </List>
-          <Divider />
-        </Drawer>
-      </React.Fragment>
+          </Drawer>
+        </React.Fragment>
+      ))}
     </div>
   );
 }

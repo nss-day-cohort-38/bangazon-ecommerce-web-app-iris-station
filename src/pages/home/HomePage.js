@@ -5,28 +5,22 @@ import productManager from "../../modules/productManager";
 import orderManager from "../../modules/orderManager";
 import order_product_manager from "../../modules/order_product_manager";
 import HomeListCard from "../../components/cards/HomeListCard";
-// import "./HomePage.css"
-import { Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-// import {
-//   Dropdown,
-//   DropdownMenu,
-//   DropdownItem,
-//   DropdownToggle,
-// } from "reactstrap";
 import { Drawer } from "../../components/menu/index";
 import Divider from "@material-ui/core/Divider";
+
 
 const HomePage = (props) => {
   const [prods, setProds] = useState([]);
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState({});
   const [productTypes, setProductTypes] = useState([]);
-  // const [dropdownOpen, setDropdownOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleMenu = () => {
+    setDrawerOpen(!drawerOpen);
+  };
 
-
-  // Function that maps the producttype id's to the products table where the product_type_id is, and counts the number of products under the specific producttype. 
+  // Function that maps the producttype id's to the products table where the product_type_id is, and counts the number of products under the specific producttype.
   // Then creates a new custom object inside an array that is set to state so the data is easily iterable.
   // This function renders data for the Drawer.
   const productCategories = async () => {
@@ -38,6 +32,7 @@ const HomePage = (props) => {
       });
       let promises = [];
       let productTypeArray = [];
+      let productsArray = [];
       let newObj = {};
       productTypeMap.forEach((id) => {
         promises.push(productManager.getProductsByProductType(id));
@@ -46,14 +41,20 @@ const HomePage = (props) => {
         .then((data) => {
           data.forEach((productType) => {
             const len = productType.length;
-            const mapName = productType.map((product) => product.product_type.name);
+            const mapName = productType.map(
+              (product) => product.product_type.name
+            );
             const name = mapName[0];
             const mapId = productType.map((product) => product.product_type.id);
             const id = mapId[0];
+            productsArray.push(productType);
             newObj = {
               id: id,
               name: name,
               count: len,
+              products: productsArray.filter(
+                (prod) => productType.id === prod.product_type_id
+              ),
             };
             productTypeArray.push(newObj);
           });
@@ -66,7 +67,6 @@ const HomePage = (props) => {
       console.log(err);
     }
   };
-
   const handleAddToCard = (productId) => {
     token
       ? orderManager.getOrders(token).then((arr) => {
@@ -142,57 +142,57 @@ const HomePage = (props) => {
     });
   }, []);
 
-  // const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const toggleMenu = () => {
-    setDrawerOpen(!drawerOpen);
-  };
 
   return (
     <>
-      <div className="product-category-container">
-        <div className="category-items">
-          <Link to="" onClick={() => toggleMenu()}>
-            Search by Product Categories
-          </Link>
-          <Drawer
-            position="left"
-            isOpen={drawerOpen}
-            close={() => toggleMenu()}
-            {...props}
-            drawerInfo={productTypes.map((productType, id) => {
-              return (
-                <>
-                  <div>
-                    <Divider/>
-                    {/* <Dropdown.Divider/> */}
-                    <Link key={id} to={`/products/category/${productType.id}`}>
-                      <span>
-                        {productType.name} ({productType.count})
-                      </span>
-                    </Link>
-                    {/* <Dropdown scrolling> */}
-                    <Dropdown.Menu>
-                      {/* <Dropdown.Divider/> */}
-                      {prods.slice(5).map((product) => {
-                        if (product.product_type_id === productType.id) {
+      <>
+        <div className="product-category-container">
+          <div className="category-items">
+            <Link onClick={() => toggleMenu()}>
+              Search by Product Categories
+            </Link>
+            <Drawer
+              position="left"
+              isOpen={drawerOpen}
+              close={() => toggleMenu()}
+              drawerInfo={productTypes.map((productType) => {
+                const pArray = productType.products;
+                return (
+                  <>
+                    <div>
+                      <Divider />
+                      <Link
+                        key={productType.id}
+                        to={`/products/category/${productType.id}`}
+                      >
+                        <span>
+                          {productType.name} ({productType.count})
+                        </span>
+                      </Link>
+                      <Divider />
+                      <ul className="top-products-container">
+                        {pArray.map((products) => {
                           return (
-                            <ul className="top-products-container">
-                              <Dropdown.Item key={product.id}>
-                                <li>{product.title}</li>
-                              </Dropdown.Item>
-                            </ul>
-                          );
-                        }
-                      })}
-                    </Dropdown.Menu>
-                    {/* </Dropdown> */}
-                  </div>
-                </>
-              );
-            })}
-          />
+                          products.slice(0, 3).map(product => {
+                            if (product.product_type_id === productType.id) {
+                            return (
+                                <li>
+                                  <Link to={`/products/${product.id}`} key={product.id}>{product.title}</Link>
+                                </li>
+                              );
+                            }
+                          })
+                          )
+                        })}
+                      </ul>
+                    </div>
+                  </>
+                );
+              })}
+            />
+          </div>
         </div>
-      </div>
+      </>
 
       <div className="home-header">
         <h1>Welcome Back!</h1>

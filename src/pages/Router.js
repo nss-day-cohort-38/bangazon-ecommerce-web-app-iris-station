@@ -89,7 +89,7 @@ const Routes = (props) => {
           }
         />
 
-        <React.Fragment>
+        {/* <React.Fragment> */}
           <div className="body-container">
           <Route
             exact
@@ -229,7 +229,7 @@ const Routes = (props) => {
             }
             />
             </div>
-        </React.Fragment>
+        {/* </React.Fragment> */}
         {/* Will redirect to home page if page does not exist */}
         <Redirect to="/" />
       </Switch>

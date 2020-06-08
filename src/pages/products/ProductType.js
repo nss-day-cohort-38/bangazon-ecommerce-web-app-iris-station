@@ -5,7 +5,6 @@ import {
   handleAddToCartHelper,
   setMessageHelper,
 } from "../../components/buttons/AddButton";
-import { withRouter } from "react-router-dom";
 import { Drawer } from "../../components/menu/index";
 import Divider from "@material-ui/core/Divider";
 import { Dropdown } from "semantic-ui-react";
@@ -17,16 +16,16 @@ const ProductType = (props) => {
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState([]);
   const [productCount, setProductCount] = useState([]);
-  //   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [prods, setProds] = useState([]);
   const isMountedRef = useRef(false);
   const { productTypeId } = props;
 
-
   const getAllProductsOfCertainType = async (productTypeId) => {
     try {
-      const getProductByProductType = await productManager.getProductsByProductType(productTypeId);
+      const getProductByProductType = await productManager.getProductsByProductType(
+        productTypeId
+      );
       const getAllProductTypes = await productManager.getProductTypes();
       const getAllProducts = await productManager.getAllProducts();
       setProducts(getProductByProductType);
@@ -70,34 +69,30 @@ const ProductType = (props) => {
             position="left"
             isOpen={drawerOpen}
             close={() => toggleMenu()}
-            {...props}
-            drawerInfo={productTypes.map((productType, id) => {
+            drawerInfo={productTypes.map((productType) => {
               return (
                 <>
                   <div>
                     <Divider />
-                    {/* <Dropdown.Divider/> */}
-                    <Link key={id} to={`/products/category/${productType.id}`}>
+                    <Link
+                      key={productType.id}
+                      to={`/products/category/${productType.id}`}
+                    >
                       <span>
                         {productType.name} {productType.count}
                       </span>
                     </Link>
-                    {/* <Dropdown scrolling> */}
-                    <Dropdown.Menu>
-                      {/* <Dropdown.Divider/> */}
-                      {prods.slice(5).map((product) => {
-                        if (product.product_type_id === productType.id) {
-                          return (
-                            <ul className="top-products-container">
-                              <Dropdown.Item key={product.id}>
-                                <li>{product.title}</li>
-                              </Dropdown.Item>
-                            </ul>
-                          );
-                        }
-                      })}
-                    </Dropdown.Menu>
-                    {/* </Dropdown> */}
+                    {prods.map((product) => {
+                      if (product.product_type_id === productType.id) {
+                        return (
+                          <ul className="top-products-container">
+                            <Link to={`/products/${product.id}`}key={product.id}>
+                              <li>{product.title}</li>
+                            </Link>
+                          </ul>
+                        );
+                      }
+                    })}
                   </div>
                 </>
               );
@@ -121,4 +116,4 @@ const ProductType = (props) => {
   );
 };
 
-export default withRouter(ProductType);
+export default ProductType;
