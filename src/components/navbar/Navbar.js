@@ -34,8 +34,10 @@ const Example = ({
   return (
     <div>
       <Navbar color={color} light={light} expand="md" fixed="top">
-        <NavbarBrand href="/">
-          <img src={`${process.env.PUBLIC_URL}/navlogo.png`} />
+        <NavbarBrand>
+          <Link to="/">
+            <img src={`${process.env.PUBLIC_URL}/navlogo.png`} />
+          </Link>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

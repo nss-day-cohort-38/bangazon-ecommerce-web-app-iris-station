@@ -4,13 +4,12 @@ import {
   Route,
   Switch,
   Redirect,
-  useHistory,
+  
 } from "react-router-dom";
 import { DefaultContainer } from "./index";
 import { Register, Login } from "../pages/users/index";
 
 const Routes = (props) => {
-  let history = useHistory();
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
   const [hasUser, setHasUser] = useState(isAuthenticated());
   const [userInfo, setUserInfo] = useState({});
@@ -67,6 +66,7 @@ const Routes = (props) => {
           }
         />
 
+        {/* Below will render routes with navbar on top */}
         <Route
           render={(props) => (
             <DefaultContainer
@@ -86,18 +86,5 @@ const Routes = (props) => {
   );
 };
 
-const useReactPath = () => {
-  const [path, setPath] = React.useState(window.location.pathname);
-  const listenToPopstate = () => {
-    const winPath = window.location.pathname;
-    setPath(winPath);
-  };
-  React.useEffect(() => {
-    window.addEventListener("popstate", listenToPopstate);
-    return () => {
-      window.removeEventListener("popstate", listenToPopstate);
-    };
-  }, []);
-  return path;
-};
+
 export { Routes };
