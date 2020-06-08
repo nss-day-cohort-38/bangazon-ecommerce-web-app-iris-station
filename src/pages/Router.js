@@ -9,12 +9,13 @@ import {
 import { DLHOME, Profile, Reports } from "./index";
 import { Navbar } from "../components";
 import "../styles/Global.css";
-import {ProductFormMaster} from "./products/";
+import { ProductFormMaster } from "./products/";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
+import { ProductType } from "./products/index";
 import SearchForm from "../components/form/searchForm";
 
 const Routes = (props) => {
@@ -32,6 +33,7 @@ const Routes = (props) => {
     sessionStorage.clear();
     setHasUser(isAuthenticated());
   };
+
   const [searchField, setSearchField] = useState({
     keyword: "",
   });
@@ -50,7 +52,7 @@ const Routes = (props) => {
   };
 
   return (
-    <Router>
+    <Router history={history}>
       <Navbar
         navArray={
           hasUser
@@ -87,6 +89,7 @@ const Routes = (props) => {
           }
         />
 
+        {/* <React.Fragment> */}
         <div className="body-container">
           <Route
             exact
@@ -129,6 +132,23 @@ const Routes = (props) => {
             }
           />
 
+          {/* this will route will filter HomePage to product types */}
+          <Route
+            exact
+            // path="/products/:productTypeName([\w ]+)"
+            path="/products/category/:productTypeId(\d+)"
+            render={(props) =>
+              hasUser ? (
+                <ProductType
+                  productTypeId={parseInt(props.match.params.productTypeId)}
+                  // productTypeName={props.match.params.productTypeName}
+                  {...props}
+                />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
 
           {/* this will route to a product detail page */}
           <Route
@@ -211,6 +231,7 @@ const Routes = (props) => {
             }
           />
         </div>
+        {/* </React.Fragment> */}
         {/* Will redirect to home page if page does not exist */}
         <Redirect to="/" />
       </Switch>

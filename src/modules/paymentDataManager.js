@@ -1,5 +1,6 @@
 import baseurl from "./baseurl";
 
+
 const paymentDataManager = {
   addPayment(token, paymentObj) {
     return fetch(`${baseurl}/payment_types`, {

@@ -1,5 +1,6 @@
 import baseurl from "./baseurl";
 
+
 export default{
     getAllPaymentTypesByUser(token){
         return fetch(`${baseurl}/payment_types`,{

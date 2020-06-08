@@ -55,8 +55,43 @@ export default {
       body: JSON.stringify(obj),
     });
   },
-  getProductTypes() {
-    return fetch(`${baseurl}/producttypes`)
-      .then((result) => result.json())
-  }
+  async getProductTypes() {
+    const r = await fetch(`${baseurl}/producttypes`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return await r.json();
+  },
+
+  async getProductsByProductType(productTypeId) {
+    const r = await fetch(`${baseurl}/products?productTypeId=${productTypeId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return await r.json();
+  },
+
+  async getProductTypeById(id) {
+    const r = await fetch(`${baseurl}/producttypes/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return await r.json();
+  },
+  // getProductTypes() {
+  //   return fetch(`${baseurl}/producttypes`)
+  //     .then((result) => result.json())
+  // }
 };
