@@ -43,7 +43,7 @@ export default function TemporaryDrawer({
               <Divider />
               {drawerInfo.map((info) => {
                 return (
-                  <ListItem button key={info.id}>
+                  <ListItem key={info.id}>
                     {info}
                   </ListItem>
                 );

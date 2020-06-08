@@ -13,9 +13,9 @@ const ProductType = (props) => {
   const [addMessage, setAddMessage] = useState([]);
   const [productCount, setProductCount] = useState([]);
   const [prods, setProds] = useState([]);
+  const [currentProduct, setCurrentProduct] = useState([]);
   const isMountedRef = useRef(false);
   const { productTypeId } = props;
-
 
   const getAllProductsOfCertainType = async (productTypeId) => {
     try {
@@ -24,9 +24,13 @@ const ProductType = (props) => {
       );
       const getAllProductTypes = await productManager.getProductTypes();
       const getAllProducts = await productManager.getAllProducts();
+      const getCurrentProduct = await productManager.getProductTypeById(
+        productTypeId
+      );
       setProducts(getProductByProductType);
       setProductTypes(getAllProductTypes);
       setProds(getAllProducts);
+      setCurrentProduct(getCurrentProduct);
 
       const len = getProductByProductType.length;
       setProductCount(len);
@@ -45,7 +49,6 @@ const ProductType = (props) => {
   const setMessage = setMessageHelper(setAddMessage);
   const handleAddToCard = handleAddToCartHelper(token, setMessage, props);
 
-
   useEffect(() => {
     isMountedRef.current = true;
     getAllProductsOfCertainType(productTypeId);
@@ -55,6 +58,9 @@ const ProductType = (props) => {
 
   return (
     <>
+      <div className="home-header">
+        <h1>{currentProduct.name}</h1>
+      </div>
       <div className="list-container">
         {products.map((product, i) => (
           <HomeListCard
