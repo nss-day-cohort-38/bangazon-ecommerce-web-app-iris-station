@@ -67,10 +67,15 @@ const ProductForm = props => {
                     >
                     <PhotoCamera />   
                   </IconButton>
-                  {/* This field displays the filename of a file once uploaded */}
-                  {/* It truncates it down to the last x characters */}
+                  {/* 
+                    The following displays the filename of an uploaded file.
+                    If it is greater than x characters, 
+                    it truncates down to the last x characters 
+                  */}
                   {image_filename
-                      ? "..." + image_filename.substring(image_filename.length -30, image_filename.length)
+                      ? image_filename.length > 30 
+                        ? "..." + image_filename.substring(image_filename.length -30, image_filename.length)
+                        : image_filename
                       : "Upload file"
                   }
                 </label>
