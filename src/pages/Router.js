@@ -104,9 +104,9 @@ const Routes = (props) => {
     ? `url("${process.env.PUBLIC_URL}/hotdog.png"), pointer`
     : "default";
 
-  document.body.style.backgroundImage = hotdog
-    ? `url("${process.env.PUBLIC_URL}/hotdog.png")`
-    : "none";
+  // document.body.style.backgroundImage = hotdog
+  //   ? `url("${process.env.PUBLIC_URL}/hotdog.png")`
+  //   : "none";
 
   return (
     <Router>
