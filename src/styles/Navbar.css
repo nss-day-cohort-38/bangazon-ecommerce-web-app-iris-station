@@ -1,3 +1,8 @@
+.site-navbar {
+  z-index: 1;
+  position: relative;
+}
+
 .navbar-item-link {
     padding: 15px;
     display: flex;

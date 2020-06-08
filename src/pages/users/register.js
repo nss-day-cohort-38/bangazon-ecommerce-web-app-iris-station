@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RegisterForm } from "../../components/form/index";
 import { userManager } from "../../modules/index";
-
+import "../../styles/RegisterView.css"
 const Register = (props) => {
   const [formData, setFormData] = useState({
     username: "",
@@ -76,14 +76,14 @@ const Register = (props) => {
   useEffect(() => {}, [failedLogin]);
 
   return (
-    <>
+    <div className="register-form-view">
       <RegisterForm
         handleFieldChange={handleFieldChange}
         failedLogin={failedLogin}
         failedLoginMessage={failedLoginMessage}
         handleSubmit={handleSubmit}
       />
-    </>
+    </div>
   );
 };
 

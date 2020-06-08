@@ -24,6 +24,10 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
+    width: "100%",
+    position: "relative",
+    zIndex: "3",
+    backgroundColor: "#ffffff"
   },
   paper: {
     height: "100vh",

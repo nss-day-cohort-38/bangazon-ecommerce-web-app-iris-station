@@ -21,20 +21,19 @@ const Example = ({
   navArray = defaultArray,
   color = "light",
   light = true,
-  userInfo,
   hasUser,
   clearUser,
   handleSearchChange,
   handleSubmit,
   handleHotdog,
-  hotdog
+  hotdog,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <div className="site-navbar">
       <Navbar color={color} light={light} expand="md" fixed="top">
         {/* <NavbarBrand> */}
         <Link to="/">
@@ -126,11 +125,6 @@ const Example = ({
                   </Link>
                 </NavItem>
                 {/* TODO: make this not inline styling */}
-                {userInfo.is_staff && (
-                  <NavItem className="navbar-item-link">
-                    <Link to="/dl/home">Design Library</Link>
-                  </NavItem>
-                )}
                 <NavItem
                   className="navbar-item-link logout-link"
                   onClick={clearUser}

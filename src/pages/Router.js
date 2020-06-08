@@ -23,6 +23,12 @@ const Routes = (props) => {
   const [userInfo, setUserInfo] = useState({});
   const [hotdog, setHotdog] = useState(false);
 
+  const clearUser = () => {
+    sessionStorage.clear();
+    setHotdog(false);
+    setHasUser(isAuthenticated());
+  };
+
   useEffect(() => {
     setHotdog(JSON.parse(window.sessionStorage.getItem("hotdog")));
   }, []);
@@ -34,51 +40,6 @@ const Routes = (props) => {
 
   const setUserToken = (resp) => {
     sessionStorage.setItem("token", resp.token);
-    setHasUser(isAuthenticated());
-  };
-
-  const DefaultRoute = ({ exact, path, render }) => {
-    return (
-      <>
-        <Route
-          exact={exact}
-          path={path}
-          render={(props) => (
-            <>
-              <Navbar
-                navArray={
-                  hasUser
-                    ? [
-                        { title: "Sell a Product", route: "/products/form" },
-                        { title: "My Products", route: "/products/myproducts" },
-                        { title: "Reports", route: "/reports" },
-                        {
-                          title: <i className="shopping cart icon"></i>,
-                          route: "/mycart",
-                        },
-                      ]
-                    : []
-                }
-                hasUser={hasUser}
-                userInfo={userInfo}
-                clearUser={clearUser}
-                searchField={searchField}
-                handleSearchChange={handleSearchChange}
-                handleSubmit={handleSubmit}
-                handleHotdog={handleHotdog}
-                hotdog={hotdog}
-              />
-              {render(props)}
-            </>
-          )}
-        />
-      </>
-    );
-  };
-
-  const clearUser = () => {
-    sessionStorage.clear();
-    setHotdog(false);
     setHasUser(isAuthenticated());
   };
 
@@ -104,12 +65,30 @@ const Routes = (props) => {
     ? `url("${process.env.PUBLIC_URL}/hotdog.png"), pointer`
     : "default";
 
-  // document.body.style.backgroundImage = hotdog
-  //   ? `url("${process.env.PUBLIC_URL}/hotdog.png")`
-  //   : "none";
-
   return (
     <Router>
+      <Navbar
+        navArray={
+          hasUser
+            ? [
+                { title: "Sell a Product", route: "/products/form" },
+                { title: "My Products", route: "/products/myproducts" },
+                { title: "Reports", route: "/reports" },
+                {
+                  title: <i className="shopping cart icon"></i>,
+                  route: "/mycart",
+                },
+              ]
+            : []
+        }
+        hasUser={hasUser}
+        clearUser={clearUser}
+        searchField={searchField}
+        handleSearchChange={handleSearchChange}
+        handleSubmit={handleSubmit}
+        handleHotdog={handleHotdog}
+        hotdog={hotdog}
+      />
       <Switch>
         {/* Below will render routes with navbar on top */}
         <Route
@@ -123,6 +102,7 @@ const Routes = (props) => {
             )
           }
         />
+
         <Route
           exact
           path="/register"
@@ -136,7 +116,7 @@ const Routes = (props) => {
         />
 
         <div className="body-container">
-          <DefaultRoute
+          <Route
             exact
             path="/"
             render={(props) =>
@@ -150,7 +130,7 @@ const Routes = (props) => {
             }
           />
 
-          <DefaultRoute
+          <Route
             exact
             path="/products/form"
             render={(props) =>
@@ -163,7 +143,8 @@ const Routes = (props) => {
               )
             }
           />
-          <DefaultRoute
+
+          <Route
             exact
             path="/search"
             render={(props) => (
@@ -172,7 +153,8 @@ const Routes = (props) => {
               </>
             )}
           />
-          <DefaultRoute
+
+          <Route
             exact
             path="/products/myproducts"
             render={(props) =>
@@ -187,7 +169,7 @@ const Routes = (props) => {
           />
 
           {/* this will route to a product detail page */}
-          <DefaultRoute
+          <Route
             exact
             path="/products/:productId(\d+)"
             render={(props) => (
@@ -201,7 +183,7 @@ const Routes = (props) => {
           />
 
           {/* If not Authenticated, this route will take you to the login page */}
-          <DefaultRoute
+          <Route
             exact
             path="/profile"
             render={(props) =>
@@ -217,7 +199,7 @@ const Routes = (props) => {
 
           {/* If not Authenticated, this route will take you to the home page */}
           {/* Routes for Reports */}
-          <DefaultRoute
+          <Route
             exact
             path="/reports"
             render={(props) =>
@@ -231,7 +213,7 @@ const Routes = (props) => {
             }
           />
 
-          <DefaultRoute
+          <Route
             exact
             path="/reports/:report_type"
             render={(props) =>
@@ -246,7 +228,7 @@ const Routes = (props) => {
           />
 
           {/* ROUTE FOR MY CART */}
-          <DefaultRoute
+          <Route
             exact
             path="/mycart"
             render={(props) =>
@@ -261,7 +243,7 @@ const Routes = (props) => {
           />
 
           {/* ROUTE FOR CHECKOUT */}
-          <DefaultRoute
+          <Route
             exact
             path="/checkout"
             render={(props) =>
@@ -275,7 +257,7 @@ const Routes = (props) => {
             }
           />
 
-          <DefaultRoute
+          <Route
             exact
             path="/dl/:component_name"
             render={(props) => (
@@ -284,14 +266,14 @@ const Routes = (props) => {
           />
 
           {/* This will handle all routes that are for the profile section */}
-          <DefaultRoute
+          <Route
             exact
             path="/profile/:category"
             render={(props) =>
               hasUser ? <Profile {...props} /> : <Redirect to="/" />
             }
           />
-          <DefaultRoute
+          <Route
             exact
             path="/profile/:category/:itemId(\d+)"
             render={(props) =>
@@ -306,4 +288,53 @@ const Routes = (props) => {
   );
 };
 
+const DefaultRoute = ({ exact, path, render, navState }) => {
+  return (
+    <>
+      <Route
+        exact={exact}
+        path={path}
+        render={(props) => <>{render(props)}</>}
+      />
+    </>
+  );
+};
+
+/* const DefaultRoute = ({ exact, path, render, navState }) => {
+  return (
+    <>
+      <Route
+        exact={exact}
+        path={path}
+        render={(props) => (
+          <>
+            <Navbar
+              navArray={
+                navState.hasUser
+                  ? [
+                      { title: "Sell a Product", route: "/products/form" },
+                      { title: "My Products", route: "/products/myproducts" },
+                      { title: "Reports", route: "/reports" },
+                      {
+                        title: <i className="shopping cart icon"></i>,
+                        route: "/mycart",
+                      },
+                    ]
+                  : []
+              }
+              hasUser={navState.hasUser}
+              clearUser={navState.clearUser}
+              searchField={navState.searchField}
+              handleSearchChange={navState.handleSearchChange}
+              handleSubmit={navState.handleSubmit}
+              handleHotdog={navState.handleHotdog}
+              hotdog={navState.hotdog}
+            />
+            {render(props)}
+          </>
+        )}
+      />
+    </>
+  );
+}; */
 export { Routes };
