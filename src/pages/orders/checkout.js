@@ -2,73 +2,12 @@
 
 import React, {useState, useEffect} from 'react';
 import PTM from "../../modules/kk-paymenttypes"
-import PM from "../../modules/productManager"
 import OrderManager from "../../modules/orderManager"
 import opm from "../../modules/order_product_manager"
-// import depleteProduct from "./depleteProduct"
+import depleteProduct from "./depleteProduct"
 import "./checkout.css"
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import UIfx from 'uifx'
-import fun_bell from '../../sound_fx/fun_bell.mp3'
-
-const chime = new UIfx(
-    fun_bell,
-    {
-      volume: 0.1, // number between 0.0 ~ 1.0
-      throttleMs: 100
-    }
-  )
-
-
-
-const depleteProduct= (arr, token)=> {
-
-    const obj = {}
-    for(let i=0; i<arr.length; i++){
-        if(!obj[arr[i].product.id]){
-            obj[arr[i].product.id] = 1
-        } else{
-            obj[arr[i].product.id] +=1
-        }
-    }
-
-
-    for (let [productId, value] of Object.entries(obj)) {
-        PM.getOneProduct(productId).then(newObj=> {
-            if(newObj.quantity < value){
-                confirmAlert({
-                    title: `Not Enough ${newObj.title}`,
-                    message: `Would you like to buy the remaining ${newObj.quantity}`,
-                    buttons: [
-                      {
-                        label: 'Yes',
-                        onClick: () => {PM.getOneProduct(productId).then(newObj=> {
-                            newObj.quantity= 0
-                            PM.updateQuantity(token, newObj)
-                        })}
-                      },
-                      {
-                        label: 'No',
-                        onClick: () => {}
-                      }
-                    ]
-                  });
-            } else {
-                PM.getOneProduct(productId).then(newObj=> {
-                    newObj.quantity-= value
-                    PM.updateQuantity(token, newObj)
-                })
-            }
-            })
-      }
-      return new Promise((resolve, reject) => {
-        resolve("some string");
-    });
-     
-    
-    
-}
+import wooshAudio from "../../sound_fx/fun_bell.mp3"
 
 
 const Checkout = props => {
@@ -82,28 +21,25 @@ const Checkout = props => {
     const selectPaymentId= e => {
         setSelectedPaymentId(e.target.value)
     }
-    
+    const woosh = new UIfx(
+        wooshAudio,
+        {
+            volume: 0.2,
+            throttleMs: 100
+        }
+    )
 
-    const  handleSubmit=async ()=> {
+    const handleSubmit=()=> {
         
         if(selectedPaymentId===""){
             alert('Please Select a Payment Method')
         }else{
         //deplete products
-        
-        const myPromise = await depleteProduct(products, token)
+        depleteProduct(products, token)
+        //changeorder
         const newOrder = order
         newOrder.payment_type_id = Number(selectedPaymentId)
-        OrderManager.putOrder(token, newOrder).then(()=> {chime.play();props.history.push("/")})
-     
-        
-        
-        
-        
-       
-    }
-        
-        
+        OrderManager.putOrder(token, newOrder).then(()=> woosh.play(), props.history.push("/"))}
     }
 
     useEffect(()=> {
