@@ -84,7 +84,7 @@ const OrderDetails = ({ loading, currentOrder, className }) => {
                             className="paper-image"
                             src={
                               item.image_path === null
-                                ? "https://via.placeholder.com/100"
+                                ? `${process.env.PUBLIC_URL}/noimage.png` 
                                 : item.image_path
                             }
                           />
