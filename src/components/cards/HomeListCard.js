@@ -67,7 +67,7 @@ export default function HomeListCard(props) {
                 // If there is no image, then fill it with a dummy image
                 backgroundImage: `url(${
                   props.product.image_path === null
-                    ? "https://via.placeholder.com/100"
+                    ? `${process.env.PUBLIC_URL}/noimage.png` 
                     : props.product.image_path
                 })`,
                 backgroundPosition: "center",
@@ -80,7 +80,9 @@ export default function HomeListCard(props) {
           <div className="cc-right">
             <div className="cc-title">{props.product.title}</div>
             <div className="cc-price">Only ${props.product.price}</div>
+            <p className="text">Stock: {props.product.quantity}</p>
             <p className="text">{props.product.description}</p>
+            
 
             <div className="cc-prod-buttons">
               <IconButton
@@ -106,13 +108,14 @@ export default function HomeListCard(props) {
             className={classes.media}
             image={
               props.product.image_path === null
-                ? "https://via.placeholder.com/100"
+                ? `${process.env.PUBLIC_URL}/noimage.png` 
                 : props.product.image_path
             }
             title={props.product.title}
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="div">
+            <p className="text">Stock: {props.product.quantity}</p>
               <p className="text">{props.product.description}</p>
             </Typography>
           </CardContent>

@@ -35,7 +35,15 @@
 }
 
 .category-items {
-display: flex;
-justify-content: left;
-flex-direction: row;
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+}
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.prod-card-button-container select {
+  margin-right: 5px;
 }

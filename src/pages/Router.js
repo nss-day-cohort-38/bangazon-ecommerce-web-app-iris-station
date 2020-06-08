@@ -9,7 +9,7 @@ import {
 import { DLHOME, Profile, Reports } from "./index";
 import { Navbar } from "../components";
 import "../styles/Global.css";
-import ProductForm from "./products/ProductForm";
+import {ProductFormMaster} from "./products/";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
@@ -114,7 +114,7 @@ const Routes = (props) => {
             exact
             path="/products/form"
             render={(props) =>
-              hasUser ? <ProductForm {...props} /> : <Redirect to="/" />
+              hasUser ? <ProductFormMaster {...props} /> : <Redirect to="/" />
             }
           />
           <Route

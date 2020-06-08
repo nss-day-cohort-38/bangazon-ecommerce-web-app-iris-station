@@ -24,13 +24,12 @@ const Checkout = props => {
     const woosh = new UIfx(
         wooshAudio,
         {
-            volume: 0.2,
+            volume: 0.05,
             throttleMs: 100
         }
     )
 
     const handleSubmit=()=> {
-        woosh.play()
         if(selectedPaymentId===""){
             alert('Please Select a Payment Method')
         }else{
@@ -39,7 +38,10 @@ const Checkout = props => {
         //changeorder
         const newOrder = order
         newOrder.payment_type_id = Number(selectedPaymentId)
-        OrderManager.putOrder(token, newOrder).then(()=> props.history.push("/"))}
+        OrderManager.putOrder(token, newOrder).then(()=> woosh.play())}
+
+        // #Cheat codes (I am sure there is a better way, but some times you gotta do whatcha gotta do!)
+        setTimeout(() => {props.history.push("/")}, 100)
     }
 
     useEffect(()=> {
@@ -81,7 +83,7 @@ const Checkout = props => {
             </form>
             </div>
             <div className="checkout-btn-container">
-                <button class="ui primary button" onClick={()=> handleSubmit()}>Checkout</button>
+                <button className="ui primary button" onClick={()=> handleSubmit()}>Checkout</button>
             </div>
             </div>
         </div>
