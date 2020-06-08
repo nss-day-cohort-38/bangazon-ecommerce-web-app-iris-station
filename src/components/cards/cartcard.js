@@ -3,10 +3,6 @@ import React from 'react'
 import { Button, Card, Image } from "semantic-ui-react"
 
 const CartCard = props => {
-//this will just return the card item for products in the users cart
-    // let image = props.product.image_path === null 
-    //   ? "https://via.placeholder.com/100" 
-    //   : `${props.product.image_path}`
 
     return(
         <Card className="ccard">
@@ -16,7 +12,7 @@ const CartCard = props => {
           size='mini'
           //if the image is null use a default image else use the user selected image
           src={props.product.product.image_path === null 
-              ? "https://via.placeholder.com/100" 
+              ? `${process.env.PUBLIC_URL}/noimage.png` 
               : `${props.product.product.image_path}`}
         />
         <Card.Header>{props.product.product.title}</Card.Header>

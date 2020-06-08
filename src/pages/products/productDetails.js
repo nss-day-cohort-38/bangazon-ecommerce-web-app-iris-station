@@ -61,7 +61,7 @@ const ProductDetails = (props) => {
     //fetch the product here
     productManager
       .getOneProduct(props.productId)
-      .then((prod) => {console.log(prod); setProduct(prod)});
+      .then((prod) => {setProduct(prod)});
       
   }, [props.productId]);
 
@@ -94,7 +94,7 @@ const ProductDetails = (props) => {
               style={{
                 backgroundImage: `url(${
                   product.image_path === null
-                    ? "https://via.placeholder.com/100"
+                    ? `${process.env.PUBLIC_URL}/noimage.png` 
                     : product.image_path
                 })`,
                 backgroundPosition: "center",

@@ -1,8 +1,6 @@
 //Made by Kurt Krafft and Andrew Green to handle dealing with the product viewset in the API
 import baseurl from "./baseurl";
 
-const remoteUrl = "http://localhost:8000";
-
 export default {
   getHomeList() {
     return fetch(`${baseurl}/products?number`).then((r) => r.json());
@@ -28,6 +26,24 @@ export default {
       method: "DELETE",
     });
   },
+  postProduct(token, obj) {
+    // Note: Content-type cannot be set when uploading a file
+    const headers = {
+      Authorization: `Token ${token}`,
+    }
+    // If there is no image, 
+    // then content-type and accept are needed in the fetch call
+    if (obj.image_path === null) { 
+      headers["Accept"] = "application/json";
+      headers["Content-Type"] = "application/json";
+    } 
+    
+    return fetch(`${baseurl}/products`, {
+      method: "POST",
+      headers: headers,
+      body: obj
+    }).then((response) => response.json())
+  },
   updateQuantity(token, obj) {
     return fetch(`${baseurl}/products/${obj.id}`, {
       method: "PUT",
@@ -39,4 +55,8 @@ export default {
       body: JSON.stringify(obj),
     });
   },
+  getProductTypes() {
+    return fetch(`${baseurl}/producttypes`)
+      .then((result) => result.json())
+  }
 };

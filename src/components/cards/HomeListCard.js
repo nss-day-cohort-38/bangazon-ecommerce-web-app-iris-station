@@ -67,7 +67,7 @@ export default function HomeListCard(props) {
                 // If there is no image, then fill it with a dummy image
                 backgroundImage: `url(${
                   props.product.image_path === null
-                    ? "https://via.placeholder.com/100"
+                    ? `${process.env.PUBLIC_URL}/noimage.png` 
                     : props.product.image_path
                 })`,
                 backgroundPosition: "center",
@@ -108,7 +108,7 @@ export default function HomeListCard(props) {
             className={classes.media}
             image={
               props.product.image_path === null
-                ? "https://via.placeholder.com/100"
+                ? `${process.env.PUBLIC_URL}/noimage.png` 
                 : props.product.image_path
             }
             title={props.product.title}
