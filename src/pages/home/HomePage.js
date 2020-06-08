@@ -12,6 +12,7 @@ const HomePage = (props) => {
   const [prods, setProds] = useState([]);
   const token = sessionStorage.getItem("token");
   const [addMessage, setAddMessage] = useState({});
+  const [reload, setReload] = useState(false)
   
   const handleAddToCard = (productId) => {
     //grab that product from database
