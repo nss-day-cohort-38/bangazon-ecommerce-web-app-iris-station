@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -15,10 +15,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link to="/">
-        Iris Station
-      </Link>{" "}
-      {new Date().getFullYear()}
+      <Link to="/">Iris Station</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -29,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   paper: {
+    height: "100vh",
     display: "flex",
+    justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
   },
@@ -52,23 +51,31 @@ const SignUp = (props) => {
     formData = props.formData;
   }
   const classes = useStyles();
-  const failedLogin = props.failedLogin;
-  const handleFieldChange = props.handleFieldChange;
-  const handleSubmit = props.handleSubmit;
+  // const  = props.failedLogin;
+  // const  = props.handleFieldChange;
+  // const handleSubmit = props.handleSubmit;
+  const {
+    handleSubmit,
+    handleFieldChange,
+    failedLogin,
+    failedLoginMessage,
+  } = props;
 
   return (
     <Container className={classes.root} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <Link to="/">
+          <img src={`${process.env.PUBLIC_URL}/logosmall.png`} />
+        </Link>
+
         <Typography component="h1" variant="h5">
-          Sign up
+          Create your account
         </Typography>
         <UserForm
           handleFieldChange={handleFieldChange}
           handleSubmit={handleSubmit}
+          failedLoginMessage={failedLoginMessage}
           failedLogin={failedLogin}
           classes={classes}
           formData={formData}
@@ -80,10 +87,10 @@ const SignUp = (props) => {
             </Link>
           </Grid>
         </Grid>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 };

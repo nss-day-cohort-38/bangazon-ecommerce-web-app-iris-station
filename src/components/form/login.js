@@ -5,14 +5,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Message } from "semantic-ui-react"; 
+import { Message } from "semantic-ui-react";
 
 function Copyright() {
   return (
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = props => {
+const LoginForm = (props) => {
   const classes = useStyles();
 
   return (
@@ -69,19 +69,24 @@ const LoginForm = props => {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <Link to="/">
+            <img src={`${process.env.PUBLIC_URL}/logosmall.png`} />
+          </Link>
+          <hr />
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign in to Iris Station
           </Typography>
           <form className={classes.form} noValidate>
-            {props.failedLogin 
-              ? <Message negative>
-                  <p>The username or password you entered is incorrect, please try again.</p>
-                </Message>
-              : <></> 
-            }
+            {props.failedLogin ? (
+              <Message negative>
+                <p>
+                  The username or password you entered is incorrect, please try
+                  again.
+                </p>
+              </Message>
+            ) : (
+              <></>
+            )}
             <TextField
               variant="outlined"
               margin="normal"
@@ -106,11 +111,7 @@ const LoginForm = props => {
               autoComplete="current-password"
               onChange={props.handleFieldChange}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-              name="rememberme"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -141,6 +142,6 @@ const LoginForm = props => {
       </Grid>
     </Grid>
   );
-}
+};
 
-export default LoginForm
+export default LoginForm;

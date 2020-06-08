@@ -34,7 +34,9 @@ const Example = ({
   return (
     <div>
       <Navbar color={color} light={light} expand="md" fixed="top">
-        <NavbarBrand href="/">Iris Station</NavbarBrand>
+        <NavbarBrand href="/">
+          <img src={`${process.env.PUBLIC_URL}/navlogo.png`} />
+        </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
