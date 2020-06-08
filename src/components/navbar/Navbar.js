@@ -147,62 +147,64 @@ const Example = ({
             })}
           </Nav>
 
-          <NavItem className="navbar-item-link">
-            <div className="product-category-container">
-              <div className="category-items">
-                <Link onClick={() => toggleMenu()}>
-                  Search Products By Categories
-                </Link>
-                <Drawer
-                  position="left"
-                  isOpen={drawerOpen}
-                  close={() => toggleMenu()}
-                  drawerInfo={productTypes.map((productType) => {
-                    const pArray = productType.products;
-                    return (
-                      <>
-                        <div className="producttypes-items-container">
-                          <Link
-                            onClick={() => toggleMenu()}
-                            key={productType.id}
-                            to={`/products/category/${productType.id}`}
-                          >
-                            <span className="product-name-on-list">
-                              <strong>{productType.name}</strong> - (
-                              {productType.count}) Items
-                            </span>
-                            <ChevronRightIcon />
-                          </Link>
-                          <div className="top-sellers">Top Sellers:</div>
-                          <ul className="top-products-container">
-                            {pArray.map((products) => {
-                              return products.slice(0, 3).map((product) => {
-                                if (
-                                  product.product_type_id === productType.id
-                                ) {
-                                  return (
-                                    <li className="product-items-list">
-                                      <Link
-                                        onClick={() => toggleMenu()}
-                                        to={`/products/${product.id}`}
-                                        key={product.id}
-                                      >
-                                        {product.title}
-                                      </Link>
-                                    </li>
-                                  );
-                                }
-                              });
-                            })}
-                          </ul>
-                        </div>
-                      </>
-                    );
-                  })}
-                />
+          {hasUser ? (
+            <NavItem className="navbar-item-link">
+              <div className="product-category-container">
+                <div className="category-items">
+                  <Link onClick={() => toggleMenu()}>
+                    Search Products By Categories
+                  </Link>
+                  <Drawer
+                    position="left"
+                    isOpen={drawerOpen}
+                    close={() => toggleMenu()}
+                    drawerInfo={productTypes.map((productType) => {
+                      const pArray = productType.products;
+                      return (
+                        <>
+                          <div className="producttypes-items-container">
+                            <Link
+                              onClick={() => toggleMenu()}
+                              key={productType.id}
+                              to={`/products/category/${productType.id}`}
+                            >
+                              <span className="product-name-on-list">
+                                <strong>{productType.name}</strong> - (
+                                {productType.count}) Items
+                              </span>
+                              <ChevronRightIcon />
+                            </Link>
+                            <div className="top-sellers">Top Sellers:</div>
+                            <ul className="top-products-container">
+                              {pArray.map((products) => {
+                                return products.slice(0, 3).map((product) => {
+                                  if (
+                                    product.product_type_id === productType.id
+                                  ) {
+                                    return (
+                                      <li className="product-items-list">
+                                        <Link
+                                          onClick={() => toggleMenu()}
+                                          to={`/products/${product.id}`}
+                                          key={product.id}
+                                        >
+                                          {product.title}
+                                        </Link>
+                                      </li>
+                                    );
+                                  }
+                                });
+                              })}
+                            </ul>
+                          </div>
+                        </>
+                      );
+                    })}
+                  />
+                </div>
               </div>
-            </div>
-          </NavItem>
+            </NavItem>
+          ) : null}
           <Nav navbar>
             <form>
               <NavItem className="navbar-item-link">
