@@ -4,52 +4,46 @@ import {
   Route,
   Switch,
   Redirect,
+  useHistory,
 } from "react-router-dom";
-
-import { Register, Login } from "../pages/users/index";
 import { DLHOME, Profile, Reports } from "./index";
 import { Navbar } from "../components";
 import "../styles/Global.css";
 import { ProductFormMaster } from "./products/";
 import { HomePage } from "./home/index";
 import { ProductDetails } from "./products/index";
+import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
 import SearchForm from "../components/form/searchForm";
 
 const Routes = (props) => {
+  let history = useHistory();
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
   const [hasUser, setHasUser] = useState(isAuthenticated());
   const [userInfo, setUserInfo] = useState({});
   const [hotdog, setHotdog] = useState(false);
-
-  const clearUser = () => {
-    sessionStorage.clear();
-    setHotdog(false);
-    setHasUser(isAuthenticated());
-  };
-
-  useEffect(() => {
-    setHotdog(JSON.parse(window.sessionStorage.getItem("hotdog")));
-  }, []);
-
-  const handleHotdog = () => {
-    setHotdog(!hotdog);
-    window.sessionStorage.setItem("hotdog", !hotdog);
-  };
 
   const setUserToken = (resp) => {
     sessionStorage.setItem("token", resp.token);
     setHasUser(isAuthenticated());
   };
 
+  const clearUser = () => {
+    sessionStorage.clear();
+    setHotdog(false);
+    setHasUser(isAuthenticated());
+  };
   const [searchField, setSearchField] = useState({
     keyword: "",
   });
   const [submittedSearchField, setSubmittedSearchField] = useState({
     keyword: "",
   });
-
+  const handleHotdog = () => {
+    setHotdog(!hotdog);
+    window.sessionStorage.setItem("hotdog", !hotdog);
+  };
   const handleSearchChange = (e) => {
     const stateToChange = { ...searchField };
     stateToChange[e.target.id] = e.target.value.toLowerCase();
@@ -59,6 +53,10 @@ const Routes = (props) => {
   const handleSubmit = () => {
     setSubmittedSearchField(searchField);
   };
+
+  useEffect(() => {
+    setHotdog(JSON.parse(window.sessionStorage.getItem("hotdog")));
+  }, []);
 
   // Add hotdog image url here
   document.body.style.cursor = hotdog
@@ -90,7 +88,6 @@ const Routes = (props) => {
         hotdog={hotdog}
       />
       <Switch>
-        {/* Below will render routes with navbar on top */}
         <Route
           exact
           path="/login"
@@ -103,68 +100,45 @@ const Routes = (props) => {
           }
         />
 
-        <Route
-          exact
-          path="/register"
-          render={(props) =>
-            hasUser ? (
-              <Redirect to="/" />
-            ) : (
-              <Register setUserToken={setUserToken} {...props} />
-            )
-          }
-        />
-
         <div className="body-container">
+          <Route
+            exact
+            path="/register"
+            render={(props) =>
+              hasUser ? (
+                <Redirect to="/" />
+              ) : (
+                <Register setUserToken={setUserToken} {...props} />
+              )
+            }
+          />
+
           <Route
             exact
             path="/"
             render={(props) =>
-              searchField ? (
-                <>
-                  <HomePage {...props} />{" "}
-                </>
-              ) : (
-                <Redirect to="/search" />
-              )
+              searchField ? <HomePage {...props} /> : <Redirect to="/search" />
             }
           />
-
           <Route
             exact
             path="/products/form"
             render={(props) =>
-              hasUser ? (
-                <>
-                  <ProductFormMaster {...props} />
-                </>
-              ) : (
-                <Redirect to="/" />
-              )
+              hasUser ? <ProductFormMaster {...props} /> : <Redirect to="/" />
             }
           />
-
           <Route
             exact
             path="/search"
             render={(props) => (
-              <>
-                <SearchForm searchField={submittedSearchField} />
-              </>
+              <SearchForm searchField={submittedSearchField} />
             )}
           />
-
           <Route
             exact
             path="/products/myproducts"
             render={(props) =>
-              hasUser ? (
-                <>
-                  <MyProducts {...props} />{" "}
-                </>
-              ) : (
-                <Redirect to="/" />
-              )
+              hasUser ? <MyProducts {...props} /> : <Redirect to="/" />
             }
           />
 
@@ -173,12 +147,10 @@ const Routes = (props) => {
             exact
             path="/products/:productId(\d+)"
             render={(props) => (
-              <>
-                <ProductDetails
-                  productId={parseInt(props.match.params.productId)}
-                  {...props}
-                />
-              </>
+              <ProductDetails
+                productId={parseInt(props.match.params.productId)}
+                {...props}
+              />
             )}
           />
 
@@ -187,13 +159,7 @@ const Routes = (props) => {
             exact
             path="/profile"
             render={(props) =>
-              hasUser ? (
-                <>
-                  <Profile {...props} />
-                </>
-              ) : (
-                <Redirect to="/login" />
-              )
+              hasUser ? <Profile {...props} /> : <Redirect to="/login" />
             }
           />
 
@@ -203,13 +169,7 @@ const Routes = (props) => {
             exact
             path="/reports"
             render={(props) =>
-              hasUser ? (
-                <>
-                  <Reports {...props} />
-                </>
-              ) : (
-                <Redirect to="/" />
-              )
+              hasUser ? <Reports {...props} /> : <Redirect to="/" />
             }
           />
 
@@ -217,13 +177,7 @@ const Routes = (props) => {
             exact
             path="/reports/:report_type"
             render={(props) =>
-              hasUser ? (
-                <>
-                  <Reports {...props} />
-                </>
-              ) : (
-                <Redirect to="/reports" />
-              )
+              hasUser ? <Reports {...props} /> : <Redirect to="/reports" />
             }
           />
 
@@ -232,13 +186,7 @@ const Routes = (props) => {
             exact
             path="/mycart"
             render={(props) =>
-              hasUser ? (
-                <>
-                  <MyCart {...props} />
-                </>
-              ) : (
-                <Redirect to="/" />
-              )
+              hasUser ? <MyCart {...props} /> : <Redirect to="/" />
             }
           />
 
@@ -247,13 +195,7 @@ const Routes = (props) => {
             exact
             path="/checkout"
             render={(props) =>
-              hasUser ? (
-                <>
-                  <Checkout {...props} />
-                </>
-              ) : (
-                <Redirect to="/" />
-              )
+              hasUser ? <Checkout {...props} /> : <Redirect to="/" />
             }
           />
 
@@ -287,54 +229,4 @@ const Routes = (props) => {
     </Router>
   );
 };
-
-const DefaultRoute = ({ exact, path, render, navState }) => {
-  return (
-    <>
-      <Route
-        exact={exact}
-        path={path}
-        render={(props) => <>{render(props)}</>}
-      />
-    </>
-  );
-};
-
-/* const DefaultRoute = ({ exact, path, render, navState }) => {
-  return (
-    <>
-      <Route
-        exact={exact}
-        path={path}
-        render={(props) => (
-          <>
-            <Navbar
-              navArray={
-                navState.hasUser
-                  ? [
-                      { title: "Sell a Product", route: "/products/form" },
-                      { title: "My Products", route: "/products/myproducts" },
-                      { title: "Reports", route: "/reports" },
-                      {
-                        title: <i className="shopping cart icon"></i>,
-                        route: "/mycart",
-                      },
-                    ]
-                  : []
-              }
-              hasUser={navState.hasUser}
-              clearUser={navState.clearUser}
-              searchField={navState.searchField}
-              handleSearchChange={navState.handleSearchChange}
-              handleSubmit={navState.handleSubmit}
-              handleHotdog={navState.handleHotdog}
-              hotdog={navState.hotdog}
-            />
-            {render(props)}
-          </>
-        )}
-      />
-    </>
-  );
-}; */
 export { Routes };
