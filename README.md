@@ -9,7 +9,7 @@ Iris Station is an E-commerce application that allows a logged in user to do the
     - View the products that a logged in user has posted to sell
     - View the amount of times a product has been sold
     - View the current Stock
-    - User can Remove a product they have for sale Product
+    - Users can Remove a product they have for sale Product
 - Reports
     - User can see errors where a customer has multiple open orders. It shows their full name and how many open orders they have.
 - My Cart
@@ -35,9 +35,9 @@ Iris Station is an E-commerce application that allows a logged in user to do the
     - View past orders
 - User can Register and login if not already logged in
 - Cool switch
-    - Just toggle it and see what is does ;)
+    - Just toggle it and see what it does ;)
 
-## Want to use Iris Station? Follow the instructions bellow to run the application.
+## Want to use Iris Station? Follow the instructions below to run the application.
 
 1. Create a new directory in your terminal. Clone down this repository by clicking the "Clone or Download" button above, copying the SSH key, and running the following command in your terminal `git clone sshKeyGoesHere`.
 
