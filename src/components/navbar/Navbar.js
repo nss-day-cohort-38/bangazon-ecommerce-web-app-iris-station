@@ -34,6 +34,9 @@ const Example = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [productTypes, setProductTypes] = useState([]);
   const [products, setProducts] = useState([]);
+  const token = sessionStorage.getItem("token");
+
+
 
   const toggle = () => setIsOpen(!isOpen);
   const toggleMenu = () => {
@@ -93,7 +96,7 @@ const Example = ({
     productManager.getHomeList().then((arr) => {
       setProducts(arr);
     });
-  }, []);
+  }, [token]);
 
   return (
     <div>
