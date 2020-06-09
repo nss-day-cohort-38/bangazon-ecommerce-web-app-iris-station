@@ -1,14 +1,14 @@
 .tabular-menu {
-    display: none !important;
+  display: none !important;
 }
 
 @media screen and (max-width: 960px) {
-    .tabular-menu {
-        display: flex !important;
-        flex-wrap: wrap;
-    }
-
-    .vertical-menu {
-        display: none !important;
-    }
+  .tabular-menu {
+    display: flex !important;
+    flex-wrap: wrap;
   }
+
+  .vertical-menu {
+    display: none !important;
+  }
+}

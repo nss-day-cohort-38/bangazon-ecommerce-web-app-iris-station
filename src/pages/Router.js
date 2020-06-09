@@ -15,6 +15,7 @@ import { ProductDetails } from "./products/index";
 import { Register, Login } from "../pages/users/index";
 import MyProducts from "./products/MyProducts";
 import { MyCart, Checkout } from "./orders/index";
+import { ProductType } from "./products/index";
 import SearchForm from "../components/form/searchForm";
 
 const Routes = (props) => {
@@ -34,6 +35,7 @@ const Routes = (props) => {
     setHotdog(false);
     setHasUser(isAuthenticated());
   };
+
   const [searchField, setSearchField] = useState({
     keyword: "",
   });
@@ -99,20 +101,19 @@ const Routes = (props) => {
             )
           }
         />
-
+        <Route
+          exact
+          path="/register"
+          render={(props) =>
+            hasUser ? (
+              <Redirect to="/" />
+            ) : (
+              <Register setUserToken={setUserToken} {...props} />
+            )
+          }
+        />
+        {/* <React.Fragment> */}
         <div className="body-container">
-          <Route
-            exact
-            path="/register"
-            render={(props) =>
-              hasUser ? (
-                <Redirect to="/" />
-              ) : (
-                <Register setUserToken={setUserToken} {...props} />
-              )
-            }
-          />
-
           <Route
             exact
             path="/"
@@ -139,6 +140,24 @@ const Routes = (props) => {
             path="/products/myproducts"
             render={(props) =>
               hasUser ? <MyProducts {...props} /> : <Redirect to="/" />
+            }
+          />
+
+          {/* this will route will filter HomePage to product types */}
+          <Route
+            exact
+            // path="/products/:productTypeName([\w ]+)"
+            path="/products/category/:productTypeId(\d+)"
+            render={(props) =>
+              hasUser ? (
+                <ProductType
+                  productTypeId={parseInt(props.match.params.productTypeId)}
+                  // productTypeName={props.match.params.productTypeName}
+                  {...props}
+                />
+              ) : (
+                <Redirect to="/" />
+              )
             }
           />
 
@@ -223,6 +242,7 @@ const Routes = (props) => {
             }
           />
         </div>
+        {/* </React.Fragment> */}
         {/* Will redirect to home page if page does not exist */}
         <Redirect to="/" />
       </Switch>

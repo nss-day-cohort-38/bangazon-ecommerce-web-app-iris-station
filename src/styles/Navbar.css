@@ -4,19 +4,19 @@
 }
 
 .navbar-item-link {
-    padding: 15px;
-    display: flex;
-    line-height: 20px;
-  }
-
-.right-side-link{
-    margin: auto 0;
+  padding: 15px;
+  display: flex;
+  line-height: 20px;
 }
 
-  .navbar-right-side{
-    display: flex;
-    justify-content: flex-end;
-  }
+.right-side-link {
+  margin: auto 0;
+}
+
+.navbar-right-side {
+  display: flex;
+  justify-content: flex-end;
+}
 
 .logout-link {
   margin: auto 0;
@@ -26,4 +26,82 @@
 
 .navbar-search-button {
   color: #ffffff !important;
+}
+
+.drawer-container {
+  width: 30%;
+}
+
+div.menu.transition.visible {
+  width: 25%;
+}
+
+.top-products-container {
+  width: 50%;
+}
+
+div.MuiPaper-root.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiPaper-elevation16 {
+  overflow-y: visible;
+  width: 17%;
+  scroll-behavior: smooth;
+}
+
+.product-types-header {
+  display: flex;
+  justify-content: center;
+  background-color: #4183c4;
+  color: white;
+  position: relative;
+}
+
+.all-products {
+  padding-left: 16px;
+  color: black;
+  font-weight: bold;
+}
+
+.product-items-list {
+  width: 100%;
+  color: black;
+
+}
+
+.producttypes-items-container {
+  width: 100%;
+}
+
+.navbar-item-link.nav-item {
+  display: flex;
+}
+
+.product-category-container {
+  display: flex;
+  margin-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  align-items: center;
+  background-color: #f8f9fa;
+}
+
+.category-items {
+  justify-content: center;
+  flex-direction: row;
+  padding-top: 7px;
+}
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.prod-card-button-container select {
+  margin-right: 5px;
+}
+
+.product-name-on-list {
+  color: black;
+  font-weight: 500;
+}
+.top-sellers {
+  margin-top: 3px;
 }
