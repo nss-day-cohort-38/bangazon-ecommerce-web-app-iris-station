@@ -8,10 +8,10 @@ Iris Station is an E-commerce application that allows a logged in user to do the
 - My Products
     - View the products that a logged in user has posted to sell
     - View the amount of times a product has been sold
-- Search for Products to Buy
-    - Search by product or city
-    - View a list of all products for sell on Iris Station
-    - View the 20 most recent product listings
+    - View the current Stock
+    - User can Remove a product they have for sale Product
+- Reports
+    - User can see errors where a customer has multiple open orders. It shows their full name and how many open orders they have.
 - My Cart
     - View the cart and products in it
     - Remove Products within your cart
@@ -19,12 +19,23 @@ Iris Station is an E-commerce application that allows a logged in user to do the
     - Cancel an order and delete products in an order
     - If a product is deleted by the seller, all products in carts will be deleted. However, if you look at past orders where that product was already bought it still exists there. 
     - The inventory for products bought will be reflected
+- Search Products By Categories
+    - See all the product categories and the top three items in that category. 
+    - Click on the category name to see all products in that category
+    - Click product name to view the product details
+- Search for Products to Buy
+    - Search by product or city
+    - View a list of all products for sell on Iris Station
+    - View the 20 most recent product listings
 - Profile
     - Add a payment type
     - View all payment types for a user
     - Delete a payment type
     - Edit user information (address, phone number, email, etc.)
     - View past orders
+- User can Register and login if not already logged in
+- Cool switch
+    - Just toggle it and see what is does ;)
 
 ## Want to use Iris Station? Follow the instructions bellow to run the application.
 
