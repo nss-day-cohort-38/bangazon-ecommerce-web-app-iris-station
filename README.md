@@ -34,7 +34,7 @@ Iris Station is an E-commerce application that allows a logged in user to do the
     - Edit user information (address, phone number, email, etc.)
     - View past orders
 - User can Register and login if not already logged in
-- Cool switch
+- Dark Mode
     - Just toggle it and see what it does ;)
 
 ## Want to use Iris Station? Follow the instructions below to run the application.
