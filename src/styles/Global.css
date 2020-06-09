@@ -1,7 +1,7 @@
 
 
 .body-container {
-    padding-top: 65px;
+    padding-top: 100px;
 }
 
 .login-page{
@@ -11,3 +11,35 @@
 .vertical-menu-sibling{
     margin: 20px;
 }
+
+@media screen and (max-width: 991px) {
+    .body-container {
+        padding-top: 65px;
+    }
+
+    
+  }
+
+@media screen and (min-width: 992px) and  (max-width: 1073px) {
+    .body-container {
+        padding-top: 150px;
+    }
+
+    
+  }
+
+@media screen and (min-width: 1074px) and (max-width: 1098px) {
+    .body-container {
+        padding-top: 140px;
+    }
+
+    
+  }
+
+@media screen and (min-width: 1099px) and ( max-width: 1243px) {
+    .body-container {
+        padding-top: 120px;
+    }
+
+
+  }

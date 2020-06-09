@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -23,6 +23,7 @@ const Routes = (props) => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
   const [hasUser, setHasUser] = useState(isAuthenticated());
   const [userInfo, setUserInfo] = useState({});
+  const [hotdog, setHotdog] = useState(false);
 
   const setUserToken = (resp) => {
     sessionStorage.setItem("token", resp.token);
@@ -31,6 +32,7 @@ const Routes = (props) => {
 
   const clearUser = () => {
     sessionStorage.clear();
+    setHotdog(false);
     setHasUser(isAuthenticated());
   };
 
@@ -40,7 +42,10 @@ const Routes = (props) => {
   const [submittedSearchField, setSubmittedSearchField] = useState({
     keyword: "",
   });
-
+  const handleHotdog = () => {
+    setHotdog(!hotdog);
+    window.sessionStorage.setItem("hotdog", !hotdog);
+  };
   const handleSearchChange = (e) => {
     const stateToChange = { ...searchField };
     stateToChange[e.target.id] = e.target.value.toLowerCase();
@@ -51,8 +56,17 @@ const Routes = (props) => {
     setSubmittedSearchField(searchField);
   };
 
+  useEffect(() => {
+    setHotdog(JSON.parse(window.sessionStorage.getItem("hotdog")));
+  }, []);
+
+  // Add hotdog image url here
+  document.body.style.cursor = hotdog
+    ? `url("${process.env.PUBLIC_URL}/hotdog.png"), pointer`
+    : "default";
+
   return (
-    <Router history={history}>
+    <Router>
       <Navbar
         navArray={
           hasUser
@@ -68,14 +82,13 @@ const Routes = (props) => {
             : []
         }
         hasUser={hasUser}
-        userInfo={userInfo}
         clearUser={clearUser}
         searchField={searchField}
         handleSearchChange={handleSearchChange}
-        history={history}
         handleSubmit={handleSubmit}
+        handleHotdog={handleHotdog}
+        hotdog={hotdog}
       />
-      )
       <Switch>
         <Route
           exact
@@ -88,21 +101,19 @@ const Routes = (props) => {
             )
           }
         />
-
+        <Route
+          exact
+          path="/register"
+          render={(props) =>
+            hasUser ? (
+              <Redirect to="/" />
+            ) : (
+              <Register setUserToken={setUserToken} {...props} />
+            )
+          }
+        />
         {/* <React.Fragment> */}
         <div className="body-container">
-          <Route
-            exact
-            path="/register"
-            render={(props) =>
-              hasUser ? (
-                <Redirect to="/" />
-              ) : (
-                <Register setUserToken={setUserToken} {...props} />
-              )
-            }
-          />
-
           <Route
             exact
             path="/"
@@ -237,20 +248,5 @@ const Routes = (props) => {
       </Switch>
     </Router>
   );
-};
-
-const useReactPath = () => {
-  const [path, setPath] = React.useState(window.location.pathname);
-  const listenToPopstate = () => {
-    const winPath = window.location.pathname;
-    setPath(winPath);
-  };
-  React.useEffect(() => {
-    window.addEventListener("popstate", listenToPopstate);
-    return () => {
-      window.removeEventListener("popstate", listenToPopstate);
-    };
-  }, []);
-  return path;
 };
 export { Routes };

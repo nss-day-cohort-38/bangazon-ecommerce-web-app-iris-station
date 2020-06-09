@@ -31,7 +31,7 @@ const Reports = ({ match }) => {
           {reportsView === "" && "Choose a report to run"}
           {reportsView === "multiple-orders" && <MultipleOpenReports />}
         </Grid>
-        <Grid item xs={0} md={1}></Grid>
+        <Grid item xs={false} md={1}></Grid>
       </Grid>
     </div>
   );

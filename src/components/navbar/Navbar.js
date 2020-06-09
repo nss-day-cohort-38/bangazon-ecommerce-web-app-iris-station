@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "../../styles/Navbar.css";
 import { Input, Button } from "semantic-ui-react";
+import Switch from "@material-ui/core/Switch";
 import { TextField } from "@material-ui/core";
 import { Drawer } from "../../components/menu/index";
 import productManager from "../../modules/productManager";
@@ -24,11 +25,12 @@ const Example = ({
   navArray = defaultArray,
   color = "light",
   light = true,
-  userInfo,
   hasUser,
   clearUser,
   handleSearchChange,
   handleSubmit,
+  handleHotdog,
+  hotdog,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -41,6 +43,7 @@ const Example = ({
   const toggle = () => setIsOpen(!isOpen);
   const toggleMenu = () => {
     setDrawerOpen(!drawerOpen);
+    isOpen && toggle();
   };
 
   // Function that maps the producttype id's to the products table where the product_type_id is, and counts the number of products under the specific producttype.
@@ -99,9 +102,13 @@ const Example = ({
   }, [token]);
 
   return (
-    <div>
-      <Navbar color={color} light={light} expand="md" fixed="top">
-        <NavbarBrand href="/">Iris Station</NavbarBrand>
+    <div className="site-navbar">
+      <Navbar color={color} light={light} expand="lg" fixed="top">
+        {/* <NavbarBrand> */}
+        <Link to="/" onClick={() => isOpen && toggle()}>
+          <img src={`${process.env.PUBLIC_URL}/navlogo.png`} />
+        </Link>
+        {/* </NavbarBrand> */}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -124,6 +131,7 @@ const Example = ({
                                     .join("-")
                                     .toLowerCase()}`
                             }
+                            onClick={() => isOpen && toggle()}
                           >
                             <DropdownItem>{dropitem.title}</DropdownItem>
                           </Link>
@@ -141,6 +149,7 @@ const Example = ({
                           ? item.route
                           : `/${item.title.split(" ").join("-").toLowerCase()}`
                       }
+                      onClick={() => isOpen && toggle()}
                     >
                       {item.title}
                     </Link>
@@ -218,7 +227,13 @@ const Example = ({
                   placeholder="Search..."
                   onChange={handleSearchChange}
                   action={
-                    <Link to="/search" onClick={handleSubmit}>
+                    <Link
+                      to="/search"
+                      onClick={(e) => {
+                        isOpen && toggle();
+                        handleSubmit(e);
+                      }}
+                    >
                       <Button
                         color="blue"
                         className="navbar-search-button"
@@ -232,16 +247,25 @@ const Example = ({
             {hasUser ? (
               <>
                 <NavItem className="navbar-item-link">
-                  <Link to="/profile/view" className="right-side-link">
+                  <Switch
+                    onClick={() => isOpen && toggle()}
+                    checked={hotdog}
+                    onChange={handleHotdog}
+                    color="primary"
+                    name="checkedB"
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />
+                </NavItem>
+                <NavItem className="navbar-item-link">
+                  <Link
+                    onClick={() => isOpen && toggle()}
+                    to="/profile/view"
+                    className="right-side-link"
+                  >
                     Profile
                   </Link>
                 </NavItem>
                 {/* TODO: make this not inline styling */}
-                {userInfo.is_staff && (
-                  <NavItem className="navbar-item-link">
-                    <Link to="/dl/home">Design Library</Link>
-                  </NavItem>
-                )}
                 <NavItem
                   className="navbar-item-link logout-link"
                   onClick={clearUser}
@@ -252,12 +276,20 @@ const Example = ({
             ) : (
               <>
                 <NavItem className="navbar-item-link">
-                  <Link className="right-side-link" to="/login">
+                  <Link
+                    onClick={() => isOpen && toggle()}
+                    className="right-side-link"
+                    to="/login"
+                  >
                     Login
                   </Link>
                 </NavItem>
                 <NavItem className="navbar-item-link">
-                  <Link className="right-side-link" to="/register">
+                  <Link
+                    onClick={() => isOpen && toggle()}
+                    className="right-side-link"
+                    to="/register"
+                  >
                     Register
                   </Link>
                 </NavItem>

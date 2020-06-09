@@ -1,0 +1,6 @@
+.register-form-view {
+    width: 100%;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 2;
+}

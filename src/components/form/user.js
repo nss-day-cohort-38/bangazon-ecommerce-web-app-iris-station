@@ -17,14 +17,14 @@ const UserForm = props => {
     <>
       <form 
         className={classes.form} 
-        noValidate
         onSubmit={handleSubmit}
+        autocomplete="on"
       >
         <Grid container spacing={2}>
           {/* For now, this is the most common error we will be facing */}
           {props.failedLogin 
             ? <Message negative>
-                <p>The username you entered is already in use, please try again.</p>
+                <p>{props.failedLoginMessage}</p>
               </Message>
             : <></> 
           }

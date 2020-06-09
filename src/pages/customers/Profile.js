@@ -66,7 +66,7 @@ const ProfilePage = ({ match }) => {
           {profileView === "order-history" && <OrderHistory itemId={itemId} />}
           {profileView === "payment-types" && <PaymentPage />}
         </Grid>
-        <Grid item xs={0} md={1}></Grid>
+        <Grid item xs={false} md={1}></Grid>
       </Grid>
     </div>
   );
